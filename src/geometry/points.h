@@ -20,36 +20,69 @@
 #ifndef POINTS_H_
 #define POINTS_H_
 
+/**
+ * All things obrik.
+ */
 namespace obrik
 {
+  /**
+   * All things having to do with screen geometry.
+   */
   namespace geometry
   {
+    /**
+     * A 2-dimensional point.
+     */
     class Point2D
     {
     protected:
 
+      /**
+       * The position of the point.
+       */
       int x, y;
 
     public:
 
+      /**
+       * Creates a new 2-dimensional point.
+       */
       Point2D(int x, int y);
 
+      /**
+       * Get's the x coordinate of this point.
+       */
       virtual int getX();
 
+      /**
+       * Get's the y coordinate of this point.
+       */
       virtual int getY();
     };
 
+    /**
+     * Represents a timestamped 2-dimensional point.
+     */
     class Point2DT : Point2D
     {
     protected:
 
+      /**
+       * The time this point was created.
+       */
       long t;
 
     public:
 
+      /**
+       * Creates a new 2D point with timestamp.
+       */
       Point2DT(int x, int y, long t);
 
-      virtual int getT();
+      /**
+       * Gets the time this point was created.
+       */
+      virtual long getT();
     };
 
     /**
