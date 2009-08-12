@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of Obrik, a free body diagram simulator.
  * Copyright (C) 2010  Andrew Correa <jamoozy@gmail.com>
  *                     Ali Mohammad <alawibaba@gmail.com>
