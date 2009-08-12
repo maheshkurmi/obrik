@@ -35,7 +35,7 @@ int obrik::geometry::Point2D::getY()
 obrik::geometry::Point2DT::Point2DT(int x, int y, long t)
   : Point2D(x, y), t(t) {}
 
-int obrik::geometry::Point2DT::getT()
+long obrik::geometry::Point2DT::getT()
 {
   return t;
 }
