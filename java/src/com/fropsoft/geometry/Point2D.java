@@ -17,43 +17,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fopsoft.geometry;
+package com.fropsoft.geometry;
 
 /**
- * Represents a timestamped point. This is very similar to the {@link Point2D}
- * class, with the exception that this also has a timestamp, which can be
- * accessed via the {@link #getT()} method.
+ * Represents a point on screen with an x and a y coordinte. The coordinates are
+ * integers, because they represent a screen pixel coordinate.
  * 
  * @author jamoozy
  */
-public class Point2DT extends Point2D
+public class Point2D
 {
   /**
-   * The timestamp of this point.
+   * The X coordinate of this point.
    */
-  protected long t;
+  protected int x;
 
   /**
-   * Creates a new timestamped point.
+   * The Y coordinate of this point.
+   */
+  protected int y;
+
+  /**
+   * Creates a new point at the point (x,y).,
    * 
    * @param x The x coordinate of the new point.
    * @param y The y coordinate of the new point.
-   * @param t The timestamp of the new point.
    */
-  public Point2DT(int x, int y, long t)
+  public Point2D(int x, int y)
   {
-    super(x, y);
-    this.t = t;
+    this.x = x;
+    this.y = y;
   }
 
   /**
-   * Returns the timestamp of this point.
+   * Returns the y coordinate of this point.
    * 
-   * @return The timestamp
+   * @return The y coordinate.
    */
-  public long getT()
+  public int getX()
   {
-    return t;
+    return x;
+  }
+
+  /**
+   * Returns the x coordinate of this point.
+   * 
+   * @return The x coordinate.
+   */
+  public int getY()
+  {
+    return y;
+  }
+
+  public double distanceTo(Point2D that)
+  {
+    double xDiff = this.x - that.x;
+    double yDiff = this.y - that.y;
+    return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
   }
 
   /*
@@ -62,9 +82,9 @@ public class Point2DT extends Point2D
    * @see java.lang.Object#clone()
    */
   @Override
-  public Point2DT clone()
+  public Point2D clone()
   {
-    return new Point2DT(x, y, t);
+    return new Point2D(x, y);
   }
 
   /*
@@ -75,6 +95,6 @@ public class Point2DT extends Point2D
   @Override
   public String toString()
   {
-    return String.format("(%d,%d) @ %d", x, y, t);
+    return String.format("(%d,%d)", x, y);
   }
 }

@@ -21,7 +21,7 @@ package com.fropsoft.sketch;
 
 import java.awt.Shape;
 
-import com.fopsoft.geometry.Stroke;
+import com.fropsoft.geometry.Stroke;
 
 public class DotRecognizer implements ShapeRecognizer
 {

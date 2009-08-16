@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fopsoft.geometry;
+package com.fropsoft.geometry;
 
 /**
  * This is a 2D point with a timestamp and a velocity. This is equivalent to a

@@ -17,63 +17,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fopsoft.geometry;
+package com.fropsoft.geometry;
 
 /**
- * Represents a point on screen with an x and a y coordinte. The coordinates are
- * integers, because they represent a screen pixel coordinate.
+ * Represents a timestamped point. This is very similar to the {@link Point2D}
+ * class, with the exception that this also has a timestamp, which can be
+ * accessed via the {@link #getT()} method.
  * 
  * @author jamoozy
  */
-public class Point2D
+public class Point2DT extends Point2D
 {
   /**
-   * The X coordinate of this point.
+   * The timestamp of this point.
    */
-  protected int x;
+  protected long t;
 
   /**
-   * The Y coordinate of this point.
-   */
-  protected int y;
-
-  /**
-   * Creates a new point at the point (x,y).,
+   * Creates a new timestamped point.
    * 
    * @param x The x coordinate of the new point.
    * @param y The y coordinate of the new point.
+   * @param t The timestamp of the new point.
    */
-  public Point2D(int x, int y)
+  public Point2DT(int x, int y, long t)
   {
-    this.x = x;
-    this.y = y;
+    super(x, y);
+    this.t = t;
   }
 
   /**
-   * Returns the y coordinate of this point.
+   * Returns the timestamp of this point.
    * 
-   * @return The y coordinate.
+   * @return The timestamp
    */
-  public int getX()
+  public long getT()
   {
-    return x;
-  }
-
-  /**
-   * Returns the x coordinate of this point.
-   * 
-   * @return The x coordinate.
-   */
-  public int getY()
-  {
-    return y;
-  }
-
-  public double distanceTo(Point2D that)
-  {
-    double xDiff = this.x - that.x;
-    double yDiff = this.y - that.y;
-    return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    return t;
   }
 
   /*
@@ -82,9 +62,9 @@ public class Point2D
    * @see java.lang.Object#clone()
    */
   @Override
-  public Point2D clone()
+  public Point2DT clone()
   {
-    return new Point2D(x, y);
+    return new Point2DT(x, y, t);
   }
 
   /*
@@ -95,6 +75,6 @@ public class Point2D
   @Override
   public String toString()
   {
-    return String.format("(%d,%d)", x, y);
+    return String.format("(%d,%d) @ %d", x, y, t);
   }
 }

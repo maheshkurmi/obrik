@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fopsoft.geometry;
+package com.fropsoft.geometry;
 
 import java.util.Iterator;
 import java.util.Vector;
