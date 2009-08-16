@@ -19,31 +19,33 @@
 
 #include "points.h"
 
-obrik::geometry::Point2D::Point2D(int x, int y)
-  : x(x), y(y) {}
+using namespace fropsoft::geometry;
 
-int obrik::geometry::Point2D::getX()
+Point2D::Point2D(int x, int y) :
+        x(x), y(y) {}
+
+int Point2D::getX()
 {
   return x;
 }
 
-int obrik::geometry::Point2D::getY()
+int Point2D::getY()
 {
   return y;
 }
 
-obrik::geometry::Point2DT::Point2DT(int x, int y, long t)
-  : Point2D(x, y), t(t) {}
+Point2DT::Point2DT(int x, int y, long t) :
+        Point2D(x, y), t(t) {}
 
-long obrik::geometry::Point2DT::getT()
+long Point2DT::getT()
 {
   return t;
 }
 
-obrik::geometry::Point2DTV::Point2DTV(int x, int y, long t, double v)
-  : Point2DT(x, y, t), v(v) {}
+Point2DTV::Point2DTV(int x, int y, long t, double v) :
+        Point2DT(x, y, t), v(v) {}
 
-int obrik::geometry::Point2DTV::getV()
+int Point2DTV::getV()
 {
   return v;
 }

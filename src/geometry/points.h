@@ -23,7 +23,7 @@
 /**
  * All things obrik.
  */
-namespace obrik
+namespace fropsoft
 {
   /**
    * All things having to do with screen geometry.
