@@ -3,6 +3,7 @@
 	<name>obrik-java</name>
 	<comment></comment>
 	<projects>
+		<project>jbox2d</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

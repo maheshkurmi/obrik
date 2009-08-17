@@ -17,22 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.obrik;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.geometry.Stroke;
 
-public class DotRecognizer implements ShapeRecognizer
+/**
+ * An {@link Item} is something that exists on the Obrik canvas that has
+ * meaning.
+ * 
+ * @author jamoozy
+ */
+public interface Item
 {
-  public double gague(Stroke stroke)
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+  /**
+   * Returns the shapes that made up this {@link Item}.
+   * 
+   * @return The shapes that make up this {@link Item}.
+   */
+  public Shape getShapes();
 
-  public Shape getShape()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
+  /**
+   * Converts this to something that JBox2D can handle.
+   * 
+   * @return This, converted to JBox2D format.
+   */
+  public Object toJBox2DObject();
 }

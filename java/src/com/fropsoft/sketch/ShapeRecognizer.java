@@ -19,8 +19,7 @@
 
 package com.fropsoft.sketch;
 
-import java.awt.Shape;
-
+import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
 
 /**

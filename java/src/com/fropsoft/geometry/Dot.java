@@ -17,22 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.geometry;
 
-import com.fropsoft.geometry.Shape;
-import com.fropsoft.geometry.Stroke;
-
-public class DotRecognizer implements ShapeRecognizer
+/**
+ * Y'know ... a dot.
+ * 
+ * @author jamoozy
+ */
+public class Dot extends AbstractShape
 {
-  public double gague(Stroke stroke)
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
 
-  public Shape getShape()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
 }

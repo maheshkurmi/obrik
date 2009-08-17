@@ -17,22 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.geometry;
 
-import com.fropsoft.geometry.Shape;
-import com.fropsoft.geometry.Stroke;
-
-public class DotRecognizer implements ShapeRecognizer
+/**
+ * Interface that all shapes share. In Obrik, shapes are just that, shapes. A
+ * shape doesn't mean anything until it has been classified as an {@link Item}.
+ * 
+ * @author jamoozy
+ */
+public interface Shape
 {
-  public double gague(Stroke stroke)
-  {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  public Shape getShape()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
+  /**
+   * Returns the stroke data that made this shape.
+   * 
+   * @return The stroke data that made this shape.
+   */
+  public Stroke[] getStrokes();
 }

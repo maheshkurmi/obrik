@@ -66,6 +66,19 @@ public class Stroke
   /*
    * (non-Javadoc)
    * 
+   * @see java.lang.Object#clone()
+   */
+  public Stroke clone()
+  {
+    Stroke that = new Stroke();
+    for (int i = 0; i < points.size(); i++)
+      that.points.add(this.points.get(i).clone());
+    return that;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.util.Vector#iterator()
    */
   public Iterator<Point2DTV> iterator()

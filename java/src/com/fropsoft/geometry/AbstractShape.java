@@ -17,22 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.geometry;
 
-import com.fropsoft.geometry.Shape;
-import com.fropsoft.geometry.Stroke;
+import java.util.Vector;
 
-public class DotRecognizer implements ShapeRecognizer
+/**
+ * A shape that implements the strokes part of the shape.
+ * 
+ * @author jamoozy
+ */
+public class AbstractShape implements Shape
 {
-  public double gague(Stroke stroke)
+  private Vector<Stroke> strokes;
+
+  public AbstractShape()
   {
-    // TODO Auto-generated method stub
-    return 0;
+    strokes = new Vector<Stroke>();
   }
 
-  public Shape getShape()
+  public Stroke[] getStrokes()
   {
-    // TODO Auto-generated method stub
-    return null;
+    Stroke[] out = new Stroke[strokes.size()];
+    for (int i = 0; i < out.length; i++)
+      out[i] = strokes.get(i).clone();
+    return out;
   }
 }
