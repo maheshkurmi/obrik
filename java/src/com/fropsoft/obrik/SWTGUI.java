@@ -21,5 +21,25 @@ package com.fropsoft.obrik;
 
 public class SWTGUI
 {
-
+  public static void main(String[] args)
+  {
+//    final Display display = new Display();
+//    final Shell shell = new Shell(display);
+//    shell.addPaintListener(new PaintListener()
+//    {
+//      public void paintControl(PaintEvent event)
+//      {
+//        Rectangle rect = shell.getClientArea();
+//        event.gc.drawOval(0, 0, rect.width - 1, rect.height - 1);
+//      }
+//    });
+//    shell.setBounds(10, 10, 200, 200);
+//    shell.open();
+//    while (!shell.isDisposed())
+//    {
+//      if (!display.readAndDispatch())
+//        display.sleep();
+//    }
+//    display.dispose();
+  }
 }
