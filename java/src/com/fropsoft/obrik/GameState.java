@@ -101,4 +101,12 @@ public class GameState
   {
     return points.size();
   }
+
+  public Point2DT lastPoint()
+  {
+    if (points.size() > 0)
+      return points.get(points.size() - 1).clone();
+    else
+      return null;
+  }
 }

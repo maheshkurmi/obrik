@@ -28,9 +28,10 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import com.fropsoft.geometry.Point2DT;
 
 /**
  * Sets up a Swing interface and creates and hooks into an Obrik {@link GameState}.
@@ -94,34 +95,36 @@ public class SwingGUI extends JPanel implements MouseListener,
   {
     game = new GameState();
 
-    JLabel area = null;
-    add(area = new JLabel()
-    {
-      Dimension minSize = new Dimension(100, 50);
-  
-      {
-          setBackground(Color.white);
-          setOpaque(true);
-          setBorder(BorderFactory.createLineBorder(Color.black));
-      }
-  
-      public Dimension getMinimumSize()
-      {
-          return minSize;
-      }
-  
-      public Dimension getPreferredSize()
-      {
-          return minSize;
-      }
-    });
+//    JLabel area = null;
+//    add(area = new JLabel()
+//    {
+//      Dimension minSize = new Dimension(100, 50);
+//  
+//      {
+//        setBackground(Color.white);
+//        setOpaque(true);
+//        setBorder(BorderFactory.createLineBorder(Color.black));
+//      }
+//  
+//      public Dimension getMinimumSize()
+//      {
+//        return minSize;
+//      }
+//  
+//      public Dimension getPreferredSize()
+//      {
+//        return minSize;
+//      }
+//    });
 
-    area.addMouseListener(this);
+//    area.addMouseListener(this);
     addMouseListener(this);
-    area.addMouseMotionListener(this);
+//    area.addMouseMotionListener(this);
     addMouseMotionListener(this);
-    
+
+    setBackground(Color.white);
     setOpaque(true);
+    setBorder(BorderFactory.createLineBorder(Color.white));
   }
 
   /*
@@ -131,7 +134,6 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseClicked(MouseEvent e)
   {
-    System.out.println("click");
     game.mouseClicked(e);
   }
 
@@ -142,7 +144,6 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseEntered(MouseEvent e)
   {
-    System.out.println("entered");
     game.mouseEntered(e);
   }
 
@@ -153,8 +154,8 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseExited(MouseEvent e)
   {
-    System.out.println("exit");
     game.mouseExited(e);
+    repaint(e);
   }
 
   /*
@@ -164,7 +165,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mousePressed(MouseEvent e)
   {
-    System.out.println("press");
+    repaint();
     game.mousePressed(e);
   }
 
@@ -175,7 +176,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseReleased(MouseEvent e)
   {
-    System.out.println("release");
+    repaint(e);
     game.mouseReleased(e);
   }
 
@@ -187,7 +188,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseDragged(MouseEvent e)
   {
-    System.out.println("drag");
+    repaint(e);
     game.mouseDrag(e);
   }
 
@@ -199,7 +200,6 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseMoved(MouseEvent e)
   {
-    System.out.println("move");
     game.mouseMoved(e);
   }
 
@@ -211,6 +211,25 @@ public class SwingGUI extends JPanel implements MouseListener,
   public Dimension getPreferredSize()
   {
     return new Dimension(400, 400);
+  }
+
+  /**
+   * Request a repaint between the passed mouse event an the last point.
+   * 
+   * @param e The event that caused the repaint request.
+   * 
+   * @see #repaint()
+   */
+  public void repaint(MouseEvent e)
+  {
+    Point2DT p = game.lastPoint();
+    if (p != null)
+    {
+      repaint(Math.min(e.getX(), p.getX()) - 5,
+          Math.min(e.getY(), p.getY()) - 5,
+          Math.abs(e.getX() - p.getX()) + 10,
+          Math.abs(e.getY() - p.getY()) + 10);
+    }
   }
 
   /*
