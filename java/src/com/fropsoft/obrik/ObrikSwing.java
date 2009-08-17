@@ -19,13 +19,16 @@
 
 package com.fropsoft.obrik;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -90,59 +93,142 @@ public class ObrikSwing extends JPanel implements MouseListener,
   private ObrikSwing()
   {
     game = new GameState();
+
+    JLabel area = null;
+    add(area = new JLabel()
+    {
+      Dimension minSize = new Dimension(100, 50);
+  
+      {
+          setBackground(Color.white);
+          setOpaque(true);
+          setBorder(BorderFactory.createLineBorder(Color.black));
+      }
+  
+      public Dimension getMinimumSize()
+      {
+          return minSize;
+      }
+  
+      public Dimension getPreferredSize()
+      {
+          return minSize;
+      }
+    });
+
+    area.addMouseListener(this);
+    addMouseListener(this);
+    area.addMouseMotionListener(this);
+    addMouseMotionListener(this);
+    
+    setOpaque(true);
   }
 
-  public void mouseClicked(MouseEvent arg0)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+   */
+  public void mouseClicked(MouseEvent e)
   {
-    // TODO Auto-generated method stub
-
+    System.out.println("click");
+    game.mouseClicked(e);
   }
 
-  public void mouseEntered(MouseEvent arg0)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+   */
+  public void mouseEntered(MouseEvent e)
   {
-    // TODO Auto-generated method stub
-
+    System.out.println("entered");
+    game.mouseEntered(e);
   }
 
-  public void mouseExited(MouseEvent arg0)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+   */
+  public void mouseExited(MouseEvent e)
   {
-    // TODO Auto-generated method stub
-
+    System.out.println("exit");
+    game.mouseExited(e);
   }
 
-  public void mousePressed(MouseEvent arg0)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+   */
+  public void mousePressed(MouseEvent e)
   {
-    // TODO Auto-generated method stub
-
+    System.out.println("press");
+    game.mousePressed(e);
   }
 
-  public void mouseReleased(MouseEvent arg0)
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+   */
+  public void mouseReleased(MouseEvent e)
   {
-    // TODO Auto-generated method stub
-
+    System.out.println("release");
+    game.mouseReleased(e);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+   */
   public void mouseDragged(MouseEvent e)
   {
+    System.out.println("drag");
     game.mouseDrag(e);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+   */
   public void mouseMoved(MouseEvent e)
   {
-    // Ignored because we only want drags.
+    System.out.println("move");
+    game.mouseMoved(e);
   }
 
-
+  /*
+   * (non-Javadoc)
+   * 
+   * @see javax.swing.JComponent#getPreferredSize()
+   */
   public Dimension getPreferredSize()
   {
     return new Dimension(400, 400);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+   */
   public void paintComponent(Graphics g)
   {
     super.paintComponent(g);
 
-    // Draw Text
-    g.drawString("This is my custom Panel!", 10, 20);
+    System.out.println("paintComponent()");
+
+    // Draw the user's stroke:
+    int[] xs = game.getStrokeXCoords();
+    int[] ys = game.getStrokeYCoords();
+    g.drawPolyline(xs, ys, game.getNumPoints());
+    
+    // TODO Draw all the things in the #game object.
   }
 }

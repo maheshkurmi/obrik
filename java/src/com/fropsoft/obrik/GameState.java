@@ -20,6 +20,9 @@
 package com.fropsoft.obrik;
 
 import java.awt.event.MouseEvent;
+import java.util.Vector;
+
+import com.fropsoft.geometry.Point2DT;
 
 /**
  * Keeps track of the state of the Obrik "game".
@@ -31,16 +34,71 @@ public class GameState
   // TODO fields with objects that will be turned into JBox things and GUI
   // things.
 
+  public Vector<Point2DT> points;
+
   /**
    * Create a new Obrik game state.
    */
   public GameState()
   {
-    // TODO write me
+    points = new Vector<Point2DT>();
   }
 
   public void mouseDrag(MouseEvent e)
   {
-    // TODO Auto-generated method stub
+    points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+  }
+
+  public void mouseClicked(MouseEvent e)
+  {
+    // Up & down, so do no action. (for now)
+  }
+
+  public void mouseEntered(MouseEvent e)
+  {
+    // Not interesting to us.
+  }
+
+  public void mousePressed(MouseEvent e)
+  {
+    points.clear();
+    points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+  }
+
+  public void mouseExited(MouseEvent e)
+  {
+    if (e.getButton() != MouseEvent.NOBUTTON)
+      points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+  }
+
+  public void mouseReleased(MouseEvent e)
+  {
+    points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+  }
+
+  public void mouseMoved(MouseEvent e)
+  {
+    // No movement action (when mouse unpressed).
+  }
+
+  public int[] getStrokeXCoords()
+  {
+    int[] xs = new int[points.size()];
+    for (int i = 0; i < xs.length; i++)
+      xs[i] = points.get(i).getX();
+    return xs;
+  }
+
+  public int[] getStrokeYCoords()
+  {
+    int[] ys = new int[points.size()];
+    for (int i = 0; i < ys.length; i++)
+      ys[i] = points.get(i).getY();
+    return ys;
+  }
+
+  public int getNumPoints()
+  {
+    return points.size();
   }
 }
