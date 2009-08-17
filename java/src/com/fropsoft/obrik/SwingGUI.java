@@ -241,8 +241,6 @@ public class SwingGUI extends JPanel implements MouseListener,
   {
     super.paintComponent(g);
 
-    System.out.println("paintComponent()");
-
     // Draw the user's stroke:
     int[] xs = game.getStrokeXCoords();
     int[] ys = game.getStrokeYCoords();
