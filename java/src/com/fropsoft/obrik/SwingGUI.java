@@ -36,7 +36,7 @@ import javax.swing.SwingUtilities;
  * Sets up a Swing interface and creates and hooks into an Obrik {@link GameState}.
  * @author jamoozy
  */
-public class ObrikSwing extends JPanel implements MouseListener,
+public class SwingGUI extends JPanel implements MouseListener,
     MouseMotionListener
 {
   /**
@@ -69,7 +69,7 @@ public class ObrikSwing extends JPanel implements MouseListener,
     JFrame frame = new JFrame("Obrik");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    frame.setContentPane(new ObrikSwing());
+    frame.setContentPane(new SwingGUI());
 
     //Display the window.
     frame.pack();
@@ -90,7 +90,7 @@ public class ObrikSwing extends JPanel implements MouseListener,
   /**
    * Create a new, empty Obrik game under a Swing GUI.
    */
-  private ObrikSwing()
+  private SwingGUI()
   {
     game = new GameState();
 
