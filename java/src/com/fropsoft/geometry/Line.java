@@ -24,7 +24,36 @@ package com.fropsoft.geometry;
  * 
  * @author jamoozy
  */
-public class Line
+public class Line extends AbstractShape
 {
+  /**
+   * Creates a new Line.
+   * 
+   * @param strokes
+   */
+  public Line(Stroke... strokes)
+  {
+    super(strokes);
+  }
 
+  /**
+   * Returns the starting point of this line.
+   * 
+   * @return The starting piont of this line.
+   */
+  public Point2D getStartPoint()
+  {
+    return strokes.get(0).get(0);
+  }
+
+  /**
+   * Returns the ending point of this line.
+   * 
+   * @return The ending piont of this line.
+   */
+  public Point2D getEndPoint()
+  {
+    Stroke s = strokes.get(strokes.size() - 1);
+    return s.get(s.numPoints() - 1);
+  }
 }

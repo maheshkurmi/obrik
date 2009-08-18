@@ -19,6 +19,8 @@
 
 package com.fropsoft.geometry;
 
+import com.fropsoft.obrik.Item;
+
 /**
  * Interface that all shapes share. In Obrik, shapes are just that, shapes. A
  * shape doesn't mean anything until it has been classified as an {@link Item}.
@@ -33,4 +35,11 @@ public interface Shape
    * @return The stroke data that made this shape.
    */
   public Stroke[] getStrokes();
+
+  /**
+   * Returns the bounding box of this {@link Shape}.
+   * 
+   * @return The bounding box of this {@link Shape}.
+   */
+  public Bounds getBounds();
 }

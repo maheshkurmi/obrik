@@ -41,7 +41,10 @@ public interface ShapeRecognizer
    * After a call to {@link #gague(Stroke)}, this function will return the Shape
    * representation of that {@link Stroke} object.
    * 
+   * @param stroke
+   *          The stroke that was recognized as this {@link Shape}.
+   * 
    * @return A {@link Shape} representation of a {@link Stroke} object.
    */
-  public Shape getShape();
+  public Shape makeShape(Stroke stroke);
 }

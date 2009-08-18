@@ -19,51 +19,52 @@
 
 package com.fropsoft.geometry;
 
-
 /**
- * Y'know ... a dot.
+ * Encompases some useful angle manipulation functions (in 2D). All operations
+ * are done in radians. (One might call this a glorified double.)
  * 
  * @author jamoozy
  */
-public class Dot extends AbstractShape
+public class Angle
 {
   /**
-   * Creates a new dot from the passed strokes.
-   * 
-   * @param strokes
+   * The angle, in radians, of this angle.
    */
-  public Dot(Stroke... strokes)
+  private final double angle;
+
+  /**
+   * Creates a new angle with the given angle.
+   * 
+   * @param angle
+   *          The angle of the new angle ^_^
+   */
+  public Angle(double angle)
   {
-    super(strokes);
+    this.angle = angle;
   }
 
   /**
-   * Returns the centerpoint of this dot---it's location.
+   * Finds the angle bewteen two angles.
    * 
-   * @return The centerpoint of this dot---it's location.
+   * @param that
+   *          The other angle.
+   * @return The angle between the angles.
    */
-  public Point2D getCenter()
+  public Angle angleBetween(Angle that)
   {
-    return bbox.getCenter();
+    double diff = this.angle - that.angle;
+    if (diff > Math.PI)
+      diff = 2 * Math.PI - diff;
+    return new Angle(diff);
   }
 
   /**
-   * Returns the X coordinate of this dot.
+   * Returns the double value of this angle.
    * 
-   * @return The X coordinate of this dot.
+   * @return The double value of this angle.
    */
-  public int getCenterX()
+  public double getValue()
   {
-    return bbox.getCenter().getX();
-  }
-
-  /**
-   * Returns the Y coordinate of this dot.
-   * 
-   * @return The Y coordinate of this dot.
-   */
-  public int getCenterY()
-  {
-    return bbox.getCenter().getY();
+    return angle;
   }
 }

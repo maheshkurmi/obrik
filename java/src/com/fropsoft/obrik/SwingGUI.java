@@ -25,20 +25,24 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Iterator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.fropsoft.geometry.Dot;
+import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2DT;
+import com.fropsoft.geometry.Shape;
 
 /**
- * Sets up a Swing interface and creates and hooks into an Obrik {@link GameState}.
+ * Sets up a Swing interface and creates and hooks into an Obrik {@link State}.
  * @author jamoozy
  */
 public class SwingGUI extends JPanel implements MouseListener,
-    MouseMotionListener
+MouseMotionListener
 {
   /**
    * Run Obrik in a Swing GUI.
@@ -79,47 +83,23 @@ public class SwingGUI extends JPanel implements MouseListener,
     // Don't do any more GUI work here as advised by a Sun thread safety page at:
     // <http://java.sun.com/products/jfc/tsc/articles/threads/threads1.html>
   }
-  
+
 
 
 
   /**
    * The internal state of Obrik.
    */
-  private GameState game;
+  private final State state;
 
   /**
    * Create a new, empty Obrik game under a Swing GUI.
    */
   private SwingGUI()
   {
-    game = new GameState();
+    state = new State();
 
-//    JLabel area = null;
-//    add(area = new JLabel()
-//    {
-//      Dimension minSize = new Dimension(100, 50);
-//  
-//      {
-//        setBackground(Color.white);
-//        setOpaque(true);
-//        setBorder(BorderFactory.createLineBorder(Color.black));
-//      }
-//  
-//      public Dimension getMinimumSize()
-//      {
-//        return minSize;
-//      }
-//  
-//      public Dimension getPreferredSize()
-//      {
-//        return minSize;
-//      }
-//    });
-
-//    area.addMouseListener(this);
     addMouseListener(this);
-//    area.addMouseMotionListener(this);
     addMouseMotionListener(this);
 
     setBackground(Color.white);
@@ -134,7 +114,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseClicked(MouseEvent e)
   {
-    game.mouseClicked(e);
+    state.mouseClicked(e);
   }
 
   /*
@@ -144,7 +124,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseEntered(MouseEvent e)
   {
-    game.mouseEntered(e);
+    state.mouseEntered(e);
   }
 
   /*
@@ -154,8 +134,9 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseExited(MouseEvent e)
   {
-    game.mouseExited(e);
     repaint(e);
+    state.mouseExited(e);
+    invokeShapeRecognitionLater();
   }
 
   /*
@@ -166,7 +147,7 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mousePressed(MouseEvent e)
   {
     repaint();
-    game.mousePressed(e);
+    state.mousePressed(e);
   }
 
   /*
@@ -177,7 +158,22 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mouseReleased(MouseEvent e)
   {
     repaint(e);
-    game.mouseReleased(e);
+    state.mouseReleased(e);
+    invokeShapeRecognitionLater();
+  }
+
+  /**
+   * Queue up a shape recognition.
+   */
+  private void invokeShapeRecognitionLater()
+  {
+    SwingUtilities.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        state.recognizeStroke();
+      }
+    });
   }
 
   /*
@@ -189,7 +185,7 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mouseDragged(MouseEvent e)
   {
     repaint(e);
-    game.mouseDrag(e);
+    state.mouseDrag(e);
   }
 
   /*
@@ -200,7 +196,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseMoved(MouseEvent e)
   {
-    game.mouseMoved(e);
+    state.mouseMoved(e);
   }
 
   /*
@@ -208,6 +204,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    * 
    * @see javax.swing.JComponent#getPreferredSize()
    */
+  @Override
   public Dimension getPreferredSize()
   {
     return new Dimension(400, 400);
@@ -222,7 +219,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void repaint(MouseEvent e)
   {
-    Point2DT p = game.lastPoint();
+    Point2DT p = state.lastPoint();
     if (p != null)
     {
       repaint(Math.min(e.getX(), p.getX()) - 5,
@@ -237,15 +234,34 @@ public class SwingGUI extends JPanel implements MouseListener,
    * 
    * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
    */
+  @Override
   public void paintComponent(Graphics g)
   {
     super.paintComponent(g);
 
     // Draw the user's stroke:
-    int[] xs = game.getStrokeXCoords();
-    int[] ys = game.getStrokeYCoords();
-    g.drawPolyline(xs, ys, game.getNumPoints());
-    
-    // TODO Draw all the things in the #game object.
+    int[] xs = state.getStrokeXCoords();
+    int[] ys = state.getStrokeYCoords();
+    g.drawPolyline(xs, ys, state.getNumPoints());
+
+    // Draw all the items in the state member.
+    for (Iterator<Shape> iter = state.shapeIterator(); iter.hasNext();)
+      drawShape(g, iter.next());
+  }
+
+  public void drawShape(Graphics g, Shape s)
+  {
+    if (s.getClass() == Line.class)
+    {
+      Line line = (Line)s;
+      g.setColor(Color.blue);
+      g.drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(),
+          line.getEndPoint().getX(), line.getEndPoint().getY());
+    }
+    else if (s.getClass() != Dot.class)
+    {
+      System.err.println("Hey!  There's a " + s.getClass().getSimpleName()
+          + " shape!");
+    }
   }
 }

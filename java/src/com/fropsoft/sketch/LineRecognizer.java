@@ -19,11 +19,21 @@
 
 package com.fropsoft.sketch;
 
-import com.fropsoft.geometry.Dot;
+import java.util.Iterator;
+
+import com.fropsoft.geometry.Angle;
+import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Point2D;
+import com.fropsoft.geometry.Point2DTV;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
 
-public class DotRecognizer implements ShapeRecognizer
+/**
+ * Recognizes a Line.
+ * 
+ * @author jamoozy
+ */
+public class LineRecognizer implements ShapeRecognizer
 {
   /*
    * (non-Javadoc)
@@ -34,18 +44,40 @@ public class DotRecognizer implements ShapeRecognizer
   public double gague(Stroke stroke)
   {
     if (stroke.numPoints() < 4)
-      return 1.0;
-    
-    return 1.0 / stroke.numPoints();
+      return 0.0;
+
+    Iterator<Point2DTV> iter = stroke.iterator();
+
+    Point2D last = iter.next();
+    Point2D curr = iter.next();
+
+    Angle lastAngle, minAngle, maxAngle, angleDiff;
+    Angle currAngle = minAngle = maxAngle = last.angleTo(curr);
+
+    while (iter.hasNext())
+    {
+      last = curr;
+      lastAngle = currAngle;
+
+      curr = iter.next();
+      currAngle = last.angleTo(curr);
+
+      angleDiff = currAngle.angleBetween(lastAngle);
+      if (angleDiff.getValue() > Math.PI / 3)
+        return 0;
+    }
+
+    return Math.PI / minAngle.angleBetween(maxAngle).getValue();
   }
 
   /*
    * (non-Javadoc)
    * 
-   * @see com.fropsoft.sketch.ShapeRecognizer#getShape()
+   * @see
+   * com.fropsoft.sketch.ShapeRecognizer#makeShape(com.fropsoft.geometry.Stroke)
    */
   public Shape makeShape(Stroke stroke)
   {
-    return new Dot(stroke);
+    return new Line(stroke);
   }
 }

@@ -70,7 +70,6 @@ public class RecognizerMain
         high = i;
       }
     }
-    System.out.println(recognizers.get(high).getClass().getSimpleName());
-    return recognizers.get(high).getShape();
+    return recognizers.get(high).makeShape(stroke);
   }
 }

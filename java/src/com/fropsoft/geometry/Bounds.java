@@ -19,6 +19,8 @@
 
 package com.fropsoft.geometry;
 
+import java.util.Iterator;
+
 /**
  * This can be thought of as a bounding box.
  * 
@@ -26,6 +28,15 @@ package com.fropsoft.geometry;
  */
 public class Bounds
 {
+  public static Bounds createFromStrokes(Stroke... strokes)
+  {
+    Bounds bounds = new Bounds();
+    for (Stroke s : strokes)
+      for (Iterator<Point2DTV> iter = s.iterator(); iter.hasNext();)
+        bounds.expandToInclude(iter.next());
+    return bounds;
+  }
+
   /**
    * Minimum (x,y).
    */
@@ -35,6 +46,30 @@ public class Bounds
    * Maximum (x,y).
    */
   private Point2D max;
+
+  /**
+   * Creates a new, invalid Bounds object, where the coordinates of min are
+   * {@link Integer#max} and the coordinates or max are {@link Integer#min}
+   */
+  private Bounds()
+  {
+    min = new Point2D(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    max = new Point2D(Integer.MIN_VALUE, Integer.MIN_VALUE);
+  }
+
+  /**
+   * Expands the {@link Bounds} object to include this point.
+   * 
+   * @param point
+   *          The point to ensure
+   */
+  private void expandToInclude(Point2D point)
+  {
+    max = new Point2D(Math.max(max.getX(), point.getX()),
+                      Math.max(max.getY(), point.getY()));
+    min = new Point2D(Math.min(min.getX(), point.getX()),
+                      Math.min(min.getY(), point.getY()));
+  }
 
   /**
    * Creates a new Bounds object.
@@ -48,6 +83,36 @@ public class Bounds
   {
     min = new Point2D(minX, minY);
     max = new Point2D(maxX, maxY);
+  }
+
+  /**
+   * Returns the center point of this {@link Bounds} object.
+   * 
+   * @return The cneter point of this {@link Bounds} object.
+   */
+  public Point2D getCenter()
+  {
+    return new Point2D(getCenterX(), getCenterY());
+  }
+
+  /**
+   * Returns the y coordinate of the center of this {@link Bounds} object.
+   * 
+   * @return The y coordinate of the cneter of this {@link Bounds} object.
+   */
+  public int getCenterX()
+  {
+    return (min.getX() + max.getX()) / 2;
+  }
+
+  /**
+   * Returns the x coordinate of the center of this {@link Bounds} object.
+   * 
+   * @return The x coordinate of the cneter of this {@link Bounds} object.
+   */
+  public int getCenterY()
+  {
+    return (min.getY() + max.getY()) / 2;
   }
 
   /**

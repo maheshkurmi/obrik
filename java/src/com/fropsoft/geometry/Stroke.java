@@ -68,6 +68,7 @@ public class Stroke
    * 
    * @see java.lang.Object#clone()
    */
+  @Override
   public Stroke clone()
   {
     Stroke that = new Stroke();
@@ -84,5 +85,27 @@ public class Stroke
   public Iterator<Point2DTV> iterator()
   {
     return points.iterator();
+  }
+
+  /**
+   * Returns the number of points in this stroke.
+   * 
+   * @return The number of points in this stroke.
+   */
+  public int numPoints()
+  {
+    return points.size();
+  }
+
+  /**
+   * Returns the i'th point from the stroke.
+   * 
+   * @param i
+   *          The index of the point to get.
+   * @return The i'th piont from the stroke.
+   */
+  public Point2D get(int i)
+  {
+    return points.get(i);
   }
 }

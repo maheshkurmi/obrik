@@ -69,11 +69,32 @@ public class Point2D
     return y;
   }
 
+  /**
+   * Computes the L<sub>2</sub> norm to that.
+   * 
+   * @param that
+   *          The other point.
+   * @return The L<sub>2</sub> norm to that.
+   */
   public double distanceTo(Point2D that)
   {
     double xDiff = this.x - that.x;
     double yDiff = this.y - that.y;
     return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+  }
+
+  /**
+   * Computes the angle in radians to that, where 0 is when that is directly to
+   * the right of this, and pi/2 is where that is directly above this.
+   * 
+   * @param that
+   *          The other point.
+   * @return The angle, in radians.
+   */
+  public Angle angleTo(Point2D that)
+  {
+    // TODO Check documentation to see what this returns.
+    return new Angle(Math.atan2(that.x - this.x, that.y - this.y));
   }
 
   /*

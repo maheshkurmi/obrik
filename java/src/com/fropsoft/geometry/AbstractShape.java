@@ -22,24 +22,53 @@ package com.fropsoft.geometry;
 import java.util.Vector;
 
 /**
- * A shape that implements the strokes part of the shape.
+ * A class that implements the strokes and bounds part of the shape interface.
  * 
  * @author jamoozy
  */
 public class AbstractShape implements Shape
 {
-  private Vector<Stroke> strokes;
+  /**
+   * The strokes that make up this shape.
+   */
+  protected Vector<Stroke> strokes;
 
-  public AbstractShape()
+  /**
+   * The bounding box of this {@link Shape}.
+   */
+  protected Bounds bbox;
+
+  /**
+   * Creates a new AbstractShape
+   */
+  protected AbstractShape(Stroke... strokes)
   {
-    strokes = new Vector<Stroke>();
+    this.strokes = new Vector<Stroke>();
+    for (Stroke s : strokes)
+      this.strokes.add(s);
+    bbox = Bounds.createFromStrokes(strokes);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fropsoft.geometry.Shape#getStrokes()
+   */
   public Stroke[] getStrokes()
   {
     Stroke[] out = new Stroke[strokes.size()];
     for (int i = 0; i < out.length; i++)
       out[i] = strokes.get(i).clone();
     return out;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fropsoft.geometry.Shape#getBounds()
+   */
+  public Bounds getBounds()
+  {
+    return bbox;
   }
 }
