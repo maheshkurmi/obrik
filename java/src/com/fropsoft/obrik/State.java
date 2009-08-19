@@ -27,8 +27,9 @@ import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
 import com.fropsoft.sketch.DotRecognizer;
+import com.fropsoft.sketch.ItemRecognizerMain;
 import com.fropsoft.sketch.LineRecognizer;
-import com.fropsoft.sketch.RecognizerMain;
+import com.fropsoft.sketch.ShapeRecognizerMain;
 
 /**
  * Keeps track of the state of the Obrik "game".
@@ -55,7 +56,17 @@ public class State
   /**
    * The shape recognition module.
    */
-  private final RecognizerMain recognizer;
+  private final ShapeRecognizerMain srec;
+
+  /**
+   * The items waiting to be simulated.
+   */
+  private final Vector<Item> items;
+
+  /**
+   * The item recognizer.
+   */
+  private final ItemRecognizerMain irec;
 
   /**
    * Create a new Obrik game state.
@@ -64,10 +75,17 @@ public class State
   {
     points = new Vector<Point2DT>();
     stroke = null;
+
     shapes = new Vector<Shape>();
-    recognizer = new RecognizerMain();
-    recognizer.add(new DotRecognizer());
-    recognizer.add(new LineRecognizer());
+    srec = new ShapeRecognizerMain();
+    srec.add(new DotRecognizer());
+    srec.add(new LineRecognizer());
+
+    items = new Vector<Item>();
+    irec = new ItemRecognizerMain();
+    // TODO create and add item recognizers.
+
+    // TODO create and init a global recognizer.
   }
 
   public void mouseDrag(MouseEvent e)
@@ -77,7 +95,8 @@ public class State
 
   public void mouseClicked(MouseEvent e)
   {
-    // XXX Up & down, so do no action. (for now) --- maybe make a Dot?
+    // Up & down, so do no action.
+    // XXX maybe add a dot shape or click gesture? interact?
   }
 
   public void mouseEntered(MouseEvent e)
@@ -117,7 +136,14 @@ public class State
     // No movement action (when mouse unpressed).
   }
 
-  public int[] getStrokeXCoords()
+  /**
+   * Returns the X coordinates of the stroke in an array. This is here because
+   * it's useful for many "draw poly-line" functions, including the one in
+   * Swing.
+   * 
+   * @return The array of x coordinates from the user's stroke.
+   */
+  public int[] buildStrokeXCoords()
   {
     int[] xs = new int[points.size()];
     for (int i = 0; i < xs.length; i++)
@@ -125,7 +151,14 @@ public class State
     return xs;
   }
 
-  public int[] getStrokeYCoords()
+  /**
+   * Returns the Y coordinates of the stroke in an array. This is here because
+   * it's useful for many "draw poly-line" functions, including the one in
+   * Swing.
+   * 
+   * @return The array of y coordinates from the user's stroke.
+   */
+  public int[] buildStrokeYCoords()
   {
     int[] ys = new int[points.size()];
     for (int i = 0; i < ys.length; i++)
@@ -133,19 +166,32 @@ public class State
     return ys;
   }
 
+  /**
+   * Returns the number of points in the user's current stroke.
+   * 
+   * @return The number of points in the user's current stroke.
+   */
   public int getNumPoints()
   {
     return points.size();
   }
 
-  public Point2DT lastPoint()
+  /**
+   * Returns the last (drawn) point in the user's stroke.
+   * 
+   * @return The last (drawn) point in the user's stroke.
+   */
+  public Point2DT getLastPoint()
   {
     if (points.size() > 0)
-      return points.get(points.size() - 1).clone();
+      return points.get(points.size() - 1);
     else
       return null;
   }
 
+  /**
+   * Turn the stroke point data into a stroke.
+   */
   private void makeStroke()
   {
     stroke = new Stroke(points.toArray(new Point2DT[] {}));
@@ -159,13 +205,23 @@ public class State
   {
     if (stroke != null)
     {
-      shapes.add(recognizer.classify(stroke));
+      shapes.add(srec.classify(stroke));
       System.out.println("Probably a "
           + shapes.get(shapes.size() - 1).getClass().getSimpleName());
       stroke = null;
+
+      if (shapes.size() > 0)
+      {
+        items.add(irec.classify(shapes.toArray(new Shape[] { null })));
+      }
     }
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.util.Vector#iterator()
+   */
   public Iterator<Shape> shapeIterator()
   {
     return shapes.iterator();

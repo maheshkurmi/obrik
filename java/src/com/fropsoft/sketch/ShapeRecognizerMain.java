@@ -24,7 +24,7 @@ import java.util.Vector;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
 
-public class RecognizerMain
+public class ShapeRecognizerMain
 {
   /**
    * The list of recognizers that this recognizer tries to recognize.
@@ -34,7 +34,7 @@ public class RecognizerMain
   /**
    * Creates a new, empty recognizer.
    */
-  public RecognizerMain()
+  public ShapeRecognizerMain()
   {
     recognizers = new Vector<ShapeRecognizer>();
   }

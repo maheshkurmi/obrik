@@ -20,38 +20,56 @@
 package com.fropsoft.sketch;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.geometry.Stroke;
+import com.fropsoft.obrik.Box;
 
 /**
- * Interface for a class that recognizes a shape from a user stroke. All classes
- * that implement this must have a corresponding class that implements the
- * {@link Shape} interface. That corresponding class is expected to be returned
- * by the {@link #makeShape(Stroke)} method.
+ * Recognizes a box.
  * 
  * @author jamoozy
  * 
- * @see {@link Shape}, {@link ShapeRecognizerMain}
+ * @see {@link Box}
  */
-public interface ShapeRecognizer
+public class BoxRecognizer implements ItemRecognizer
 {
   /**
-   * Classifies the passed stroke set as this shape.
-   * 
-   * @param stroke
-   *          The stroke to classify.
-   * 
-   * @return The probability the stroke is this shape.
+   * The item that was found on the last call to {@link #gauge(Shape...)}.
    */
-  public double gague(Stroke stroke);
+  private final Box item;
 
   /**
-   * After a call to {@link #gague(Stroke)}, this function will return the Shape
-   * representation of that stroke.
-   * 
-   * @param stroke
-   *          The stroke that was recognized as this shape.
-   * 
-   * @return A shape representation of the stroke object.
+   * Creaes a new box recognizer.
    */
-  public Shape makeShape(Stroke stroke);
+  public BoxRecognizer()
+  {
+    item = null;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fropsoft.sketch.ItemRecognizer#gauge(com.fropsoft.geometry.Shape[])
+   */
+  public double gauge(Shape... shapes)
+  {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fropsoft.sketch.ItemRecognizer#getItem(com.fropsoft.geometry.Shape[])
+   */
+  public Box getItem(Shape... shapes)
+  {
+    if (item != null)
+      return item;
+
+    if (gauge(shapes) <= 0)
+      throw new NoItemFoundException(" ");
+
+    return item;
+  }
 }

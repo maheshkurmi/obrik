@@ -22,25 +22,33 @@ package com.fropsoft.obrik;
 import com.fropsoft.geometry.Shape;
 
 /**
- * An {@link Item} is something that exists on the Obrik canvas that has
- * meaning.
- * 
  * @author jamoozy
  */
-public interface Item
+public abstract class AbstractItem implements Item
 {
   /**
-   * Returns the shapes that made up this {@link Item}.
-   * 
-   * @return The shapes that make up this {@link Item}.
+   * The shapes that make up this Item.
    */
-  public Shape[] getShapes();
+  protected Shape[] shapes;
 
   /**
-   * Converts this to something that JBox2D can handle.
+   * Adds the shapes to the protected {@link #shapes} array.
    * 
-   * @return This, converted to JBox2D format.
+   * @param shapes
+   *          The shapes to add.
    */
-  public Object toJBox2DObject(); // TODO change return type or nature of
-                                  // this method.
+  protected AbstractItem(Shape... shapes)
+  {
+    this.shapes = new Shape[shapes.length];
+    for (int i = 0; i < shapes.length; i++)
+      this.shapes[i] = shapes[i];
+  }
+
+  /* (non-Javadoc)
+   * @see com.fropsoft.obrik.Item#getShapes()
+   */
+  public Shape[] getShapes()
+  {
+    return shapes;
+  }
 }

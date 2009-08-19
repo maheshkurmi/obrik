@@ -17,30 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
-
-import com.fropsoft.geometry.Shape;
+package com.fropsoft.sketch;
 
 /**
- * An {@link Item} is something that exists on the Obrik canvas that has
- * meaning.
+ * Thrown when a call to
+ * {@link ItemRecognizer#getItem(com.fropsoft.geometry.Shape...)} cannot find an
+ * item in the shape list.
  * 
  * @author jamoozy
  */
-public interface Item
+public class NoItemFoundException extends RuntimeException
 {
-  /**
-   * Returns the shapes that made up this {@link Item}.
-   * 
-   * @return The shapes that make up this {@link Item}.
-   */
-  public Shape[] getShapes();
-
-  /**
-   * Converts this to something that JBox2D can handle.
-   * 
-   * @return This, converted to JBox2D format.
-   */
-  public Object toJBox2DObject(); // TODO change return type or nature of
-                                  // this method.
+  public NoItemFoundException(String msg)
+  {
+    super(msg);
+  }
 }

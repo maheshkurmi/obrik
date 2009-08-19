@@ -219,7 +219,7 @@ MouseMotionListener
    */
   public void repaint(MouseEvent e)
   {
-    Point2DT p = state.lastPoint();
+    Point2DT p = state.getLastPoint();
     if (p != null)
     {
       repaint(Math.min(e.getX(), p.getX()) - 5,
@@ -240,8 +240,8 @@ MouseMotionListener
     super.paintComponent(g);
 
     // Draw the user's stroke:
-    int[] xs = state.getStrokeXCoords();
-    int[] ys = state.getStrokeYCoords();
+    int[] xs = state.buildStrokeXCoords();
+    int[] ys = state.buildStrokeYCoords();
     g.drawPolyline(xs, ys, state.getNumPoints());
 
     // Draw all the items in the state member.

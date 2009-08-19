@@ -19,28 +19,14 @@
 
 package com.fropsoft.obrik;
 
-import com.fropsoft.geometry.Shape;
-
 /**
- * An {@link Item} is something that exists on the Obrik canvas that has
- * meaning.
- * 
  * @author jamoozy
+ *
  */
-public interface Item
+public class InvalidShapeException extends Exception
 {
-  /**
-   * Returns the shapes that made up this {@link Item}.
-   * 
-   * @return The shapes that make up this {@link Item}.
-   */
-  public Shape[] getShapes();
-
-  /**
-   * Converts this to something that JBox2D can handle.
-   * 
-   * @return This, converted to JBox2D format.
-   */
-  public Object toJBox2DObject(); // TODO change return type or nature of
-                                  // this method.
+  public InvalidShapeException(String msg)
+  {
+    super(msg);
+  }
 }
