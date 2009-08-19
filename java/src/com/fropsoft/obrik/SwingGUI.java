@@ -39,16 +39,16 @@ import com.fropsoft.geometry.Shape;
 
 /**
  * Sets up a Swing interface and creates and hooks into an Obrik {@link State}.
+ *
  * @author jamoozy
  */
 public class SwingGUI extends JPanel implements MouseListener,
-MouseMotionListener
+    MouseMotionListener
 {
   /**
    * Run Obrik in a Swing GUI.
    * 
-   * @param args
-   *          Command line args (none yet supported).
+   * @param args Command line args (none yet supported).
    */
   public static void main(String[] args)
   {
@@ -76,16 +76,14 @@ MouseMotionListener
 
     frame.setContentPane(new SwingGUI());
 
-    //Display the window.
+    // Display the window.
     frame.pack();
     frame.setVisible(true);
 
-    // Don't do any more GUI work here as advised by a Sun thread safety page at:
+    // Don't do any more GUI work here as advised by a Sun thread safety page
+    // at:
     // <http://java.sun.com/products/jfc/tsc/articles/threads/threads1.html>
   }
-
-
-
 
   /**
    * The internal state of Obrik.
@@ -171,7 +169,8 @@ MouseMotionListener
     {
       public void run()
       {
-        state.recognizeStroke();
+        if (state.recognizeStroke())
+          repaint();
       }
     });
   }
@@ -244,24 +243,33 @@ MouseMotionListener
     int[] ys = state.buildStrokeYCoords();
     g.drawPolyline(xs, ys, state.getNumPoints());
 
-    // Draw all the items in the state member.
+    // Draw all the shapes in the state.
     for (Iterator<Shape> iter = state.shapeIterator(); iter.hasNext();)
       drawShape(g, iter.next());
+
+    // Draw all the items in the state.
+    for (Iterator<Item> iter = state.itemIterator(); iter.hasNext();)
+      drawItem(g, iter.next());
+  }
+
+  public void drawItem(Graphics g, Item i)
+  {
+    for (Shape s : i.getShapes())
+      drawShape(g, s);
   }
 
   public void drawShape(Graphics g, Shape s)
   {
     if (s.getClass() == Line.class)
     {
-      Line line = (Line)s;
+      Line line = (Line) s;
       g.setColor(Color.blue);
-      g.drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(),
-          line.getEndPoint().getX(), line.getEndPoint().getY());
+      g.drawLine(line.getStartPoint().getX(), line.getStartPoint().getY(), line
+          .getEndPoint().getX(), line.getEndPoint().getY());
     }
     else if (s.getClass() != Dot.class)
     {
-      System.err.println("Hey!  There's a " + s.getClass().getSimpleName()
-          + " shape!");
+      System.err.println("Hey!  There's a " + s.getClass() + " shape!");
     }
   }
 }
