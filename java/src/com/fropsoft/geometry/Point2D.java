@@ -72,8 +72,7 @@ public class Point2D
   /**
    * Computes the L<sub>2</sub> norm to that.
    * 
-   * @param that
-   *          The other point.
+   * @param that The other point.
    * @return The L<sub>2</sub> norm to that.
    */
   public double distanceTo(Point2D that)
@@ -87,21 +86,18 @@ public class Point2D
    * Computes the angle in radians to that, where 0 is when that is directly to
    * the right of this, and pi/2 is where that is directly above this.
    * 
-   * @param that
-   *          The other point.
+   * @param that The other point.
    * @return The angle, in radians.
    */
   public Angle angleTo(Point2D that)
   {
-    // TODO Check documentation to see what this returns.
-    return new Angle(Math.atan2(that.x - this.x, that.y - this.y));
+    return new Angle(Math.atan2(that.y - this.y, that.x - this.x));
   }
 
   /**
    * For use as the slope in the "y = mx + b" line eequation.
    * 
-   * @param that
-   *          The other line.
+   * @param that The other line.
    * @return The slope between the two lines.
    */
   public double slopeTo(Point2D that)
@@ -134,8 +130,7 @@ public class Point2D
   /**
    * Finds the midpoint between to points.
    * 
-   * @param that
-   *          The other point.
+   * @param that The other point.
    * 
    * @return The midpoint between two points.
    */
