@@ -205,14 +205,20 @@ public class State
   {
     if (stroke != null)
     {
-      shapes.add(srec.classify(stroke));
-      System.out.println("Probably a "
-          + shapes.get(shapes.size() - 1).getClass().getSimpleName());
-      stroke = null;
-
-      if (shapes.size() > 0)
+      Shape shape = srec.classify(stroke);
+      if (shape != null)
       {
-        items.add(irec.classify(shapes.toArray(new Shape[] { null })));
+        shapes.add(shape);
+        System.out.println("Probably a "
+            + shapes.get(shapes.size() - 1).getClass().getSimpleName());
+        stroke = null;
+  
+        if (shapes.size() > 0)
+        {
+          Item item = irec.classify(shapes.toArray(new Shape[]{}));
+          if (item != null)
+            items.add(item);
+        }
       }
     }
   }

@@ -48,8 +48,7 @@ public class ItemRecognizerMain
    * Adds the passed item recognizer to the list of recognizers this will query
    * on the next call to {@link #classify(Shape...)}.
    * 
-   * @param r
-   *          The shape recognizer to add.
+   * @param r The shape recognizer to add.
    */
   public void add(ItemRecognizer r)
   {
@@ -60,8 +59,7 @@ public class ItemRecognizerMain
    * Queries all registered recognizers and returns the item corresponding to
    * the most probable match in the list.
    * 
-   * @param shapes
-   *          The shapes to evaluate.
+   * @param shapes The shapes to evaluate.
    * @return The item corresponding to the most probable match.
    */
   public Item classify(Shape... shapes)
@@ -77,6 +75,9 @@ public class ItemRecognizerMain
         high = i;
       }
     }
+
+    if (high < 0)
+      return null;
 
     return recognizers.get(high).getItem(shapes);
   }
