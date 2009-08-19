@@ -20,35 +20,53 @@
 package com.fropsoft.sketch;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Box;
+import com.fropsoft.obrik.Item;
 
 /**
- * Recognizes a box.
  * 
  * @author jamoozy
- * 
- * @see {@link Box}
  */
-public class BoxRecognizer extends AbstractItemRecognizer
+public abstract class AbstractItemRecognizer implements ItemRecognizer
 {
   /**
-   * Creaes a new box recognizer.
+   * The item that was found on the last call to {@link #gauge(Shape...)}.
    */
-  public BoxRecognizer()
+  private Item item;
+
+  /**
+   * Sets the item.
+   * 
+   * @param item The item.
+   */
+  protected void setItem(Item item)
   {
-    super();
+    this.item = item;
+  }
+
+  /**
+   * Returns the item.
+   * 
+   * @return The item.
+   */
+  protected Item getItem()
+  {
+    return item;
   }
 
   /*
    * (non-Javadoc)
    * 
    * @see
-   * com.fropsoft.sketch.ItemRecognizer#gauge(com.fropsoft.geometry.Shape[])
+   * com.fropsoft.sketch.ItemRecognizer#getItem(com.fropsoft.geometry.Shape[])
    */
-  public double gauge(Shape... shapes)
+  public Item getItem(Shape... shapes)
   {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+    if (item != null)
+      return item;
 
+    if (gauge(shapes) <= 0)
+      throw new NoItemFoundException(" ");
+
+    return item;
+  }
 }

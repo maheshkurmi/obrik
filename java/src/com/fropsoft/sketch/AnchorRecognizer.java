@@ -20,25 +20,14 @@
 package com.fropsoft.sketch;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Box;
 
 /**
- * Recognizes a box.
+ * This recognizes anchors (that look like X's).
  * 
  * @author jamoozy
- * 
- * @see {@link Box}
  */
-public class BoxRecognizer extends AbstractItemRecognizer
+public class AnchorRecognizer extends AbstractItemRecognizer
 {
-  /**
-   * Creaes a new box recognizer.
-   */
-  public BoxRecognizer()
-  {
-    super();
-  }
-
   /*
    * (non-Javadoc)
    * 
@@ -50,5 +39,4 @@ public class BoxRecognizer extends AbstractItemRecognizer
     // TODO Auto-generated method stub
     return 0;
   }
-
 }

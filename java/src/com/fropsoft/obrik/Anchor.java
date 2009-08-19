@@ -17,38 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
-
-import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Box;
+package com.fropsoft.obrik;
 
 /**
- * Recognizes a box.
+ * Looks like an X.
  * 
  * @author jamoozy
- * 
- * @see {@link Box}
  */
-public class BoxRecognizer extends AbstractItemRecognizer
+public class Anchor extends AbstractItem
 {
-  /**
-   * Creaes a new box recognizer.
-   */
-  public BoxRecognizer()
-  {
-    super();
-  }
-
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * com.fropsoft.sketch.ItemRecognizer#gauge(com.fropsoft.geometry.Shape[])
+   * @see com.fropsoft.obrik.Item#toJBox2DObject()
    */
-  public double gauge(Shape... shapes)
+  public Object toJBox2DObject()
   {
     // TODO Auto-generated method stub
-    return 0;
+    return null;
   }
-
 }
