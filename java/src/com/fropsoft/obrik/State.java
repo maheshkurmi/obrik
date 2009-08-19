@@ -200,8 +200,10 @@ public class State
 
   /**
    * Performs shape recognition on the point data.
+   * 
+   * @return {@link true} if something was recognizeed.
    */
-  public void recognizeStroke()
+  public boolean recognizeStroke()
   {
     if (stroke != null)
     {
@@ -210,17 +212,19 @@ public class State
       {
         shapes.add(shape);
         System.out.println("Probably a "
-            + shapes.get(shapes.size() - 1).getClass().getSimpleName());
+            + shapes.get(shapes.size() - 1).getClass());
         stroke = null;
-  
+
         if (shapes.size() > 0)
         {
-          Item item = irec.classify(shapes.toArray(new Shape[]{}));
+          Item item = irec.classify(shapes.toArray(new Shape[] {}));
           if (item != null)
             items.add(item);
         }
+        return true;
       }
     }
+    return false;
   }
 
   /*
@@ -231,5 +235,15 @@ public class State
   public Iterator<Shape> shapeIterator()
   {
     return shapes.iterator();
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.util.Vector#iterator()
+   */
+  public Iterator<Item> itemIterator()
+  {
+    return items.iterator();
   }
 }
