@@ -56,4 +56,34 @@ public class Line extends AbstractShape
     Stroke s = strokes.get(strokes.size() - 1);
     return s.get(s.numPoints() - 1);
   }
+
+  /**
+   * Determines if that line and this line intersect, returning the intersection
+   * or <code>null</code>.
+   * 
+   * @param that
+   *          The other line.
+   * @return The intersection (if it exists) or <code>null</code>.
+   */
+  public Point2D intersection(Line that)
+  {
+    double thisSlope = this.getStartPoint().slopeTo(this.getEndPoint());
+    double thatSlope = that.getStartPoint().slopeTo(that.getEndPoint());
+
+    // Only parallel lines don't intersect, so check that.
+    if (thisSlope == thatSlope)
+      return null;
+
+    // Find the "b" in "y = mx + b"
+    double thisOffset = this.getEndPoint().getY() - thisSlope
+            * this.getEndPoint().getX();
+    double thatOffset = that.getEndPoint().getY() - thatSlope
+            * that.getEndPoint().getX();
+
+    // XXX I should probably look at the efficiency of this method.
+    return new Point2D((int) Math.round((thisOffset - thatOffset)
+        / (thatSlope - thisSlope)), (int) Math
+        .round((thatSlope * thisOffset - thisSlope * thatOffset)
+            / (thatSlope - thisSlope)));
+  }
 }

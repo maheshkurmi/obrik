@@ -97,6 +97,18 @@ public class Point2D
     return new Angle(Math.atan2(that.x - this.x, that.y - this.y));
   }
 
+  /**
+   * For use as the slope in the "y = mx + b" line eequation.
+   * 
+   * @param that
+   *          The other line.
+   * @return The slope between the two lines.
+   */
+  public double slopeTo(Point2D that)
+  {
+    return (that.y - this.y) / (that.x - this.x);
+  }
+
   /*
    * (non-Javadoc)
    * 
@@ -117,5 +129,18 @@ public class Point2D
   public String toString()
   {
     return String.format("(%d,%d)", x, y);
+  }
+
+  /**
+   * Finds the midpoint between to points.
+   * 
+   * @param that
+   *          The other point.
+   * 
+   * @return The midpoint between two points.
+   */
+  public Point2D midpoint(Point2D that)
+  {
+    return new Point2D((this.x + that.x) / 2, (this.y + that.y) / 2);
   }
 }
