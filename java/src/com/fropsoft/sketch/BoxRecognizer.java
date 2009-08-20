@@ -19,6 +19,7 @@
 
 package com.fropsoft.sketch;
 
+import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.obrik.Box;
 
@@ -47,8 +48,17 @@ public class BoxRecognizer extends AbstractItemRecognizer
    */
   public double gauge(Shape... shapes)
   {
-    // TODO Auto-generated method stub
+    Line[] lines = Line.findLines(shapes);
+
+    // See if they can be arranged head-to-toe.
+    for (int i = 0; i < lines.length; i++)
+    {
+      for (int j = 0; j < lines.length; j++)
+      {
+        // TODO uhhhh ....
+      }
+    }
+
     return 0;
   }
-
 }

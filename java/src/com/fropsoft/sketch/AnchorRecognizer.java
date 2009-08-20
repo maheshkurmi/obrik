@@ -19,6 +19,7 @@
 
 package com.fropsoft.sketch;
 
+import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Shape;
 
 /**
@@ -36,7 +37,16 @@ public class AnchorRecognizer extends AbstractItemRecognizer
    */
   public double gauge(Shape... shapes)
   {
-    // TODO Auto-generated method stub
+    Line[] lines = Line.findLines(shapes);
+
+    // Find a crossing of lines.
+    for (int i = 0; i < shapes.length; i++)
+    {
+      for (int j = 0; j < shapes.length; j++)
+      {
+				// TODO uhhhh .... something with Bounds#area(Bounds)?
+      }
+    }
     return 0;
   }
 }
