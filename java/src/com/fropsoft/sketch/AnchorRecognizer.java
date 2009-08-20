@@ -66,9 +66,9 @@ public class AnchorRecognizer extends AbstractItemRecognizer
     int iMax = -1, jMax = -1;   // Indexes of the best pair.
 
     // Find a crossing of lines.
-    for (int i = 0; i < shapes.length; i++)
+    for (int i = 0; i < lines.length; i++)
     {
-      for (int j = 0; j < shapes.length; j++)
+      for (int j = 0; j < lines.length; j++)
       {
         Line a = lines[i];
         Line b = lines[j];
