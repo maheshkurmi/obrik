@@ -21,6 +21,7 @@ package com.fropsoft.sketch;
 
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Shape;
+import com.fropsoft.obrik.Anchor;
 
 /**
  * This recognizes anchors (that look like X's).
@@ -29,6 +30,28 @@ import com.fropsoft.geometry.Shape;
  */
 public class AnchorRecognizer extends AbstractItemRecognizer
 {
+  /**
+   * Gauges how likely it is that l1 and l2 form an anchor (X).  This is a
+   * helper function for the {@link ItemRecognizer#gauge(Shape...)} method.
+   * The return value is in [0,1].
+   *
+   * @param l1
+   *          The first line.
+   * @param l2
+   *          The second line.
+   * @return The probability that these two lines comprise an X
+   */
+  private static double gauge(Line l1, Line l2)
+  {
+    double o1 = l1.getBounds().overlap(l2.getBounds());
+    double o2 = l2.getBounds().overlap(l1.getBounds());
+
+    double angle = l1.acuteAngleBetween(l2).getValue();
+
+    // o1 and o2 are in [0,1], angle is in [0,pi/2], so normalize by pi/2
+    return (2 * o1 * o2 * angle) / Math.PI;
+  }
+
   /*
    * (non-Javadoc)
    * 
@@ -39,14 +62,30 @@ public class AnchorRecognizer extends AbstractItemRecognizer
   {
     Line[] lines = Line.findLines(shapes);
 
+    double highGauge = 0;
+    int iMax = -1, jMax = -1;   // Indexes of the best pair.
+
     // Find a crossing of lines.
     for (int i = 0; i < shapes.length; i++)
     {
       for (int j = 0; j < shapes.length; j++)
       {
-				// TODO uhhhh .... something with Bounds#area(Bounds)?
+        Line a = lines[i];
+        Line b = lines[j];
+
+        double rate = AnchorRecognizer.gauge(a, b);
+        if (rate > highGauge)
+        {
+          highGauge = rate;
+          iMax = i;
+          jMax = j;
+        }
       }
     }
-    return 0;
+
+    if (iMax >= 0 || jMax >= 0)
+      this.setItem(new Anchor(lines[iMax], lines[jMax]));
+
+    return highGauge;
   }
 }
