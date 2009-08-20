@@ -182,6 +182,6 @@ public class Bounds
                                 Math.max(this.min.getY(), that.min.getY()),
                                 Math.min(this.max.getX(), that.max.getX()),
                                 Math.min(this.max.getY(), that.max.getY()));
-    return overlap.area() / this.area();
+    return ((double) overlap.area()) / this.area();
   }
 }

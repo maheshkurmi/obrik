@@ -68,7 +68,7 @@ public class AnchorRecognizer extends AbstractItemRecognizer
     // Find a crossing of lines.
     for (int i = 0; i < lines.length; i++)
     {
-      for (int j = 0; j < lines.length; j++)
+      for (int j = i + 1; j < lines.length; j++)
       {
         Line a = lines[i];
         Line b = lines[j];
