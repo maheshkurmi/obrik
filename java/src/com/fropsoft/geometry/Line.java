@@ -120,6 +120,16 @@ public class Line extends AbstractShape
   }
 
   /**
+   * Computes the length of this line.
+   *
+   * @return The length of this line.
+   */
+  public double length()
+  {
+    return getStartPoint().distanceTo(getEndPoint());
+  }
+
+  /**
    * Computes the most acute angle between this line and that line.
    *
    * @param that
