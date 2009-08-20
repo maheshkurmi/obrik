@@ -1,0 +1,4 @@
+#Wed Aug 19 22:12:02 EDT 2009
+eclipse.preferences.version=1
+org.eclim.java.compile.sourcepath=src
+org.eclim.java.run.mainclass=com.fropsoft.obrik.SwingGUI
