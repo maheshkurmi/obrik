@@ -44,7 +44,7 @@ public class Angle
   }
 
   /**
-   * Finds the angle bewteen two angles.
+   * Finds the angle between two angles.  Will be in [0,179].
    * 
    * @param that
    *          The other angle.

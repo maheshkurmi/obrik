@@ -37,6 +37,7 @@ public class Line extends AbstractShape
    */
   public static Line[] findLines(Shape... shapes)
   {
+    // TODO generic-ize this function and put it ... somewhere.
     Vector<Line> vs = new Vector<Line>();
     for (Shape s : shapes)
       if (s.getClass() == Line.class)
@@ -105,6 +106,35 @@ public class Line extends AbstractShape
                                   - thisSlope * thatOffset)
                                       / (thatSlope - thisSlope)));
   }
+
+  /**
+   * Compute the absolute angle of this line.  The direction the line was
+   * drawn matters.  This returns 0 when the line was drawn from the left
+   * directly to the right, <code>{@link Math#PI}/2</code> is straight up.
+   *
+   * @return The absolute angle of this line.
+   */
+  public Angle getAbsoluteAngle()
+  {
+    return getStartPoint().angleTo(getEndPoint());
+  }
+
+  /**
+   * Computes the most acute angle between this line and that line.
+   *
+   * @param that
+   *          The other line.
+   * @return The most acute angle between the two lines.
+   */
+  public Angle acuteAngleBetween(Line that)
+  {
+    double angleBetween =
+      this.getAbsoluteAngle().angleBetween(that.getAbsoluteAngle()).getValue();
+    if (angleBetween > Math.PI / 2)
+      angleBetween = Math.PI - angleBetween;
+    return new Angle(angleBetween);
+  }
+
 
   /**
    * Determines if this line is top-left to bottom-right. Direction does not
