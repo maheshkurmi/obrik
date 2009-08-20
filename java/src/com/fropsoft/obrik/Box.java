@@ -22,9 +22,14 @@ package com.fropsoft.obrik;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
+import com.fropsoft.sketch.BoxRecognizer;
 
 /**
+ * A box is a closed loop of lines.
+ * 
  * @author jamoozy
+ * 
+ * @see {@link BoxRecognizer}
  */
 public class Box extends AbstractItem
 {
@@ -59,7 +64,7 @@ public class Box extends AbstractItem
     // Loop through and create the box.
     for (int i = 0; i < shapes.length; i++)
     {
-      Line l1 = (Line)shapes[i];
+      Line l1 = (Line) shapes[i];
       Line l2 = (Line) shapes[(i + 1) % shapes.length];
 
       outline[i] = l2.getStartPoint().midpoint(l1.getEndPoint());
@@ -79,7 +84,9 @@ public class Box extends AbstractItem
     return outline;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see com.fropsoft.obrik.Item#toJBox2DObject()
    */
   public Object toJBox2DObject()
@@ -87,5 +94,4 @@ public class Box extends AbstractItem
     // TODO Auto-generated method stub
     return null;
   }
-
 }
