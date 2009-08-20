@@ -65,19 +65,23 @@ public class Bounds
    */
   private void expandToInclude(Point2D point)
   {
-    max = new Point2D(Math.max(max.getX(), point.getX()),
-                      Math.max(max.getY(), point.getY()));
-    min = new Point2D(Math.min(min.getX(), point.getX()),
-                      Math.min(min.getY(), point.getY()));
+    max = new Point2D(Math.max(max.getX(), point.getX()), Math.max(max.getY(),
+        point.getY()));
+    min = new Point2D(Math.min(min.getX(), point.getX()), Math.min(min.getY(),
+        point.getY()));
   }
 
   /**
    * Creates a new Bounds object.
    * 
-   * @param minX Minimum x value.
-   * @param minY Minimum y value.
-   * @param maxX Maximum x value.
-   * @param maxY Maximum y value.
+   * @param minX
+   *          Minimum x value.
+   * @param minY
+   *          Minimum y value.
+   * @param maxX
+   *          Maximum x value.
+   * @param maxY
+   *          Maximum y value.
    */
   public Bounds(int minX, int minY, int maxX, int maxY)
   {
@@ -153,5 +157,31 @@ public class Bounds
   public int getMaxY()
   {
     return max.getY();
+  }
+
+  /**
+   * Returns the area of this bounds object in pixels<sup>2</sup>.
+   * 
+   * @return The area of this bounds object in pixels<sup>2</sup>.
+   */
+  public int area()
+  {
+    return (max.getX() - min.getX()) * (max.getY() - min.getY());
+  }
+
+  /**
+   * Determine the percentage of this area overlapped by that bounds.
+   * 
+   * @param that
+   *          The bounds to compare with.
+   * @return The percentage of overlap.
+   */
+  public double overlap(Bounds that)
+  {
+    Bounds overlap = new Bounds(Math.max(this.min.getX(), that.min.getX()),
+                                Math.max(this.min.getY(), that.min.getY()),
+                                Math.min(this.max.getX(), that.max.getX()),
+                                Math.min(this.max.getY(), that.max.getY()));
+    return overlap.area() / this.area();
   }
 }
