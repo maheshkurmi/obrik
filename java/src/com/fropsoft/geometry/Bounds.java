@@ -65,10 +65,10 @@ public class Bounds
    */
   private void expandToInclude(Point2D point)
   {
-    max = new Point2D(Math.max(max.getX(), point.getX()), Math.max(max.getY(),
-        point.getY()));
-    min = new Point2D(Math.min(min.getX(), point.getX()), Math.min(min.getY(),
-        point.getY()));
+    max = new Point2D(Math.max(max.getX(), point.getX()),
+                      Math.max(max.getY(), point.getY()));
+    min = new Point2D(Math.min(min.getX(), point.getX()),
+                      Math.min(min.getY(), point.getY()));
   }
 
   /**

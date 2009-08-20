@@ -41,8 +41,7 @@ public class Line extends AbstractShape
     for (Shape s : shapes)
       if (s.getClass() == Line.class)
         vs.add((Line) s);
-    return vs.toArray(new Line[]
-    {});
+    return vs.toArray(new Line[] {});
   }
 
   /**
@@ -95,14 +94,43 @@ public class Line extends AbstractShape
 
     // Find the "b" in "y = mx + b"
     double thisOffset = this.getEndPoint().getY() - thisSlope
-        		* this.getEndPoint().getX();
+                      * this.getEndPoint().getX();
     double thatOffset = that.getEndPoint().getY() - thatSlope
-        		* that.getEndPoint().getX();
+                      * that.getEndPoint().getX();
 
     // XXX I should probably look at the efficiency of this method.
     return new Point2D((int) Math.round((thisOffset - thatOffset)
-        / (thatSlope - thisSlope)), (int) Math
-        .round((thatSlope * thisOffset - thisSlope * thatOffset)
-            / (thatSlope - thisSlope)));
+                                      / (thatSlope - thisSlope)),
+                       (int) Math.round((thatSlope * thisOffset
+                                  - thisSlope * thatOffset)
+                                      / (thatSlope - thisSlope)));
+  }
+
+  /**
+   * Determines if this line is top-left to bottom-right. Direction does not
+   * mater, so this is equivalent to bottom-right to top-left.
+   * 
+   * @return
+   */
+  public boolean isTLBR()
+  {
+    return (getStartPoint().getX() < getEndPoint().getX() &&
+            getStartPoint().getY() < getEndPoint().getY()) ||
+           (getStartPoint().getX() > getEndPoint().getX() &&
+            getStartPoint().getY() > getEndPoint().getY());
+  }
+
+  /**
+   * Determines if this line is top-right to bottom-left. Direction does not
+   * mater, so this is equivalent to bottom-left to top-right.
+   * 
+   * @return
+   */
+  public boolean isTRBL()
+  {
+    return (getStartPoint().getX() < getEndPoint().getX() &&
+            getStartPoint().getY() > getEndPoint().getY()) ||
+           (getStartPoint().getX() > getEndPoint().getX() &&
+            getStartPoint().getY() < getEndPoint().getY());
   }
 }
