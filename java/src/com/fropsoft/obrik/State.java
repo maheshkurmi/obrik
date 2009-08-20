@@ -19,6 +19,9 @@
 
 package com.fropsoft.obrik;
 
+import com.fropsoft.sketch.AnchorRecognizer;
+import com.fropsoft.sketch.BoxRecognizer;
+
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
@@ -83,7 +86,8 @@ public class State
 
     items = new Vector<Item>();
     irec = new ItemRecognizerMain();
-    // TODO create and add item recognizers.
+    irec.add(new BoxRecognizer());
+    irec.add(new AnchorRecognizer());
 
     // TODO create and init a global recognizer.
   }

@@ -19,6 +19,8 @@
 
 package com.fropsoft.obrik;
 
+import com.fropsoft.geometry.Line;
+
 /**
  * Looks like an X.
  * 
@@ -26,6 +28,14 @@ package com.fropsoft.obrik;
  */
 public class Anchor extends AbstractItem
 {
+  /**
+   * Creates a new Anchor made up of these two lines.
+   */
+  public Anchor(Line l1, Line l2)
+  {
+    super(l1, l2);
+  }
+
   /*
    * (non-Javadoc)
    * 
