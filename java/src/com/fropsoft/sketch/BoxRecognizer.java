@@ -98,7 +98,7 @@ public class BoxRecognizer extends AbstractItemRecognizer
     /**
      * The line nodes.
      */
-    private final LGEdge[] lns;
+    public final LGEdge[] lns;
 
     /**
      * Creates a new line graph for the set of lines.
@@ -192,7 +192,7 @@ public class BoxRecognizer extends AbstractItemRecognizer
     /**
      * Probability that these two lines were meant to be connected.
      */
-    public final double prob;
+    public double prob;
 
     /**
      * Creates a new object with all data.
@@ -285,7 +285,7 @@ public class BoxRecognizer extends AbstractItemRecognizer
   {
     Line[] lines = Line.findLines(shapes);
 
-    Vector<LGNode> edges = new Vector<LGNode>();
+    Vector<LGNode> nodes = new Vector<LGNode>();
 
 //    LineGraph graph = new LineGraph(lines.length);
 
@@ -293,7 +293,46 @@ public class BoxRecognizer extends AbstractItemRecognizer
     // canvas.
     for (int i = 0; i < lines.length; i++)
       for (int j = i + 1; j < lines.length; j++)
-        edges.add(BoxRecognizer.gaugeConnection(lines[i], lines[j]));
+        nodes.add(BoxRecognizer.gaugeConnection(lines[i], lines[j]));
+
+    // Coallate LGNodes that fall on the same spacial point.
+    for (int i = 0; i < nodes.size(); i++)
+    {
+      for (int j = i + 1; j < nodes.size(); j++)
+      {
+        // Check all nodes pairwise.
+        LGNode a = nodes.get(i);
+        LGNode b = nodes.get(j);
+
+        boolean foundMatch = false;
+        for (int u = 0; !foundMatch && u < a.les.size(); u++)
+        {
+          for (int v = 0; !foundMatch && v < b.les.size(); v++)
+          {
+            // In each pair, check all pairs of LineEnds.
+            LineEnd x = a.les.get(u);
+            LineEnd y = b.les.get(v);
+            if (x.equals(y))
+            {
+              // Match found, so coallate.
+              for (LineEnd le : b.les)
+                if (!a.les.contains(le))
+                  a.les.add(le);
+
+              // Bookkeeping.
+              a.prob += b.prob;
+              nodes.remove(j);
+              foundMatch = true;
+              j -= 1;
+            }
+          }
+        }
+      }
+    }
+
+    // Normalize probabilities again.
+    for (LGNode n : nodes)
+      n.prob /= n.les.size() - 1;
 
     return 0;
   }
