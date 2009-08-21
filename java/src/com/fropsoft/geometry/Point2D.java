@@ -102,7 +102,13 @@ public class Point2D
    */
   public double slopeTo(Point2D that)
   {
-    return (that.y - this.y) / (that.x - this.x);
+    if (that.x == this.x)
+      if (that.y - this.y > 0)
+        return Double.POSITIVE_INFINITY;
+      else
+        return Double.NEGATIVE_INFINITY;
+
+    return (that.y - this.y) / (double) (that.x - this.x);
   }
 
   /*

@@ -138,16 +138,13 @@ public class Line extends AbstractShape
       return null;
 
     // Find the "b" in "y = mx + b"
-    double aOffset = a.getEndPoint().getY() - aSlope
-                      * a.getEndPoint().getX();
-    double bOffset = b.getEndPoint().getY() - bSlope
-                      * b.getEndPoint().getX();
+    double aOffset = a.getEndY() - aSlope * a.getEndX();
+    double bOffset = b.getEndY() - bSlope * b.getEndX();
 
     // XXX I should probably look at the efficiency of a method.
-    return new Point2D((int) Math.round((aOffset - bOffset)
-                                      / (bSlope - aSlope)),
-                       (int) Math.round((bSlope * aOffset
-                                  - aSlope * bOffset)
+    return new Point2D(
+        (int) Math.round((aOffset - bOffset) / (bSlope - aSlope)),
+        (int) Math.round((bSlope * aOffset - aSlope * bOffset)
                                       / (bSlope - aSlope)));
   }
 
@@ -166,10 +163,11 @@ public class Line extends AbstractShape
   public static Point2D segmentIntersection(Line a, Line b)
   {
     Point2D inter = intersection(a, b);
-    if (a.isOn(inter) && b.isOn(inter))
-      return inter;
-    else
+
+    if (inter == null || !a.isOn(inter) || !b.isOn(inter))
       return null;
+
+    return inter;
   }
 
   public boolean isOn(Point2D point)
