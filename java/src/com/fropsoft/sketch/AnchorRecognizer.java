@@ -43,6 +43,9 @@ public class AnchorRecognizer extends AbstractItemRecognizer
    */
   private static double gauge(Line l1, Line l2)
   {
+    if (Line.segmentIntersection(l1, l2) == null)
+      return 0;
+
     double o1 = l1.getBounds().overlap(l2.getBounds());
     double o2 = l2.getBounds().overlap(l1.getBounds());
 
