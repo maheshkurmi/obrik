@@ -215,15 +215,17 @@ public class State
       if (shape != null)
       {
         shapes.add(shape);
-        System.out.println("Probably a "
-            + shapes.get(shapes.size() - 1).getClass());
+        System.out.println("Probably a " + shape.getClass());
         stroke = null;
 
         if (shapes.size() > 0)
         {
           Item item = irec.classify(shapes.toArray(new Shape[] {}));
           if (item != null)
+          {
             items.add(item);
+            System.out.println("Probably a " + item.getClass());
+          }
         }
         return true;
       }
