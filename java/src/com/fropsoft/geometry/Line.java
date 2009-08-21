@@ -66,6 +66,26 @@ public class Line extends AbstractShape
   }
 
   /**
+   * Returns the X coordinate of the starting location.
+   *
+   * @return the X coordinate of the starting location.
+   */
+  public int getStartX()
+  {
+    return getStartPoint().getX();
+  }
+
+  /**
+   * Returns the Y coordinate of the starting location.
+   *
+   * @return the Y coordinate of the starting location.
+   */
+  public int getStartY()
+  {
+    return getStartPoint().getY();
+  }
+
+  /**
    * Returns the ending point of this line.
    * 
    * @return The ending piont of this line.
@@ -77,34 +97,95 @@ public class Line extends AbstractShape
   }
 
   /**
-   * Determines if that line and this line intersect, returning the intersection
-   * or <code>null</code>.
+   * Returns the X coordinate of the ending location.
+   *
+   * @return the X coordinate of the ending location.
+   */
+  public int getEndX()
+  {
+    return getEndPoint().getX();
+  }
+
+  /**
+   * Returns the Y coordinate of the ending location.
+   *
+   * @return the Y coordinate of the ending location.
+   */
+  public int getEndY()
+  {
+    return getEndPoint().getY();
+  }
+
+  /**
+   * Computes if lines a and b intersect, returning the intersection or
+   * <code>null</code>.  This only reterns <code>null</code> when a and b are
+   * perfectly parallel.  If you want to get the intersections of the actual
+   * line segments, use {@link #segmentIntersection(Line)}.  This method will
+   * extend both lines into infinity in either direction to get the
+   * intersection.
    * 
    * @param that
    *          The other line.
    * @return The intersection (if it exists) or <code>null</code>.
    */
-  public Point2D intersection(Line that)
+  public static Point2D intersection(Line a, Line b)
   {
-    double thisSlope = this.getStartPoint().slopeTo(this.getEndPoint());
-    double thatSlope = that.getStartPoint().slopeTo(that.getEndPoint());
+    double aSlope = a.getStartPoint().slopeTo(a.getEndPoint());
+    double bSlope = b.getStartPoint().slopeTo(b.getEndPoint());
 
-    // Only parallel lines don't intersect, so check that.
-    if (thisSlope == thatSlope)
+    // Only parallel lines don't intersect, so check b.
+    if (aSlope == bSlope)
       return null;
 
     // Find the "b" in "y = mx + b"
-    double thisOffset = this.getEndPoint().getY() - thisSlope
-                      * this.getEndPoint().getX();
-    double thatOffset = that.getEndPoint().getY() - thatSlope
-                      * that.getEndPoint().getX();
+    double aOffset = a.getEndPoint().getY() - aSlope
+                      * a.getEndPoint().getX();
+    double bOffset = b.getEndPoint().getY() - bSlope
+                      * b.getEndPoint().getX();
 
-    // XXX I should probably look at the efficiency of this method.
-    return new Point2D((int) Math.round((thisOffset - thatOffset)
-                                      / (thatSlope - thisSlope)),
-                       (int) Math.round((thatSlope * thisOffset
-                                  - thisSlope * thatOffset)
-                                      / (thatSlope - thisSlope)));
+    // XXX I should probably look at the efficiency of a method.
+    return new Point2D((int) Math.round((aOffset - bOffset)
+                                      / (bSlope - aSlope)),
+                       (int) Math.round((bSlope * aOffset
+                                  - aSlope * bOffset)
+                                      / (bSlope - aSlope)));
+  }
+
+  /**
+   * Computes the intersection of the lines, treating them as line segments.
+   * This differs from {@link #intersection(Line)} in that it treats the lines
+   * as segments instead of infinitely long lines.  Thus, this method will
+   * return <code>null</code> more often than {@link #intersection(Line)}
+   *
+   * @param a
+   *          The line this may intersect.
+   * @param b
+   *          The line this may intersect.
+   * @return The intersection point or <code>null</code>.
+   */
+  public static Point2D segmentIntersection(Line a, Line b)
+  {
+    Point2D inter = intersection(a, b);
+    if (a.isOn(inter) && b.isOn(inter))
+      return inter;
+    else
+      return null;
+  }
+
+  public boolean isOn(Point2D point)
+  {
+    double a = getEndX() - getStartX();
+    double b = getEndY() - getStartY();
+
+    // Avoid any divide-by-zero errors.
+    if (a == 0) a = 1;
+    if (b == 0) b = 1;
+
+    // How far in each direction to get to the X?
+    double u = (point.getX() - getStartX()) / a;
+    double v = (point.getY() - getStartY()) / b;
+    
+    return (Math.abs(u - v) < 0.05 && u <= 1 && v <= 1);
   }
 
   /**
