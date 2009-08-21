@@ -166,6 +166,9 @@ public class Bounds
    */
   public int area()
   {
+    if (max.getX() < min.getX() || max.getY() < min.getY())
+      return 0;
+
     return (max.getX() - min.getX()) * (max.getY() - min.getY());
   }
 
