@@ -52,7 +52,7 @@ public class Angle
    */
   public Angle angleBetween(Angle that)
   {
-    double diff = this.angle - that.angle;
+    double diff = Math.abs(this.angle - that.angle);
     if (diff > Math.PI)
       diff = 2 * Math.PI - diff;
     return new Angle(diff);
