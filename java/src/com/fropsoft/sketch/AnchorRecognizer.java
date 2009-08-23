@@ -46,13 +46,14 @@ public class AnchorRecognizer extends AbstractItemRecognizer
     if (Line.segmentIntersection(l1, l2) == null)
       return 0;
 
-    double o1 = l1.getBounds().overlap(l2.getBounds());
-    double o2 = l2.getBounds().overlap(l1.getBounds());
+//    double o1 = l1.getBounds().overlap(l2.getBounds());
+//    double o2 = l2.getBounds().overlap(l1.getBounds());
 
     double angle = l1.acuteAngleBetween(l2).getValue();
 
     // o1 and o2 are in [0,1], angle is in [0,pi/2], so normalize by pi/2
-    return (2 * o1 * o2 * angle) / Math.PI;
+//    return (2 * o1 * o2 * angle) / Math.PI;
+    return (2 * angle) / Math.PI;
   }
 
   /*
