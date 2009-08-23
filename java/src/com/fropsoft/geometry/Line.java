@@ -176,8 +176,8 @@ public class Line extends AbstractShape
     double b = getEndY() - getStartY();
 
     // Avoid any divide-by-zero errors.
-    if (a == 0) a = 1;
-    if (b == 0) b = 1;
+    if (a == 0) return Math.abs(point.getY() - getStartY()) <= 5;
+    if (b == 0) return Math.abs(point.getX() - getStartX()) <= 5;
 
     // How far in each direction to get to the X?
     double u = (point.getX() - getStartX()) / a;
