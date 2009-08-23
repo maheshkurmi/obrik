@@ -19,9 +19,11 @@ GCC:=g++
 
 LDFLAGS_STD:=
 
-
 CFLAGS_STD:=
-
 
 OBJ_DIR:=$(shell pwd)/../../obj
 SRC_DIR:=$(shell pwd)/../../src
+BIN_DIR:=$(shell pwd)/../../bin
+
+LDFLAGS_QT:=`pkg-config --libs QtCore QtGui`
+CFLAGS_QT:=`pkg-config --cflags QtCore QtGui`
