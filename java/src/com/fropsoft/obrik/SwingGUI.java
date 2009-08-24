@@ -112,7 +112,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseClicked(MouseEvent e)
   {
-    state.mouseClicked(e);
+    state.mouseClicked(e.getX(), e.getY());
   }
 
   /*
@@ -122,7 +122,8 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseEntered(MouseEvent e)
   {
-    state.mouseEntered(e);
+    state.mouseEntered(e.getX(), e.getY(),
+            e.getButton() != MouseEvent.NOBUTTON);
   }
 
   /*
@@ -133,7 +134,7 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mouseExited(MouseEvent e)
   {
     repaint(e);
-    state.mouseExited(e);
+    state.mouseExited(e.getX(), e.getY(), e.getButton() != MouseEvent.NOBUTTON);
     invokeShapeRecognitionLater();
   }
 
@@ -145,7 +146,7 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mousePressed(MouseEvent e)
   {
     repaint();
-    state.mousePressed(e);
+    state.mousePressed(e.getX(), e.getY());
   }
 
   /*
@@ -156,7 +157,7 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mouseReleased(MouseEvent e)
   {
     repaint(e);
-    state.mouseReleased(e);
+    state.mouseReleased(e.getX(), e.getY());
     invokeShapeRecognitionLater();
   }
 
@@ -184,7 +185,7 @@ public class SwingGUI extends JPanel implements MouseListener,
   public void mouseDragged(MouseEvent e)
   {
     repaint(e);
-    state.mouseDrag(e);
+    state.mouseDrag(e.getX(), e.getY());
   }
 
   /*
@@ -195,7 +196,7 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void mouseMoved(MouseEvent e)
   {
-    state.mouseMoved(e);
+    state.mouseMoved(e.getX(), e.getY());
   }
 
   /*

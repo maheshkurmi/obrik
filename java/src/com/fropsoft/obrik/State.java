@@ -22,7 +22,6 @@ package com.fropsoft.obrik;
 import com.fropsoft.sketch.AnchorRecognizer;
 import com.fropsoft.sketch.BoxRecognizer;
 
-import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -92,52 +91,115 @@ public class State
     // TODO create and init a global recognizer.
   }
 
-  public void mouseDrag(MouseEvent e)
-  {
-    points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
-  }
-
-  public void mouseClicked(MouseEvent e)
+  /**
+   * Mouse clicked at (x,y).
+   *
+   * @param x
+   *          X coordinate of mouse.
+   * @param y
+   *          Y coordinate of mouse.
+   */
+  public void mouseClicked(int x, int y)
   {
     // Up & down, so do no action.
     // XXX maybe add a dot shape or click gesture? interact?
   }
 
-  public void mouseEntered(MouseEvent e)
+  /**
+   * Mouse entered screen at (x,y).  Starts a new stroke if the button is
+   * down.  Will throw a RuntimeException if the previous stroke hasn't been
+   * handled yet.
+   *
+   * @param x
+   *          X coordinate of mouse.
+   * @param y
+   *          Y coordinate of mouse.
+   * @param isPressed
+   *          Whether the mouse has a button pressed.
+   */
+  public void mouseEntered(int x, int y, boolean isPressed)
   {
-    if (e.getButton() != MouseEvent.NOBUTTON)
+    if (isPressed)
     {
       if (points.size() > 0)
         throw new RuntimeException("points not empty!");
-      points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+      points.add(new Point2DT(x, y, System.currentTimeMillis()));
     }
   }
 
-  public void mousePressed(MouseEvent e)
+  /**
+   * Mouse exited the screen at (x,y).  Ends the current stroke, if the button
+   * is down.
+   *
+   * @param x
+   *          X coordinate of mouse.
+   * @param y
+   *          Y coordinate of mouse.
+   * @param isPressed
+   *          Whether the mouse has a button pressed.
+   */
+  public void mouseExited(int x, int y, boolean isPressed)
   {
-    if (points.size() > 0)
-      throw new RuntimeException("points not empty!");
-    points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
-  }
-
-  public void mouseExited(MouseEvent e)
-  {
-    if (e.getButton() != MouseEvent.NOBUTTON)
+    if (isPressed)
     {
-      points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+      points.add(new Point2DT(x, y, System.currentTimeMillis()));
       makeStroke();
     }
   }
 
-  public void mouseReleased(MouseEvent e)
+  /**
+   * Mouse pressed at (x,y).
+   *
+   * @param x
+   *          X coordinate of mouse.
+   * @param y
+   *          Y coordinate of mouse.
+   */
+  public void mousePressed(int x, int y)
   {
-    points.add(new Point2DT(e.getX(), e.getY(), System.currentTimeMillis()));
+    if (points.size() > 0)
+      throw new RuntimeException("points not empty!");
+    points.add(new Point2DT(x, y, System.currentTimeMillis()));
+  }
+
+  /**
+   * Mouse released at (x,y).
+   *
+   * @param x
+   *          X coordinate of mouse.
+   * @param y
+   *          Y coordinate of mouse.
+   */
+  public void mouseReleased(int x, int y)
+  {
+    points.add(new Point2DT(x, y, System.currentTimeMillis()));
     makeStroke();
   }
 
-  public void mouseMoved(MouseEvent e)
+  /**
+   * Mouse moved to (x,y) with no button pressed.
+   *
+   * @param x
+   *          X coordinate of mouse.
+   * @param y
+   *          Y coordinate of mouse.
+   */
+  public void mouseMoved(int x, int y)
   {
     // No movement action (when mouse unpressed).
+  }
+
+  /**
+   * Mouse dragged to (x,y).
+   *
+   * @param x
+   *          X coordinate of mouse after drag.
+   * @param y
+   *          Y coordinate of mouse after drag.
+   */
+  public void mouseDrag(int x, int y)
+  {
+    points.add(new Point2DT(x, y, System.currentTimeMillis()));
   }
 
   /**
