@@ -54,6 +54,8 @@ public class LineRecognizer implements ShapeRecognizer
     Angle lastAngle, minAngle, maxAngle, angleDiff;
     Angle currAngle = minAngle = maxAngle = last.angleTo(curr);
 
+    int penalties = 0;
+
     while (iter.hasNext())
     {
       last = curr;
@@ -64,10 +66,10 @@ public class LineRecognizer implements ShapeRecognizer
 
       angleDiff = currAngle.angleBetween(lastAngle);
       if (angleDiff.getValue() > Math.PI / 3)
-        return 0;
+        penalties++;
     }
 
-    return Math.PI / minAngle.angleBetween(maxAngle).getValue();
+    return 1 - (minAngle.angleBetween(maxAngle).getValue() / Math.PI);
   }
 
   /*
