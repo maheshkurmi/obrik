@@ -20,6 +20,7 @@
 package com.fropsoft.obrik;
 
 import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Point2D;
 
 /**
  * Looks like an X.
@@ -29,21 +30,25 @@ import com.fropsoft.geometry.Line;
 public class Anchor extends AbstractItem
 {
   /**
+   * The point of intersection of the lines that make up this anchor.
+   */
+  private final Point2D center;
+
+  /**
    * Creates a new Anchor made up of these two lines.
    */
   public Anchor(Line l1, Line l2)
   {
     super(l1, l2);
+    center = Line.intersection(l1, l2);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.fropsoft.obrik.Item#toJBox2DObject()
+  /**
+   * Get the center point of this anchor. The center point is defined as the
+   * point where the two lines that make this line cross.
    */
-  public Object toJBox2DObject()
+  public Point2D getCenter()
   {
-    // TODO Auto-generated method stub
-    return null;
+    return center;
   }
 }

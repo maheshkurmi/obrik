@@ -35,12 +35,4 @@ public interface Item
    * @return The shapes that make up this {@link Item}.
    */
   public Shape[] getShapes();
-
-  /**
-   * Converts this to something that JBox2D can handle.
-   * 
-   * @return This, converted to JBox2D format.
-   */
-  public Object toJBox2DObject(); // TODO change return type or nature of
-                                  // this method.
 }

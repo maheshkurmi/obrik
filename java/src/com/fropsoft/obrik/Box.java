@@ -83,15 +83,4 @@ public class Box extends AbstractItem
   {
     return outline;
   }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.fropsoft.obrik.Item#toJBox2DObject()
-   */
-  public Object toJBox2DObject()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
 }
