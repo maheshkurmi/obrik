@@ -63,7 +63,9 @@ public class ShapeRecognizerMain
     int high = -1;
     for (int i = 0; i < recognizers.size(); i++)
     {
-      double next = recognizers.get(i).gauge(stroke);
+      ShapeRecognizer r = recognizers.get(i);
+      double next = r.gauge(stroke);
+      System.out.println(r.getClass() + ": " + next);
       if (next > prob)
       {
         prob = next;

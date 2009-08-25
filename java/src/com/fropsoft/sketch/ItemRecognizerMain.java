@@ -68,7 +68,9 @@ public class ItemRecognizerMain
     int high = -1;
     for (int i = 0; i < recognizers.size(); i++)
     {
-      double next = recognizers.get(i).gauge(shapes);
+      ItemRecognizer r = recognizers.get(i);
+      double next = r.gauge(shapes);
+      System.out.println(r.getClass() + ": " + next);
       if (next > prob)
       {
         prob = next;
