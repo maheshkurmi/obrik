@@ -19,15 +19,14 @@
 
 package com.fropsoft.obrik;
 
-import com.fropsoft.sketch.AnchorRecognizer;
-import com.fropsoft.sketch.BoxRecognizer;
-
 import java.util.Iterator;
 import java.util.Vector;
 
 import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
+import com.fropsoft.sketch.AnchorRecognizer;
+import com.fropsoft.sketch.ClosedRegionRecognizer;
 import com.fropsoft.sketch.DotRecognizer;
 import com.fropsoft.sketch.ItemRecognizerMain;
 import com.fropsoft.sketch.LineRecognizer;
@@ -85,7 +84,8 @@ public class State
 
     items = new Vector<Item>();
     irec = new ItemRecognizerMain();
-    irec.add(new BoxRecognizer());
+    irec.add(new ClosedRegionRecognizer());
+    // irec.add(new BoxRecognizer());
     irec.add(new AnchorRecognizer());
 
     // TODO create and init a global recognizer.
