@@ -41,7 +41,7 @@ public class LineRecognizer implements ShapeRecognizer
    * @see
    * com.fropsoft.sketch.ShapeRecognizer#gague(com.fropsoft.geometry.Stroke)
    */
-  public double gague(Stroke stroke)
+  public double gauge(Stroke stroke)
   {
     if (stroke.numPoints() < 4)
       return 0.0;

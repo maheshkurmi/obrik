@@ -42,10 +42,10 @@ public interface ShapeRecognizer
    * 
    * @return The probability the stroke is this shape.
    */
-  public double gague(Stroke stroke);
+  public double gauge(Stroke stroke);
 
   /**
-   * After a call to {@link #gague(Stroke)}, this function will return the Shape
+   * After a call to {@link #gauge(Stroke)}, this function will return the Shape
    * representation of that stroke.
    * 
    * @param stroke
