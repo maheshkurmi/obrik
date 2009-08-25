@@ -145,7 +145,7 @@ public class Line extends AbstractShape
     return new Point2D(
         (int) Math.round((aOffset - bOffset) / (bSlope - aSlope)),
         (int) Math.round((bSlope * aOffset - aSlope * bOffset)
-                                      / (bSlope - aSlope)));
+            / (bSlope - aSlope)));
   }
 
   /**
@@ -182,8 +182,8 @@ public class Line extends AbstractShape
     // How far in each direction to get to the X?
     double u = (point.getX() - getStartX()) / a;
     double v = (point.getY() - getStartY()) / b;
-    
-    return (Math.abs(u - v) < 0.05 && u <= 1 && v <= 1);
+
+    return (Math.abs(u - v) < 0.05 && 0 <= u && u <= 1 && 0 <= v && v <= 1);
   }
 
   /**
@@ -234,8 +234,8 @@ public class Line extends AbstractShape
   public boolean isTLBR()
   {
     return (getStartPoint().getX() < getEndPoint().getX() &&
-            getStartPoint().getY() < getEndPoint().getY()) ||
-           (getStartPoint().getX() > getEndPoint().getX() &&
+        getStartPoint().getY() < getEndPoint().getY()) ||
+        (getStartPoint().getX() > getEndPoint().getX() &&
             getStartPoint().getY() > getEndPoint().getY());
   }
 
@@ -248,8 +248,8 @@ public class Line extends AbstractShape
   public boolean isTRBL()
   {
     return (getStartPoint().getX() < getEndPoint().getX() &&
-            getStartPoint().getY() > getEndPoint().getY()) ||
-           (getStartPoint().getX() > getEndPoint().getX() &&
+        getStartPoint().getY() > getEndPoint().getY()) ||
+        (getStartPoint().getX() > getEndPoint().getX() &&
             getStartPoint().getY() < getEndPoint().getY());
   }
 }
