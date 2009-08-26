@@ -294,6 +294,7 @@ public class State
         if (shapes.size() > 0)
         {
           Shape[] tmp = new Shape[shapes.size()];
+          tmp = shapes.toArray(tmp);
           Item item = irec.classify(tmp);
           if (item != null)
           {
