@@ -239,7 +239,8 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
             // Loop done.
             if (les[bestN].isOtherEnd(pool.root))
             {
-              setItem(new ClosedRegion(pool.lines.toArray(new Line[] {})));
+              lines = new Line[pool.lines.size()];
+              setItem(new ClosedRegion(lines));
               return pool.probSum / pool.lines.size();
             }
           }
