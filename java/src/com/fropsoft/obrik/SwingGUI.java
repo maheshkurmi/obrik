@@ -19,6 +19,8 @@
 
 package com.fropsoft.obrik;
 
+import com.fropsoft.geometry.Point2D;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -253,12 +255,42 @@ public class SwingGUI extends JPanel implements MouseListener,
       drawItem(g, iter.next());
   }
 
+  /**
+   * Draws an item.
+   *
+   * @param g
+   *          The graphics to draw on.
+   * @param i
+   *          The item to draw.
+   */
   public void drawItem(Graphics g, Item i)
   {
-    for (Shape s : i.getShapes())
-      drawShape(g, s);
+    if (i.getClass() == ClosedRegion.class)
+    {
+      Point2D[] points = ((ClosedRegion)i).getPoints();
+      int[] x = new int[points.length];
+      int[] y = new int[points.length];
+      for (int j = 0; j < points.length; j++)
+      {
+        x[j] = points[j].getX();
+        y[j] = points[j].getY();
+      }
+      g.drawPolygon(x, y, points.length);
+    }
+    else
+    {
+      System.err.printf("How do I draw a %s?\n", i.getClass().getSimpleName());
+    }
   }
 
+  /**
+   * Draws a shape.
+   *
+   * @param g
+   *          The graphics to draw on.
+   * @param s
+   *          The shape to draw.
+   */
   public void drawShape(Graphics g, Shape s)
   {
     if (s.getClass() == Line.class)
