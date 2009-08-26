@@ -20,15 +20,46 @@
 package com.fropsoft.obrik;
 
 import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Point2D;
 
 /**
+ * A closed region is an object that can be anchored or not.
  *
  * @author jamoozy
  */
 public class ClosedRegion extends AbstractItem
 {
+  /**
+   * The points that outline this region.  Attained by averaging the closest
+   * parts of the line segments.
+   */
+  private final Point2D[] points;
+
+  /**
+   * Creates a new closed region that was created by the passed lines.
+   *
+   * @param lines
+   *          The lines that created this region.
+   */
   public ClosedRegion(Line... lines)
   {
     super(lines);
+
+    // Create the points that ouline this line.
+    points = new Point2D[lines.length];
+    points[0] =
+        lines[0].getStartPoint().midpoint(lines[lines.length-1].getEndPoint());
+    for (int i = 1; i < lines.length; i++)
+      points[i] = lines[i-1].getEndPoint().midpoint(lines[i].getStartPoint());
+  }
+
+  /**
+   * Returns the points that define this region.
+   *
+   * @return The points that define this region.
+   */
+  public Point2D[] getPoints()
+  {
+    return points;
   }
 }
