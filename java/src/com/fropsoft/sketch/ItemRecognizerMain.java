@@ -70,7 +70,7 @@ public class ItemRecognizerMain
     {
       ItemRecognizer r = recognizers.get(i);
       double next = r.gauge(shapes);
-      System.out.println(r.getClass() + ": " + next);
+      System.out.printf("%s: %1.3f\n", r.getClass().getSimpleName(), next);
       if (next > prob)
       {
         prob = next;
@@ -78,7 +78,7 @@ public class ItemRecognizerMain
       }
     }
 
-    if (high < 0)
+    if (high <= 0)
       return null;
 
     return recognizers.get(high).getItem(shapes);
