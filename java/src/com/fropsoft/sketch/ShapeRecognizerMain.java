@@ -65,13 +65,17 @@ public class ShapeRecognizerMain
     {
       ShapeRecognizer r = recognizers.get(i);
       double next = r.gauge(stroke);
-      System.out.println(r.getClass() + ": " + next);
+      System.out.printf("%s: %1.3f\n", r.getClass().getSimpleName(), next);
       if (next > prob)
       {
         prob = next;
         high = i;
       }
     }
+
+    if (high <= 0)
+      return null;
+
     return recognizers.get(high).makeShape(stroke);
   }
 }
