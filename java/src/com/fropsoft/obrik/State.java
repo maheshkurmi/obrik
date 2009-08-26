@@ -265,6 +265,17 @@ public class State
   }
 
   /**
+   * Removes all the shapes that made up the passed item from the {@link
+   * #shapes} array.
+   */
+  private void removeItemsShapes(Item item)
+  {
+    for (Shape s : item.getShapes())
+      if (shapes.contains(s))
+        shapes.remove(s);
+  }
+
+  /**
    * Performs shape recognition on the point data.
    * 
    * @return {@link true} if something was recognizeed.
@@ -277,16 +288,18 @@ public class State
       if (shape != null)
       {
         shapes.add(shape);
-        System.out.println("Probably a " + shape.getClass());
+        System.out.println("Probably a " + shape.getClass().getSimpleName());
         stroke = null;
 
         if (shapes.size() > 0)
         {
-          Item item = irec.classify(shapes.toArray(new Shape[] {}));
+          Shape[] tmp = new Shape[shapes.size()];
+          Item item = irec.classify(tmp);
           if (item != null)
           {
+            removeItemsShapes(item);
             items.add(item);
-            System.out.println("Probably a " + item.getClass());
+            System.out.println("Probably a " + item.getClass().getSimpleName());
           }
         }
         return true;
