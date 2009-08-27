@@ -20,6 +20,7 @@
 package com.fropsoft.sketch;
 
 import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.obrik.Anchor;
 
@@ -43,7 +44,8 @@ public class AnchorRecognizer extends AbstractItemRecognizer
    */
   private static double gauge(Line l1, Line l2)
   {
-    if (Line.segmentIntersection(l1, l2) == null)
+    Point2D intersection;
+    if ((intersection = Line.segmentIntersection(l1, l2)) == null)
       return 0;
 
 //    double o1 = l1.getBounds().overlap(l2.getBounds());
@@ -51,9 +53,17 @@ public class AnchorRecognizer extends AbstractItemRecognizer
 
     double angle = l1.acuteAngleBetween(l2).getValue();
 
+    double similarity = Math.abs(l1.length() - l2.length()) /
+                        Math.max(l1.length(), l2.length());
+
+    double l1spacing = 1 - Math.abs(l1.getStartPoint().distanceTo(intersection)
+        - l1.getEndPoint().distanceTo(intersection)) / l1.length();
+    double l2spacing = 1 - Math.abs(l2.getStartPoint().distanceTo(intersection)
+        - l2.getEndPoint().distanceTo(intersection)) / l2.length();
+    
     // o1 and o2 are in [0,1], angle is in [0,pi/2], so normalize by pi/2
 //    return (2 * o1 * o2 * angle) / Math.PI;
-    return (2 * angle) / Math.PI;
+    return (2 * angle * similarity * l1spacing * l2spacing) / Math.PI;
   }
 
   /*
