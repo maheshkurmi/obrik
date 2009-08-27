@@ -144,10 +144,10 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
     public LineEnd prev;
     public LineEnd last;
 
-    public LinePool(LineEnd le)
+    public LinePool(LineEnd le, int startCapacity)
     {
       probSum = 0;
-      lines = new Vector<Line>();
+      lines = new Vector<Line>(startCapacity);
       lines.add(le.line);
       root = prev = last = le;
     }
@@ -203,7 +203,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
     // Exhaustive (naive) search.
     for (int s = 0; s < les.length; s++)  // s = starting line end
     {
-      LinePool pool = new LinePool(les[s]);
+      LinePool pool = new LinePool(les[s], les.length);
       boolean done = false;
       while (!done)
       {
@@ -240,6 +240,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
             if (les[bestN].isOtherEnd(pool.root))
             {
               lines = new Line[pool.lines.size()];
+              lines = pool.lines.toArray(lines);
               setItem(new ClosedRegion(lines));
               return pool.probSum / pool.lines.size();
             }
