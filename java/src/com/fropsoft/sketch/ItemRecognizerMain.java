@@ -78,7 +78,7 @@ public class ItemRecognizerMain
       }
     }
 
-    if (high <= 0)
+    if (prob <= 0)
       return null;
 
     return recognizers.get(high).getItem(shapes);
