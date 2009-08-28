@@ -19,6 +19,15 @@
 
 package com.fropsoft.obrik;
 
+import java.util.Vector;
+
+import org.jbox2d.collision.AABB;
+import org.jbox2d.collision.PolygonDef;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.World;
+
 /**
  * Meant to create and dispatch a JBox2D simulation. This acts as the bridge
  * betweden Obrik's internal representation of items and the way it needs to be
@@ -29,11 +38,47 @@ package com.fropsoft.obrik;
 public class JBox2DDispatcher
 {
   /**
+   * The bodies to simulate (do I need these?).
+   */
+  private final Vector<Body> bodies;
+
+  /**
+   * The JBox2D world.
+   */
+  private final World world;
+  
+  /**
+   * The "body" that acts as the barrier at the bottom of the screen.
+   */
+  private final Body groundBody;
+
+  /**
    * Creates a new dispatcher.
    */
   public JBox2DDispatcher()
   {
-    // TODO
+    bodies = new Vector<Body>(50);
+
+    world = new World(new AABB(new Vec2(-100.0f, -100.0f),
+                               new Vec2(100.0f, 100.0f)),
+                      new Vec2(0.0f, -10.0f), true);
+
+    BodyDef groundBodyDef = new BodyDef();
+    groundBodyDef.position.set(0.0f, -100.0f);
+    groundBody = world.createBody(groundBodyDef);
+    PolygonDef groundShapeDef = new PolygonDef();
+    groundShapeDef.setAsBox(50.0f, 10.0f);
+    groundBody.createShape(groundShapeDef);
+  }
+  
+  /**
+   * Resets the state of the world as though it was newly created.
+   */
+  public void reset()
+  {
+    for (Body body : bodies)
+      world.destroyBody(body);
+    bodies.clear();
   }
 
   /**
@@ -43,7 +88,18 @@ public class JBox2DDispatcher
    */
   public void add(Item item)
   {
-    // TODO
+    BodyDef bodyDef = new BodyDef();
+    bodyDef.position.set(0.0f, 4.0f);
+    Body body = world.createBody(bodyDef);
+    
+    PolygonDef shapeDef = new PolygonDef();
+    shapeDef.setAsBox(1.0f, 1.0f);
+    shapeDef.density = 1.0f;
+    shapeDef.friction = 0.3f;
+    body.createShape(shapeDef);
+    body.setMassFromShapes();
+    
+    bodies.add(body);
   }
 
   /**
@@ -53,7 +109,8 @@ public class JBox2DDispatcher
    */
   public void add(Item... items)
   {
-    // TODO
+    for (Item item : items)
+      add(item);
   }
 
   /**
@@ -61,6 +118,17 @@ public class JBox2DDispatcher
    */
   public void run()
   {
-    // TODO
+    float timeStep = 1.0f / 60.0f;
+    int iterations = 10;
+    for (int i = 0; i < 60; ++i)
+    {
+      for (Body body : bodies)
+      {
+        world.step(timeStep, iterations);
+        Vec2 position = body.getPosition();
+        float angle = body.getAngle();
+        System.out.printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+      }
+    }
   }
 }
