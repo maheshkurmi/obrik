@@ -47,10 +47,39 @@ public class ClosedRegion extends AbstractItem
 
     // Create the points that ouline this line.
     points = new Point2D[lines.length];
-    points[0] =
-        lines[0].getStartPoint().midpoint(lines[lines.length-1].getEndPoint());
-    for (int i = 1; i < lines.length; i++)
-      points[i] = lines[i-1].getEndPoint().midpoint(lines[i].getStartPoint());
+    for (int i = 0; i < lines.length; i++)
+    {
+      int j = (i + 1) % lines.length;
+      double d[] = { lines[i].getStartPoint().distanceTo(lines[j].getStartPoint()),
+                     lines[i].getStartPoint().distanceTo(lines[j].getEndPoint()),
+                     lines[i].getEndPoint().distanceTo(lines[j].getStartPoint()),
+                     lines[i].getEndPoint().distanceTo(lines[j].getEndPoint()) };
+
+      double min = Double.MAX_VALUE;
+      int min_i = 0;
+      for (int k = 0; k < d.length; k++)
+        if (d[k] < min)
+        {
+          min = d[k];
+          min_i = k;
+        }
+
+      switch (min_i)
+      {
+        case 0:
+          points[i] = lines[i].getStartPoint().midpoint(lines[j].getStartPoint());
+          break;
+        case 1:
+          points[i] = lines[i].getStartPoint().midpoint(lines[j].getEndPoint());
+          break;
+        case 2:
+          points[i] = lines[i].getEndPoint().midpoint(lines[j].getStartPoint());
+          break;
+        case 3:
+          points[i] = lines[i].getEndPoint().midpoint(lines[j].getEndPoint());
+          break;
+      }
+    }
   }
 
   /**
