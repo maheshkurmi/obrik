@@ -48,14 +48,14 @@ public class AnchorRecognizer extends AbstractItemRecognizer
     if ((intersection = Line.segmentIntersection(l1, l2)) == null)
       return 0;
 
-//    double o1 = l1.getBounds().overlap(l2.getBounds());
-//    double o2 = l2.getBounds().overlap(l1.getBounds());
+    // A measure of how close these are to 90 degrees.
+    double angle = 2 * l1.acuteAngleBetween(l2).getValue() / Math.PI;
 
-    double angle = l1.acuteAngleBetween(l2).getValue();
-
+    // A measure of how close these are to the same length.
     double similarity = Math.abs(l1.length() - l2.length()) /
                         Math.max(l1.length(), l2.length());
 
+    // A measure of how far in the middle the cross is in each line.
     double l1spacing = 1 - Math.abs(l1.getStartPoint().distanceTo(intersection)
         - l1.getEndPoint().distanceTo(intersection)) / l1.length();
     double l2spacing = 1 - Math.abs(l2.getStartPoint().distanceTo(intersection)
@@ -63,7 +63,7 @@ public class AnchorRecognizer extends AbstractItemRecognizer
     
     // o1 and o2 are in [0,1], angle is in [0,pi/2], so normalize by pi/2
 //    return (2 * o1 * o2 * angle) / Math.PI;
-    return (2 * angle * similarity * l1spacing * l2spacing) / Math.PI;
+    return angle * similarity * l1spacing * l2spacing;
   }
 
   /*
