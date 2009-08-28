@@ -74,7 +74,7 @@ public class State
    */
   public State()
   {
-    points = new Vector<Point2DT>();
+    points = new Vector<Point2DT>(200);
     stroke = null;
 
     shapes = new Vector<Shape>();
@@ -261,6 +261,7 @@ public class State
   private void makeStroke()
   {
     stroke = new Stroke(points.toArray(new Point2DT[] {}));
+    System.out.println("There were " + points.size() + " points.");
     points.clear();
   }
 
