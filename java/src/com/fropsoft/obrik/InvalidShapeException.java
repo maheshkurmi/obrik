@@ -20,11 +20,16 @@
 package com.fropsoft.obrik;
 
 /**
- * @author jamoozy
+ * Thrown when a shape is requested to be made that can't be made.
  *
+ * @author jamoozy
  */
 public class InvalidShapeException extends Exception
 {
+  /** To shut eclipse up. */
+  private static final long serialVersionUID = 1L;
+
+  /** Creates a new invalid shape exception. */
   public InvalidShapeException(String msg)
   {
     super(msg);

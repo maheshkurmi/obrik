@@ -28,6 +28,10 @@ package com.fropsoft.sketch;
  */
 public class NoItemFoundException extends RuntimeException
 {
+  /** To shut eclipse up. */
+  private static final long serialVersionUID = 2L;
+
+  /** Creates a new no item found exception. */
   public NoItemFoundException(String msg)
   {
     super(msg);

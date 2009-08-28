@@ -19,8 +19,6 @@
 
 package com.fropsoft.obrik;
 
-import com.fropsoft.geometry.Point2D;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -36,6 +34,7 @@ import javax.swing.SwingUtilities;
 
 import com.fropsoft.geometry.Dot;
 import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
 
@@ -47,6 +46,9 @@ import com.fropsoft.geometry.Shape;
 public class SwingGUI extends JPanel implements MouseListener,
     MouseMotionListener
 {
+  /** To shut eclipse up. */
+  private static final long serialVersionUID = 3L;
+
   /**
    * Run Obrik in a Swing GUI.
    * 
