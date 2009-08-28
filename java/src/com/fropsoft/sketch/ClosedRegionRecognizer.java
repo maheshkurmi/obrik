@@ -199,6 +199,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
       les[ 2*i ] = new LineEnd(lines[i], End.HEAD);
       les[2*i+1] = new LineEnd(lines[i], End.TAIL);
     }
+    lines = null;
 
     // Exhaustive (naive) search.
     for (int s = 0; s < les.length; s++)  // s = starting line end
