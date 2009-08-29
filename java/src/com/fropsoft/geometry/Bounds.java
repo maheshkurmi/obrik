@@ -28,12 +28,28 @@ import java.util.Iterator;
  */
 public class Bounds
 {
+  /**
+   * Creates the bounding box that contains all the points in all the strokes.
+   * @param strokes The strokes to create a bounding box for.
+   * @return The bounding box.
+   */
   public static Bounds createFromStrokes(Stroke... strokes)
   {
     Bounds bounds = new Bounds();
     for (Stroke s : strokes)
       for (Iterator<Point2DTV> iter = s.iterator(); iter.hasNext();)
         bounds.expandToInclude(iter.next());
+    return bounds;
+  }
+  
+  /**
+   * 
+   */
+  public static Bounds createFromShapes(Shape... shapes)
+  {
+    Bounds bounds = new Bounds();
+    for (Shape shape : shapes)
+      bounds.expandToInclude(shape.getBounds());
     return bounds;
   }
 
@@ -69,6 +85,20 @@ public class Bounds
                       Math.max(max.getY(), point.getY()));
     min = new Point2D(Math.min(min.getX(), point.getX()),
                       Math.min(min.getY(), point.getY()));
+  }
+
+  /**
+   * Expands the {@link Bounds} object to include this bounding box.
+   * 
+   * @param bounds
+   *          The bounds to ensure
+   */
+  private void expandToInclude(Bounds bounds)
+  {
+    max = new Point2D(Math.max(max.getX(), bounds.max.getX()),
+                      Math.max(max.getY(), bounds.max.getY()));
+    min = new Point2D(Math.min(min.getX(), bounds.min.getX()),
+                      Math.min(min.getY(), bounds.min.getY()));
   }
 
   /**
