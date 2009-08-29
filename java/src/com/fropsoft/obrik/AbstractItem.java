@@ -24,19 +24,25 @@ import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
 
 /**
+ * This gives a basic implementation for all the methods in the {@link Item}
+ * interface.
+ *
  * @author jamoozy
  */
 public abstract class AbstractItem implements Item
 {
   /** The shapes that make up this Item. */
   protected Shape[] shapes;
-  
+
   /** The bounding box of this item. */
   protected Bounds bbox;
 
+  /** The position of this item. */
+  protected Point2D position;
+
   /**
    * Adds the shapes to the protected {@link #shapes} array.
-   * 
+   *
    * @param shapes
    *          The shapes to add.
    */
@@ -45,7 +51,8 @@ public abstract class AbstractItem implements Item
     this.shapes = new Shape[shapes.length];
     for (int i = 0; i < shapes.length; i++)
       this.shapes[i] = shapes[i];
-    this.bbox = Bounds.createFromShapes(shapes);
+    bbox = Bounds.createFromShapes(shapes);
+    position = bbox.getCenter();
   }
 
   /* (non-Javadoc)
@@ -57,18 +64,34 @@ public abstract class AbstractItem implements Item
   }
 
   /* (non-Javadoc)
-   * @see com.fropsoft.obrik.Item#getShapes()
+   * @see com.fropsoft.obrik.Item#getPosition()
    */
   public Point2D getPosition()
   {
-    return bbox.getCenter();
+    return position;
   }
 
   /* (non-Javadoc)
-   * @see com.fropsoft.obrik.Item#getShapes()
+   * @see com.fropsoft.obrik.Item#getBBox()
    */
   public Bounds getBBox()
   {
     return bbox;
+  }
+
+  /* (non-Javadoc)
+   * @see com.fropsoft.obrik.Item#updatePosition()
+   */
+  public void updatePosition(Point2D point)
+  {
+    position = point;
+  }
+
+  /* (non-Javadoc)
+   * @see com.fropsoft.obrik.Item#resetPosition()
+   */
+  public void resetPosition()
+  {
+    position = bbox.getCenter();
   }
 }

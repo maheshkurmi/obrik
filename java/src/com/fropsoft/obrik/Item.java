@@ -26,26 +26,36 @@ import com.fropsoft.geometry.Shape;
 /**
  * An {@link Item} is something that exists on the Obrik canvas that has
  * meaning.
- * 
+ *
  * @author jamoozy
  */
 public interface Item
 {
   /**
-   * Returns the shapes that made up this {@link Item}. 
+   * Returns the shapes that made up this {@link Item}.
    * @return The shapes that make up this {@link Item}.
    */
   public Shape[] getShapes();
-  
+
   /**
    * Returns the position of this item.
    * @return The position of this item.
    */
   public Point2D getPosition();
-  
+
   /**
    * Returns the bounding box of this item.
    * @return The bounding box of this item.
    */
   public Bounds getBBox();
+
+  /**
+   * Updates the Position of this item.
+   */
+  public void updatePosition(Point2D point);
+
+  /**
+   * Resets the position of this object to where it was drawn.
+   */
+  public void resetPosition();
 }

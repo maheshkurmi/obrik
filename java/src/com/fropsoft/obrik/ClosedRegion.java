@@ -33,7 +33,10 @@ public class ClosedRegion extends AbstractItem
    * The points that outline this region.  Attained by averaging the closest
    * parts of the line segments.
    */
-  private final Point2D[] points;
+  private final Point2D[] startPoints;
+
+  /** Current points. */
+  private Point2D[] points;
 
   /** Keeps track of whether this has been anchored. */
   private boolean anchored;
@@ -53,10 +56,13 @@ public class ClosedRegion extends AbstractItem
     for (int i = 0; i < lines.length; i++)
     {
       int j = (i + 1) % lines.length;
-      double d[] = { lines[i].getStartPoint().distanceTo(lines[j].getStartPoint()),
-                     lines[i].getStartPoint().distanceTo(lines[j].getEndPoint()),
-                     lines[i].getEndPoint().distanceTo(lines[j].getStartPoint()),
-                     lines[i].getEndPoint().distanceTo(lines[j].getEndPoint()) };
+      double d[] =
+      {
+        lines[i].getStartPoint().distanceTo(lines[j].getStartPoint()),
+        lines[i].getStartPoint().distanceTo(lines[j].getEndPoint()),
+        lines[i].getEndPoint().distanceTo(lines[j].getStartPoint()),
+        lines[i].getEndPoint().distanceTo(lines[j].getEndPoint())
+      };
 
       double min = Double.MAX_VALUE;
       int min_i = 0;
@@ -83,8 +89,12 @@ public class ClosedRegion extends AbstractItem
           break;
       }
     }
+
+    startPoints = new Point2D[lines.length];
+    for (int i = 0; i < points.length; i++)
+      points[i] = startPoints[i].clone();
   }
- 
+
   /**
    * Determines if this is anchored (immobile).  You anchor closed regions by
    * drawing an X on them.
@@ -112,5 +122,15 @@ public class ClosedRegion extends AbstractItem
   public Point2D[] getPoints()
   {
     return points;
+  }
+
+  /* (non-Javadoc)
+   * @see com.fropsoft.obrik.Item#resetPosition()
+   */
+  public void resetPosition()
+  {
+    super.resetPosition();
+    for (int i = 0; i < points.length; i++)
+      points[i].setPoint(startPoints[i].getX(), startPoints[i].getY());
   }
 }
