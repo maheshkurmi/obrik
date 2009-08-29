@@ -35,6 +35,9 @@ public class ClosedRegion extends AbstractItem
    */
   private final Point2D[] points;
 
+  /** Keeps track of whether this has been anchored. */
+  private boolean anchored;
+
   /**
    * Creates a new closed region that was created by the passed lines.
    *
@@ -80,6 +83,25 @@ public class ClosedRegion extends AbstractItem
           break;
       }
     }
+  }
+ 
+  /**
+   * Determines if this is anchored (immobile).  You anchor closed regions by
+   * drawing an X on them.
+   * @return <code>truce</code> if it's anchored, <code>false</code> otherwise.
+   */
+  public boolean isAnchored()
+  {
+    return anchored;
+  }
+
+  /**
+   * Changes the anchored state of this closed region.
+   * @param anchored Whether it's anchored or not.
+   */
+  public void setAnchored(boolean anchored)
+  {
+    this.anchored = anchored;
   }
 
   /**
