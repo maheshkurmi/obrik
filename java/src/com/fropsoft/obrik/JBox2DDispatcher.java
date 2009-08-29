@@ -19,11 +19,14 @@
 
 package com.fropsoft.obrik;
 
+import java.awt.Polygon;
+
 import java.util.Vector;
 
 import org.jbox2d.collision.AABB;
-import org.jbox2d.collision.MassData;
 import org.jbox2d.collision.PolygonDef;
+import org.jbox2d.collision.PolygonShape;
+import org.jbox2d.collision.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -36,6 +39,8 @@ import com.fropsoft.geometry.Point2D;
  * betweden Obrik's internal representation of items and the way it needs to be
  * to work in JBox2D.
  *
+ * For more information on Box2D, see http://www.box2d.org/manual.html
+ *
  * @author jamoozy
  */
 public class JBox2DDispatcher
@@ -45,20 +50,20 @@ public class JBox2DDispatcher
 
   /** The JBox2D world. */
   private final World world;
-  
+
   /** The "body" that acts as the barrier at the bottom of the screen. */
   private final Body groundBody;
 
   /** The amount of time each step takes. */
   private final float timeStep = 1.0f / 60.0f;
-  
-  /** Number of iterations in a run. */
-  private final int iterations = 10;
-  
-  /** Linear factor in Vec2 -> Point2D conversion. */
+
+  /** Number of constraint checks in a run. */
+  private final int constraintChecks = 10;
+
+  /** Linear factor in {@link Vec2} -> {@link Point2D} conversion. */
   public final float m;
-  
-  /** Linear offset in Vec2 -> Point2D conversion. */ 
+
+  /** Linear offset in {@link Vec2} -> {@link Point2D} conversion. */
   public final float b;
 
   /**
@@ -68,11 +73,11 @@ public class JBox2DDispatcher
   {
     this(8.0f, 0.0f);
   }
-  
+
   /**
    * Creates a new dispatcher with the given scaling values for
    * {@link Point2D} to {@link Vec2} conversion.
-   * 
+   *
    * @param scaleFactor
    *          'm' in 'y = mx+b' linear scaling to JBox2D format.
    * @param offset
@@ -95,7 +100,7 @@ public class JBox2DDispatcher
     groundShapeDef.setAsBox(50.0f, 10.0f);
     groundBody.createShape(groundShapeDef);
   }
-  
+
   /**
    * Resets the state of the world as though it was newly created.
    */
@@ -108,7 +113,7 @@ public class JBox2DDispatcher
 
   /**
    * Loads an item into the dispatcher.
-   * 
+   *
    * @param item The item to load.
    */
   public void add(Item item)
@@ -120,30 +125,38 @@ public class JBox2DDispatcher
       return;
     }
     ClosedRegion cr = (ClosedRegion)item;
-    
-    BodyDef bodyDef = new BodyDef();
-    bodyDef.userData = item;
-    bodyDef.position = toVec2(item.getPosition());
-    if (cr.isAnchored())
-    {
-      MassData md = new MassData();
-      md.center = bodyDef.position;
-      md.I = 0.5f;
-      md.mass = 0.5f;
-      bodyDef.massData = md;
-    }
-    Body body = world.createBody(bodyDef);
 
+    // Create the body (wiht mass) of the item.
+    BodyDef bodyDef = new BodyDef();
+    bodyDef.userData = cr;
+    bodyDef.position = toVec2(item.getPosition());
+    bodyDef.linearDamping = 0.01f;
+    bodyDef.angularDamping = 0.1f;
+    bodies.add(world.createBody(bodyDef));
+
+    // Create the shape/outline of the item.
     PolygonDef shapeDef = new PolygonDef();
     Point2D[] points = cr.getPoints();
     for (int i = 0; i < points.length; i++)
       shapeDef.addVertex(toVec2(points[i]));
-    shapeDef.density = 1.0f;
-    shapeDef.friction = 0.3f;
-    body.createShape(shapeDef);
-    body.setMassFromShapes();
+    if (!cr.isAnchored())
+    {
+      shapeDef.density = 1.0f;
+      shapeDef.friction = 0.3f;
+    }
+    bodies.lastElement().createShape(shapeDef);
+    bodies.lastElement().setMassFromShapes();
+  }
 
-    bodies.add(body);
+  /**
+   * Loads a series of itemes into the dispatcher.
+   *
+   * @param items The series of items to load.
+   */
+  public void add(Item... items)
+  {
+    for (Item item : items)
+      add(item);
   }
 
   /**
@@ -159,6 +172,21 @@ public class JBox2DDispatcher
   }
 
   /**
+   * Creates a new {@link Point2D} array from the {@link Vec2} array.
+   *
+   * @param vecs
+   *          The JBox2D vectors.
+   * @return The obrik points.
+   */
+  public Point2D[] toPoint2DArray(Vec2[] vecs)
+  {
+    Point2D[] points = new Point2D[vecs.length];
+    for (int i = 0; i < vecs.length; i++)
+      points[i] = toPoint2D(vecs[i]);
+    return points;
+  }
+
+  /**
    * Convert the Obrik {@link Point2D} object into a JBox2D {@link Vec2}
    * object.
    * @param vec The Obrik representation.
@@ -171,26 +199,37 @@ public class JBox2DDispatcher
   }
 
   /**
-   * Loads a series of itemes into the dispatcher.
-   * 
-   * @param items The series of items to load.
+   * Performs one step of the simulation.  Returns whether or not the screen
+   * needs to be updated as a result of the simulation.
    */
-  public void add(Item... items)
+  public boolean step()
   {
-    for (Item item : items)
-      add(item);
+    boolean dirty = false;
+    world.step(timeStep, constraintChecks);
+    for (Body b : bodies)
+    {
+      // Check if there's an update to be done.
+      if (!b.isSleeping())
+      {
+        dirty = true;
+        ClosedRegion cr = (ClosedRegion)b.getUserData();
+        PolygonShape shape = (PolygonShape)b.getShapeList();
+        cr.setPoints(toPoint2DArray(shape.getVertices()));
+      }
+    }
+    return dirty;
   }
 
   /**
-   * Runs the JBox2D simulation.
+   * Runs the JBox2D simulation for a few seconds.
    */
-  public void run()
+  public void quickRun(int secs)
   {
     for (int i = 0; i < 60; ++i)
     {
       for (Body body : bodies)
       {
-        world.step(timeStep, iterations);
+        world.step(timeStep, constraintChecks);
         Vec2 position = body.getPosition();
         float angle = body.getAngle();
         System.out.printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
