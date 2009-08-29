@@ -23,9 +23,9 @@ package com.fropsoft.geometry;
  * This is a 2D point with a timestamp and a velocity. This is equivalent to a
  * {@link Point2DT}, except that it also has a velocity that can be accessed
  * with the {@link #getV()} method. This velocity is in pixels-per-second.
- * 
+ *
  * @author jamoozy
- * 
+ *
  */
 public class Point2DTV extends Point2DT
 {
@@ -37,7 +37,7 @@ public class Point2DTV extends Point2DT
   /**
    * Creates a new {@link Point2DTV} with the data from a {@link Point2DT}
    * object and a velocity of 0.
-   * 
+   *
    * @param p2dt
    */
   public Point2DTV(Point2DT p2dt)
@@ -48,7 +48,7 @@ public class Point2DTV extends Point2DT
   /**
    * Creates a new {@link Point2DTV} object with the data from a
    * {@link Point2DT} object and a velocity of v.
-   * 
+   *
    * @param p2dt
    * @param v
    */
@@ -59,7 +59,7 @@ public class Point2DTV extends Point2DT
 
   /**
    * Creates a new instance at (x,y) at time t voind v pixels-per-second.
-   * 
+   *
    * @param x The x coordinate
    * @param y The y coordinate
    * @param t The timestamp
@@ -73,7 +73,7 @@ public class Point2DTV extends Point2DT
 
   /**
    * Returns the speed of the pen when it made this point in pixels-per-second.
-   * 
+   *
    * @return The speed of the pen when it made this point in pixels-per-second.
    */
   public double getV()
@@ -83,7 +83,6 @@ public class Point2DTV extends Point2DT
 
   /*
    * (non-Javadoc)
-   * 
    * @see com.fopsoft.geometry.Point2DT#clone()
    */
   @Override
@@ -94,7 +93,6 @@ public class Point2DTV extends Point2DT
 
   /*
    * (non-Javadoc)
-   * 
    * @see com.fopsoft.geometry.Point2DT#toString()
    */
   @Override

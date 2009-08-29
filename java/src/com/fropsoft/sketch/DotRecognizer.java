@@ -25,9 +25,7 @@ import com.fropsoft.geometry.Stroke;
 
 public class DotRecognizer implements ShapeRecognizer
 {
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see
    * com.fropsoft.sketch.ShapeRecognizer#gague(com.fropsoft.geometry.Stroke)
    */
@@ -35,13 +33,11 @@ public class DotRecognizer implements ShapeRecognizer
   {
     if (stroke.numPoints() < 4)
       return 1.0;
-    
+
     return 1.0 / stroke.numPoints();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see com.fropsoft.sketch.ShapeRecognizer#getShape()
    */
   public Shape makeShape(Stroke stroke)

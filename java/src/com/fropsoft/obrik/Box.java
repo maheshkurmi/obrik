@@ -26,9 +26,9 @@ import com.fropsoft.sketch.BoxRecognizer;
 
 /**
  * A box is a closed loop of lines.
- * 
+ *
  * @author jamoozy
- * 
+ *
  * @see {@link BoxRecognizer}
  */
 public class Box extends AbstractItem
@@ -42,7 +42,7 @@ public class Box extends AbstractItem
    * Creates a new box made up of the passed shapes. Assumes that the shapes are
    * lines that define the edges of the box. Assumes the lines are given in
    * order around the box (either direction).
-   * 
+   *
    * @param shapes
    *          The shapes that make up this box.
    * @throws InvalidShapeException
@@ -76,7 +76,7 @@ public class Box extends AbstractItem
 
   /**
    * Returns the outline of this box.
-   * 
+   *
    * @return The outline of this box.
    */
   public Point2D[] getOutline()

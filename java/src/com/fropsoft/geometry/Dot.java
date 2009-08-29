@@ -22,14 +22,14 @@ package com.fropsoft.geometry;
 
 /**
  * Y'know ... a dot.
- * 
+ *
  * @author jamoozy
  */
 public class Dot extends AbstractShape
 {
   /**
    * Creates a new dot from the passed strokes.
-   * 
+   *
    * @param strokes
    */
   public Dot(Stroke... strokes)
@@ -39,7 +39,7 @@ public class Dot extends AbstractShape
 
   /**
    * Returns the centerpoint of this dot---it's location.
-   * 
+   *
    * @return The centerpoint of this dot---it's location.
    */
   public Point2D getCenter()
@@ -49,7 +49,7 @@ public class Dot extends AbstractShape
 
   /**
    * Returns the X coordinate of this dot.
-   * 
+   *
    * @return The X coordinate of this dot.
    */
   public int getCenterX()
@@ -59,7 +59,7 @@ public class Dot extends AbstractShape
 
   /**
    * Returns the Y coordinate of this dot.
-   * 
+   *
    * @return The Y coordinate of this dot.
    */
   public int getCenterY()

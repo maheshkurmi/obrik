@@ -26,7 +26,7 @@ import com.fropsoft.obrik.Item;
 
 /**
  * This class recognizes items given a list of shapes.
- * 
+ *
  * @author jamoozy
  */
 public class ItemRecognizerMain
@@ -47,7 +47,7 @@ public class ItemRecognizerMain
   /**
    * Adds the passed item recognizer to the list of recognizers this will query
    * on the next call to {@link #classify(Shape...)}.
-   * 
+   *
    * @param r The shape recognizer to add.
    */
   public void add(ItemRecognizer r)
@@ -58,7 +58,7 @@ public class ItemRecognizerMain
   /**
    * Queries all registered recognizers and returns the item corresponding to
    * the most probable match in the list.
-   * 
+   *
    * @param shapes The shapes to evaluate.
    * @return The item corresponding to the most probable match.
    */

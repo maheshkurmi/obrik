@@ -23,7 +23,7 @@ import java.util.Vector;
 
 /**
  * A class that implements the strokes and bounds part of the shape interface.
- * 
+ *
  * @author jamoozy
  */
 public class AbstractShape implements Shape
@@ -51,7 +51,7 @@ public class AbstractShape implements Shape
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see com.fropsoft.geometry.Shape#getStrokes()
    */
   public Stroke[] getStrokes()
@@ -64,7 +64,7 @@ public class AbstractShape implements Shape
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see com.fropsoft.geometry.Shape#getBounds()
    */
   public Bounds getBounds()

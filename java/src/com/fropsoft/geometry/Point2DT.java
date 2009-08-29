@@ -23,7 +23,7 @@ package com.fropsoft.geometry;
  * Represents a timestamped point. This is very similar to the {@link Point2D}
  * class, with the exception that this also has a timestamp, which can be
  * accessed via the {@link #getT()} method.
- * 
+ *
  * @author jamoozy
  */
 public class Point2DT extends Point2D
@@ -35,7 +35,7 @@ public class Point2DT extends Point2D
 
   /**
    * Creates a new timestamped point.
-   * 
+   *
    * @param x The x coordinate of the new point.
    * @param y The y coordinate of the new point.
    * @param t The timestamp of the new point.
@@ -48,7 +48,7 @@ public class Point2DT extends Point2D
 
   /**
    * Returns the timestamp of this point.
-   * 
+   *
    * @return The timestamp
    */
   public long getT()
@@ -58,7 +58,6 @@ public class Point2DT extends Point2D
 
   /*
    * (non-Javadoc)
-   * 
    * @see java.lang.Object#clone()
    */
   @Override
@@ -69,7 +68,6 @@ public class Point2DT extends Point2D
 
   /*
    * (non-Javadoc)
-   * 
    * @see java.lang.Object#toString()
    */
   @Override

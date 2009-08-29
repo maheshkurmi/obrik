@@ -22,7 +22,7 @@ package com.fropsoft.geometry;
 /**
  * Encompases some useful angle manipulation functions (in 2D). All operations
  * are done in radians. (One might call this a glorified double.)
- * 
+ *
  * @author jamoozy
  */
 public class Angle
@@ -34,7 +34,7 @@ public class Angle
 
   /**
    * Creates a new angle with the given angle.
-   * 
+   *
    * @param angle
    *          The angle of the new angle ^_^
    */
@@ -45,7 +45,7 @@ public class Angle
 
   /**
    * Finds the angle between two angles.  Will be in [0,179].
-   * 
+   *
    * @param that
    *          The other angle.
    * @return The angle between the angles.
@@ -60,7 +60,7 @@ public class Angle
 
   /**
    * Returns the double value of this angle.
-   * 
+   *
    * @return The double value of this angle.
    */
   public double getValue()

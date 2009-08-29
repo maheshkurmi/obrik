@@ -51,7 +51,7 @@ public class SwingGUI extends JPanel implements MouseListener,
 
   /**
    * Run Obrik in a Swing GUI.
-   * 
+   *
    * @param args Command line args (none yet supported).
    */
   public static void main(String[] args)
@@ -109,9 +109,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     setBorder(BorderFactory.createLineBorder(Color.white));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
    */
   public void mouseClicked(MouseEvent e)
@@ -119,9 +117,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     state.mouseClicked(e.getX(), e.getY());
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
    */
   public void mouseEntered(MouseEvent e)
@@ -130,9 +126,7 @@ public class SwingGUI extends JPanel implements MouseListener,
             e.getButton() != MouseEvent.NOBUTTON);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
    */
   public void mouseExited(MouseEvent e)
@@ -142,9 +136,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     invokeShapeRecognitionLater();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
    */
   public void mousePressed(MouseEvent e)
@@ -153,9 +145,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     state.mousePressed(e.getX(), e.getY());
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
    */
   public void mouseReleased(MouseEvent e)
@@ -180,9 +170,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     });
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see
    * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
    */
@@ -192,9 +180,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     state.mouseDrag(e.getX(), e.getY());
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see
    * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
    */
@@ -203,9 +189,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     state.mouseMoved(e.getX(), e.getY());
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see javax.swing.JComponent#getPreferredSize()
    */
   @Override
@@ -216,9 +200,9 @@ public class SwingGUI extends JPanel implements MouseListener,
 
   /**
    * Request a repaint between the passed mouse event an the last point.
-   * 
+   *
    * @param e The event that caused the repaint request.
-   * 
+   *
    * @see #repaint()
    */
   public void repaint(MouseEvent e)
@@ -233,9 +217,7 @@ public class SwingGUI extends JPanel implements MouseListener,
     }
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
    */
   @Override

@@ -27,7 +27,7 @@ import java.util.Vector;
  * coordinate data of a digital pen from the time it gets placed on the canvas
  * to the time it gets released. This uses {@link Point2DTV} objects to store
  * the pen stroke's data.
- * 
+ *
  * @author jamoozy
  */
 public class Stroke
@@ -47,7 +47,7 @@ public class Stroke
 
   /**
    * Creates a new stroke consisting of the passed strokes.
-   * 
+   *
    * @param points The poitns to add to this stroke.
    */
   public Stroke(Point2DT... points)
@@ -65,7 +65,6 @@ public class Stroke
 
   /*
    * (non-Javadoc)
-   * 
    * @see java.lang.Object#clone()
    */
   @Override
@@ -79,7 +78,6 @@ public class Stroke
 
   /*
    * (non-Javadoc)
-   * 
    * @see java.util.Vector#iterator()
    */
   public Iterator<Point2DTV> iterator()
@@ -89,7 +87,7 @@ public class Stroke
 
   /**
    * Returns the number of points in this stroke.
-   * 
+   *
    * @return The number of points in this stroke.
    */
   public int numPoints()
@@ -99,7 +97,7 @@ public class Stroke
 
   /**
    * Returns the i'th point from the stroke.
-   * 
+   *
    * @param i
    *          The index of the point to get.
    * @return The i'th piont from the stroke.

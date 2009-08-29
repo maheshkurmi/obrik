@@ -34,39 +34,27 @@ import com.fropsoft.sketch.ShapeRecognizerMain;
 
 /**
  * Keeps track of the state of the Obrik "game".
- * 
+ *
  * @author jamoozy
  */
 public class State
 {
-  /**
-   * Points collected from the user via one of the GUIs.
-   */
+  /** Points collected from the user via one of the GUIs. */
   private final Vector<Point2DT> points;
 
-  /**
-   * Stroke created when the final user point comes from the GUI.
-   */
+  /** Stroke created when the final user point comes from the GUI.  */
   private Stroke stroke;
 
-  /**
-   * The shapes waiting to be recognized as something.
-   */
+  /** The shapes waiting to be recognized as something.  */
   private final Vector<Shape> shapes;
 
-  /**
-   * The shape recognition module.
-   */
+  /** The shape recognition module.  */
   private final ShapeRecognizerMain srec;
 
-  /**
-   * The items waiting to be simulated.
-   */
+  /** The items waiting to be simulated.  */
   private final Vector<Item> items;
 
-  /**
-   * The item recognizer.
-   */
+  /** The item recognizer.  */
   private final ItemRecognizerMain irec;
 
   /**
@@ -206,7 +194,7 @@ public class State
    * Returns the X coordinates of the stroke in an array. This is here because
    * it's useful for many "draw poly-line" functions, including the one in
    * Swing.
-   * 
+   *
    * @return The array of x coordinates from the user's stroke.
    */
   public int[] buildStrokeXCoords()
@@ -221,7 +209,7 @@ public class State
    * Returns the Y coordinates of the stroke in an array. This is here because
    * it's useful for many "draw poly-line" functions, including the one in
    * Swing.
-   * 
+   *
    * @return The array of y coordinates from the user's stroke.
    */
   public int[] buildStrokeYCoords()
@@ -234,7 +222,7 @@ public class State
 
   /**
    * Returns the number of points in the user's current stroke.
-   * 
+   *
    * @return The number of points in the user's current stroke.
    */
   public int getNumPoints()
@@ -244,7 +232,7 @@ public class State
 
   /**
    * Returns the last (drawn) point in the user's stroke.
-   * 
+   *
    * @return The last (drawn) point in the user's stroke.
    */
   public Point2DT getLastPoint()
@@ -278,7 +266,7 @@ public class State
 
   /**
    * Performs shape recognition on the point data.
-   * 
+   *
    * @return {@link true} if something was recognizeed.
    */
   public boolean recognizeStroke()
@@ -310,9 +298,7 @@ public class State
     return false;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.util.Vector#iterator()
    */
   public Iterator<Shape> shapeIterator()
@@ -320,9 +306,7 @@ public class State
     return shapes.iterator();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see java.util.Vector#iterator()
    */
   public Iterator<Item> itemIterator()

@@ -23,14 +23,14 @@ import java.util.Vector;
 
 /**
  * Y'know ... a line.
- * 
+ *
  * @author jamoozy
  */
 public class Line extends AbstractShape
 {
   /**
    * Find all the lines in an array of shapes.
-   * 
+   *
    * @param shapes
    *          The shapes to search for lines in.
    * @return An array of the found lines.
@@ -47,7 +47,7 @@ public class Line extends AbstractShape
 
   /**
    * Creates a new Line.
-   * 
+   *
    * @param strokes
    */
   public Line(Stroke... strokes)
@@ -57,7 +57,7 @@ public class Line extends AbstractShape
 
   /**
    * Returns the starting point of this line.
-   * 
+   *
    * @return The starting piont of this line.
    */
   public Point2D getStartPoint()
@@ -87,7 +87,7 @@ public class Line extends AbstractShape
 
   /**
    * Returns the ending point of this line.
-   * 
+   *
    * @return The ending piont of this line.
    */
   public Point2D getEndPoint()
@@ -123,7 +123,7 @@ public class Line extends AbstractShape
    * line segments, use {@link #segmentIntersection(Line)}.  This method will
    * extend both lines into infinity in either direction to get the
    * intersection.
-   * 
+   *
    * @param that
    *          The other line.
    * @return The intersection (if it exists) or <code>null</code>.
@@ -228,7 +228,7 @@ public class Line extends AbstractShape
   /**
    * Determines if this line is top-left to bottom-right. Direction does not
    * mater, so this is equivalent to bottom-right to top-left.
-   * 
+   *
    * @return
    */
   public boolean isTLBR()
@@ -242,7 +242,7 @@ public class Line extends AbstractShape
   /**
    * Determines if this line is top-right to bottom-left. Direction does not
    * mater, so this is equivalent to bottom-left to top-right.
-   * 
+   *
    * @return
    */
   public boolean isTRBL()

@@ -42,7 +42,7 @@ public class ShapeRecognizerMain
   /**
    * Adds the passed shape recognizer to the list of recognizers this will query
    * on the next call to {@link #classify(Stroke)}.
-   * 
+   *
    * @param r The shape recognizer to add.
    */
   public void add(ShapeRecognizer r)
@@ -53,7 +53,7 @@ public class ShapeRecognizerMain
   /**
    * Queries all registered recognizers and returns the shape corresponding to
    * the most probable match.
-   * 
+   *
    * @param stroke The stroke to evaluate.
    * @return The shape corresponding to the most probably match.
    */

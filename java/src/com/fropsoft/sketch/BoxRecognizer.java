@@ -27,16 +27,16 @@ import com.fropsoft.obrik.Box;
 
 /**
  * Recognizes a box.
- * 
+ *
  * @author jamoozy
- * 
+ *
  * @see {@link Box}
  */
 public class BoxRecognizer extends AbstractItemRecognizer
 {
   /**
    * Determines how likely it is that l1 and l2 connect together.  This is a
-   * convenience function used by {@link #gauge(Shape...)} to group 
+   * convenience function used by {@link #gauge(Shape...)} to group
    *
    * @param l1
    *          The first line.
@@ -275,9 +275,7 @@ public class BoxRecognizer extends AbstractItemRecognizer
     super();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see
    * com.fropsoft.sketch.ItemRecognizer#gauge(com.fropsoft.geometry.Shape[])
    */

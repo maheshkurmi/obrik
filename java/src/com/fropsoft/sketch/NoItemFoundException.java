@@ -23,7 +23,7 @@ package com.fropsoft.sketch;
  * Thrown when a call to
  * {@link ItemRecognizer#getItem(com.fropsoft.geometry.Shape...)} cannot find an
  * item in the shape list.
- * 
+ *
  * @author jamoozy
  */
 public class NoItemFoundException extends RuntimeException

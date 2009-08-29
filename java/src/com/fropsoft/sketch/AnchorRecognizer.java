@@ -26,7 +26,7 @@ import com.fropsoft.obrik.Anchor;
 
 /**
  * This recognizes anchors (that look like X's).
- * 
+ *
  * @author jamoozy
  */
 public class AnchorRecognizer extends AbstractItemRecognizer
@@ -60,15 +60,13 @@ public class AnchorRecognizer extends AbstractItemRecognizer
         - l1.getEndPoint().distanceTo(intersection)) / l1.length();
     double l2spacing = 1 - Math.abs(l2.getStartPoint().distanceTo(intersection)
         - l2.getEndPoint().distanceTo(intersection)) / l2.length();
-    
+
     // o1 and o2 are in [0,1], angle is in [0,pi/2], so normalize by pi/2
 //    return (2 * o1 * o2 * angle) / Math.PI;
     return angle * similarity * l1spacing * l2spacing;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see
    * com.fropsoft.sketch.ItemRecognizer#gauge(com.fropsoft.geometry.Shape[])
    */

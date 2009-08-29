@@ -24,7 +24,7 @@ import com.fropsoft.geometry.Point2D;
 
 /**
  * Looks like an X.
- * 
+ *
  * @author jamoozy
  */
 public class Anchor extends AbstractItem

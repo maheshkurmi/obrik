@@ -22,7 +22,7 @@ package com.fropsoft.geometry;
 /**
  * Represents a point on screen with an x and a y coordinte. The coordinates are
  * integers, because they represent a screen pixel coordinate.
- * 
+ *
  * @author jamoozy
  */
 public class Point2D
@@ -39,7 +39,7 @@ public class Point2D
 
   /**
    * Creates a new point at the point (x,y).,
-   * 
+   *
    * @param x The x coordinate of the new point.
    * @param y The y coordinate of the new point.
    */
@@ -51,7 +51,7 @@ public class Point2D
 
   /**
    * Returns the y coordinate of this point.
-   * 
+   *
    * @return The y coordinate.
    */
   public int getX()
@@ -61,7 +61,7 @@ public class Point2D
 
   /**
    * Returns the x coordinate of this point.
-   * 
+   *
    * @return The x coordinate.
    */
   public int getY()
@@ -71,7 +71,7 @@ public class Point2D
 
   /**
    * Computes the L<sub>2</sub> norm to that.
-   * 
+   *
    * @param that The other point.
    * @return The L<sub>2</sub> norm to that.
    */
@@ -85,7 +85,7 @@ public class Point2D
   /**
    * Computes the angle in radians to that, where 0 is when that is directly to
    * the right of this, and pi/2 is where that is directly above this.
-   * 
+   *
    * @param that The other point.
    * @return The angle, in radians.
    */
@@ -96,7 +96,7 @@ public class Point2D
 
   /**
    * For use as the slope in the "y = mx + b" line eequation.
-   * 
+   *
    * @param that The other line.
    * @return The slope between the two lines.
    */
@@ -113,7 +113,6 @@ public class Point2D
 
   /*
    * (non-Javadoc)
-   * 
    * @see java.lang.Object#clone()
    */
   @Override
@@ -124,7 +123,6 @@ public class Point2D
 
   /*
    * (non-Javadoc)
-   * 
    * @see java.lang.Object#toString()
    */
   @Override
@@ -135,13 +133,27 @@ public class Point2D
 
   /**
    * Finds the midpoint between to points.
-   * 
+   *
    * @param that The other point.
-   * 
+   *
    * @return The midpoint between two points.
    */
   public Point2D midpoint(Point2D that)
   {
     return new Point2D((this.x + that.x) / 2, (this.y + that.y) / 2);
+  }
+
+  /**
+   * Sets the point's coordinates to new values.
+   *
+   * @param x
+   *          The new X coordinate.
+   * @param y
+   *          The new Y coordinate.
+   */
+  public void setPoint(int x, int y)
+  {
+    this.x = x;
+    this.y = y;
   }
 }
