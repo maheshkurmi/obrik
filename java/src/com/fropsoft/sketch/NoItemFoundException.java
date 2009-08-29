@@ -31,7 +31,10 @@ public class NoItemFoundException extends RuntimeException
   /** To shut eclipse up. */
   private static final long serialVersionUID = 2L;
 
-  /** Creates a new no item found exception. */
+  /**
+   * Creates a new no item found exception.
+   * @param msg A brief description.
+   */
   public NoItemFoundException(String msg)
   {
     super(msg);
