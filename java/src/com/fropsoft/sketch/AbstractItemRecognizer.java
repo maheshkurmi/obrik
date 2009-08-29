@@ -23,19 +23,19 @@ import com.fropsoft.geometry.Shape;
 import com.fropsoft.obrik.Item;
 
 /**
- * 
+ * A convenience class that handles the item handling of a class that
+ * implements {@link ItemRecognizer}.
+ *
  * @author jamoozy
  */
 public abstract class AbstractItemRecognizer implements ItemRecognizer
 {
-  /**
-   * The item that was found on the last call to {@link #gauge(Shape...)}.
-   */
+  /** The item that was found on the last call to {@link #gauge(Shape...)}.  */
   private Item item;
 
   /**
    * Sets the item.
-   * 
+   *
    * @param item The item.
    */
   protected void setItem(Item item)
@@ -45,7 +45,7 @@ public abstract class AbstractItemRecognizer implements ItemRecognizer
 
   /**
    * Returns the item.
-   * 
+   *
    * @return The item.
    */
   protected Item getItem()
@@ -53,9 +53,7 @@ public abstract class AbstractItemRecognizer implements ItemRecognizer
     return item;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
+  /* (non-Javadoc)
    * @see
    * com.fropsoft.sketch.ItemRecognizer#getItem(com.fropsoft.geometry.Shape[])
    */
