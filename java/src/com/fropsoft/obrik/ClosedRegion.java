@@ -115,6 +115,16 @@ public class ClosedRegion extends AbstractItem
   }
 
   /**
+   * Sets the points of this closed region to the passed points.
+   * @param points
+   *          The new points.
+   */
+  public void setPoints(Point2D[] points)
+  {
+    this.points = points;
+  }
+
+  /**
    * Returns the points that define this region.
    *
    * @return The points that define this region.
@@ -127,6 +137,7 @@ public class ClosedRegion extends AbstractItem
   /* (non-Javadoc)
    * @see com.fropsoft.obrik.Item#resetPosition()
    */
+  @Override
   public void resetPosition()
   {
     super.resetPosition();
