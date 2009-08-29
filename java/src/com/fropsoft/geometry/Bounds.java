@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 /**
  * This can be thought of as a bounding box.
- * 
+ *
  * @author jamoozy
  */
 public class Bounds
@@ -41,9 +41,14 @@ public class Bounds
         bounds.expandToInclude(iter.next());
     return bounds;
   }
-  
+
   /**
+   * Creates a new bounds from a list of shapes.  The created bounds will
+   * encompass all the passed shapes.
    * 
+   * @param shapes
+   *          The shapes to create the bounds from.
+   * @return The bounds.
    */
   public static Bounds createFromShapes(Shape... shapes)
   {
@@ -75,7 +80,7 @@ public class Bounds
 
   /**
    * Expands the {@link Bounds} object to include this point.
-   * 
+   *
    * @param point
    *          The point to ensure
    */
@@ -89,7 +94,7 @@ public class Bounds
 
   /**
    * Expands the {@link Bounds} object to include this bounding box.
-   * 
+   *
    * @param bounds
    *          The bounds to ensure
    */
@@ -103,7 +108,7 @@ public class Bounds
 
   /**
    * Creates a new Bounds object.
-   * 
+   *
    * @param minX
    *          Minimum x value.
    * @param minY
@@ -121,7 +126,7 @@ public class Bounds
 
   /**
    * Returns the center point of this {@link Bounds} object.
-   * 
+   *
    * @return The cneter point of this {@link Bounds} object.
    */
   public Point2D getCenter()
@@ -131,7 +136,7 @@ public class Bounds
 
   /**
    * Returns the y coordinate of the center of this {@link Bounds} object.
-   * 
+   *
    * @return The y coordinate of the cneter of this {@link Bounds} object.
    */
   public int getCenterX()
@@ -141,7 +146,7 @@ public class Bounds
 
   /**
    * Returns the x coordinate of the center of this {@link Bounds} object.
-   * 
+   *
    * @return The x coordinate of the cneter of this {@link Bounds} object.
    */
   public int getCenterY()
@@ -151,7 +156,7 @@ public class Bounds
 
   /**
    * Returns the minimum x value.
-   * 
+   *
    * @return The minimum x value.
    */
   public int getMinX()
@@ -161,7 +166,7 @@ public class Bounds
 
   /**
    * Returns the minimum y value.
-   * 
+   *
    * @return The minimum y value.
    */
   public int getMinY()
@@ -171,7 +176,7 @@ public class Bounds
 
   /**
    * Returns the maximum x value.
-   * 
+   *
    * @return The maximum x value.
    */
   public int getMaxX()
@@ -181,7 +186,7 @@ public class Bounds
 
   /**
    * Returns the maximum y value.
-   * 
+   *
    * @return The maximum y value.
    */
   public int getMaxY()
@@ -191,7 +196,7 @@ public class Bounds
 
   /**
    * Returns the area of this bounds object in pixels<sup>2</sup>.
-   * 
+   *
    * @return The area of this bounds object in pixels<sup>2</sup>.
    */
   public int area()
@@ -204,7 +209,7 @@ public class Bounds
 
   /**
    * Determine the percentage of this area overlapped by that bounds.
-   * 
+   *
    * @param that
    *          The bounds to compare with.
    * @return The percentage of overlap.
