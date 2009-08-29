@@ -19,6 +19,8 @@
 
 package com.fropsoft.obrik;
 
+import com.fropsoft.geometry.Bounds;
+import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
 
 /**
@@ -30,9 +32,20 @@ import com.fropsoft.geometry.Shape;
 public interface Item
 {
   /**
-   * Returns the shapes that made up this {@link Item}.
-   * 
+   * Returns the shapes that made up this {@link Item}. 
    * @return The shapes that make up this {@link Item}.
    */
   public Shape[] getShapes();
+  
+  /**
+   * Returns the position of this item.
+   * @return The position of this item.
+   */
+  public Point2D getPosition();
+  
+  /**
+   * Returns the bounding box of this item.
+   * @return The bounding box of this item.
+   */
+  public Bounds getBBox();
 }

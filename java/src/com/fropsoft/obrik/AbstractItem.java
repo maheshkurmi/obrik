@@ -19,6 +19,8 @@
 
 package com.fropsoft.obrik;
 
+import com.fropsoft.geometry.Bounds;
+import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
 
 /**
@@ -26,10 +28,11 @@ import com.fropsoft.geometry.Shape;
  */
 public abstract class AbstractItem implements Item
 {
-  /**
-   * The shapes that make up this Item.
-   */
+  /** The shapes that make up this Item. */
   protected Shape[] shapes;
+  
+  /** The bounding box of this item. */
+  protected Bounds bbox;
 
   /**
    * Adds the shapes to the protected {@link #shapes} array.
@@ -42,6 +45,7 @@ public abstract class AbstractItem implements Item
     this.shapes = new Shape[shapes.length];
     for (int i = 0; i < shapes.length; i++)
       this.shapes[i] = shapes[i];
+    this.bbox = Bounds.createFromShapes(shapes);
   }
 
   /* (non-Javadoc)
@@ -50,5 +54,21 @@ public abstract class AbstractItem implements Item
   public Shape[] getShapes()
   {
     return shapes;
+  }
+
+  /* (non-Javadoc)
+   * @see com.fropsoft.obrik.Item#getShapes()
+   */
+  public Point2D getPosition()
+  {
+    return bbox.getCenter();
+  }
+
+  /* (non-Javadoc)
+   * @see com.fropsoft.obrik.Item#getShapes()
+   */
+  public Bounds getBBox()
+  {
+    return bbox;
   }
 }
