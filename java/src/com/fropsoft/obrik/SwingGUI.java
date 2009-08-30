@@ -334,9 +334,10 @@ public class SwingGUI extends JPanel implements MouseListener,
    */
   public void drawItem(Graphics g, Item i)
   {
-    if (i.getClass() == ClosedRegion.class)
+    if (i instanceof ClosedRegion)
     {
-      Point2D[] points = ((ClosedRegion)i).getPoints();
+      ClosedRegion cr = (ClosedRegion)i;
+      Point2D[] points = cr.getPoints();
       int[] x = new int[points.length];
       int[] y = new int[points.length];
       for (int j = 0; j < points.length; j++)
@@ -344,6 +345,7 @@ public class SwingGUI extends JPanel implements MouseListener,
         x[j] = points[j].getX();
         y[j] = points[j].getY();
       }
+      g.setColor(cr.isAnchored() ? Color.green : Color.black);
       g.drawPolygon(x, y, points.length);
     }
     else
