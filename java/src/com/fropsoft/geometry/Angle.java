@@ -59,6 +59,26 @@ public class Angle
   }
 
   /**
+   * Gets the angle in [-pi,pi] to get from this angle to that angle.  A
+   * negative value means you must rotate counter-clockwise to get from this
+   * angle to that angle.  A positive value means a clockwise rotation.
+   *
+   * @param that
+   *          The "destination" angle.
+   * @return The angle from this to that.
+   */
+  public Angle angleTo(Angle that)
+  {
+    double diff = that.angle - this.angle;
+    if (diff > Math.PI)
+      return new Angle(diff - 2 * Math.PI);
+    else if (diff < -Math.PI)
+      return new Angle(2 * Math.PI + diff);
+    else
+      return new Angle(diff);
+  }
+
+  /**
    * Returns the double value of this angle.
    *
    * @return The double value of this angle.
@@ -66,5 +86,13 @@ public class Angle
   public double getValue()
   {
     return angle;
+  }
+
+  /*
+   */
+  @Override
+  public String toString()
+  {
+    return String.format("%.3fpi radians", angle / Math.PI);
   }
 }

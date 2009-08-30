@@ -163,8 +163,8 @@ public class Point2D
    *          The other point.
    * @return The vector to that point.
    */
-  public Point2D vectorTo(Point2D that)
+  public Point2D relativeTo(Point2D that)
   {
-    return new Point2D(that.x - this.x, that.y - this.y);
+    return new Point2D(this.x - that.x, this.y - that.y);
   }
 }

@@ -29,6 +29,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import com.fropsoft.geometry.Angle;
 import com.fropsoft.geometry.Point2D;
 
 /**
@@ -108,6 +109,43 @@ public class JBox2DDispatcher
     bodies.clear();
   }
 
+  private static Point2D[] reverseOrder(Point2D[] points)
+  {
+    Point2D tmp = null;
+    for (int i = 0; i < points.length / 2; i++)
+    {
+      int j = points.length - 1 - i;
+      tmp = points[i];
+      points[i] = points[j];
+      points[j] = tmp;
+    }
+    return points;
+  }
+
+  /**
+   * Gets a list of counter-clockwise points.  The order will be preserved,
+   * except it may be reversed.
+   *
+   * @param in
+   *          The points to make counter-clockwise.
+   * @return The counter-clockwise list of <code>in</code>.
+   */
+  private static Point2D[] createCClockwise(Point2D[] points, Point2D center)
+  {
+    double angleSum = 0;
+    for (int i = 0; i < points.length; i++)
+    {
+      int j = (i + 1) % points.length;
+      Angle a1 = center.angleTo(points[i]);
+      Angle a2 = center.angleTo(points[j]);
+      angleSum += a1.angleTo(a2).getValue();
+    }
+
+    if (angleSum < 0)
+      points = reverseOrder(points);
+    return points;
+  }
+
   /**
    * Loads an item into the dispatcher.
    *
@@ -133,9 +171,9 @@ public class JBox2DDispatcher
 
     // Create the shape/outline of the item.
     PolygonDef shapeDef = new PolygonDef();
-    Point2D[] points = cr.getPoints();
-    for (int i = points.length - 1; i >= 0; i--)
-      shapeDef.addVertex(toVec2(item.getPosition().vectorTo(points[i])));
+    Point2D[] points = createCClockwise(cr.getPoints(), cr.getPosition());
+    for (int i = 0; i < points.length; i++)
+      shapeDef.addVertex(toVec2(points[i].relativeTo(item.getPosition())));
     if (!cr.isAnchored())
     {
       shapeDef.density = 1.0f;
@@ -231,9 +269,6 @@ public class JBox2DDispatcher
         ClosedRegion cr = (ClosedRegion)b.getUserData();
         PolygonShape shape = (PolygonShape)b.getShapeList();
         cr.setPoints(toGlobalPoint2DArray(shape.getVertices(), b));
-        System.out.printf("%d: @(%.3f,%.3f) & (%.3f,%.3f)\n", i,
-                b.m_linearVelocity.x, b.m_linearVelocity.y,
-                shape.m_centroid.x, shape.m_centroid.y);
       }
     }
     return dirty;
