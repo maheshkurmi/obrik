@@ -19,14 +19,11 @@
 
 package com.fropsoft.obrik;
 
-import java.awt.Polygon;
-
 import java.util.Vector;
 
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.PolygonDef;
 import org.jbox2d.collision.PolygonShape;
-import org.jbox2d.collision.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -71,7 +68,7 @@ public class JBox2DDispatcher
    */
   public JBox2DDispatcher()
   {
-    this(8.0f, 0.0f);
+    this(-5.0f, 0.0f);
   }
 
   /**
@@ -91,7 +88,7 @@ public class JBox2DDispatcher
 
     world = new World(new AABB(new Vec2(-100.0f, -100.0f),
                                new Vec2(100.0f, 100.0f)),
-                      new Vec2(0.0f, -10.0f), true);
+                      new Vec2(0.0f, -1.0f), true);
 
     BodyDef groundBodyDef = new BodyDef();
     groundBodyDef.position.set(0.0f, -100.0f);
@@ -137,8 +134,8 @@ public class JBox2DDispatcher
     // Create the shape/outline of the item.
     PolygonDef shapeDef = new PolygonDef();
     Point2D[] points = cr.getPoints();
-    for (int i = 0; i < points.length; i++)
-      shapeDef.addVertex(toVec2(points[i]));
+    for (int i = points.length - 1; i >= 0; i--)
+      shapeDef.addVertex(toVec2(item.getPosition().vectorTo(points[i])));
     if (!cr.isAnchored())
     {
       shapeDef.density = 1.0f;
@@ -187,6 +184,23 @@ public class JBox2DDispatcher
   }
 
   /**
+   * Creates a new {@link Point2D} array from the {@link Vec2} array.
+   *
+   * @param vecs
+   *          The JBox2D vectors.
+   * @param b
+   *          The body whose frame the points are in.
+   * @return The obrik points.
+   */
+  public Point2D[] toGlobalPoint2DArray(Vec2[] vecs, Body b)
+  {
+    Point2D[] points = new Point2D[vecs.length];
+    for (int i = 0; i < vecs.length; i++)
+      points[i] = toPoint2D(b.getWorldPoint(vecs[i]));
+    return points;
+  }
+
+  /**
    * Convert the Obrik {@link Point2D} object into a JBox2D {@link Vec2}
    * object.
    * @param vec The Obrik representation.
@@ -206,15 +220,20 @@ public class JBox2DDispatcher
   {
     boolean dirty = false;
     world.step(timeStep, constraintChecks);
-    for (Body b : bodies)
+    for (int i = 0; i < bodies.size(); i++)
     {
+      Body b = bodies.get(i);
+
       // Check if there's an update to be done.
-      if (!b.isSleeping())
+      if (!b.isSleeping() || b.getUserData() != null)
       {
         dirty = true;
         ClosedRegion cr = (ClosedRegion)b.getUserData();
         PolygonShape shape = (PolygonShape)b.getShapeList();
-        cr.setPoints(toPoint2DArray(shape.getVertices()));
+        cr.setPoints(toGlobalPoint2DArray(shape.getVertices(), b));
+        System.out.printf("%d: @(%.3f,%.3f) & (%.3f,%.3f)\n", i,
+                b.m_linearVelocity.x, b.m_linearVelocity.y,
+                shape.m_centroid.x, shape.m_centroid.y);
       }
     }
     return dirty;
@@ -222,6 +241,9 @@ public class JBox2DDispatcher
 
   /**
    * Runs the JBox2D simulation for a few seconds.
+   * 
+   * @param secs
+   *          The amount of time to run this for.
    */
   public void quickRun(int secs)
   {
