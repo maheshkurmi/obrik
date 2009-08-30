@@ -109,9 +109,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
       return this.line == that.line && this.end != that.end;
     }
 
-    /*
-     * (non-Javadoc)
-     *
+    /* (non-Javadoc)
      * @see java.lang.Object.equals(Object)
      */
     @Override
@@ -138,12 +136,29 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
    */
   private class LinePool
   {
+    /** The sum of the probabilities of all the line end connections. */
     public double probSum;
+
+    /** The lines in this loop. */
     public Vector<Line> lines;
+
+    /** The root (start) line end. */
     public LineEnd root;
-    public LineEnd prev;
+
+    /** The most recently-added line end. */
     public LineEnd last;
 
+    /** The line end most recently added before #last. */
+    public LineEnd prev;
+
+    /**
+     * Creates a new line pool with the given root and the given max capacity.
+     *
+     * @param le
+     *          The root line end (where this starts from).
+     * @param startCapacity
+     *          The capacity that the line vector should start with.
+     */
     public LinePool(LineEnd le, int startCapacity)
     {
       probSum = 0;
@@ -152,13 +167,30 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
       root = prev = last = le;
     }
 
+    /**
+     * Determines whether this line end is valid, based on what the last and
+     * previous line ends are.
+     *
+     * @param le
+     *          The line end.
+     * @return <code>true</code> if it's possibly valid.
+     */
     public boolean isValidNext(LineEnd le)
     {
-      return le.line != last.line && !prev.equals(le);
+      return le.line != last.line && le.line != prev.line;
     }
 
+    /**
+     * Adds the given line end to the list.
+     */
     public void add(LineEnd le)
     {
+      if (lines.contains(le.line))
+      {
+        System.err.printf("That line is already a member.  size: %d  idx: %d\n",
+            lines.size(), lines.indexOf(le.line));
+        return;
+      }
       lines.add(le.line);
       prev = last;
       last = le.otherEnd();
@@ -204,7 +236,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
     // Exhaustive (naive) search.
     for (int s = 0; s < les.length; s++)  // s = starting line end
     {
-      LinePool pool = new LinePool(les[s], les.length);
+      LinePool pool = new LinePool(les[s], les.length / 2);
       boolean done = false;
       while (!done)
       {
@@ -233,9 +265,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
           // body.  This condition forces a pool.
           if (pool.lines.size() > 2)
           {
-            done = false;
             pool.probSum += maxProb;
-            pool.add(les[bestN]);
 
             // Loop done.
             if (les[bestN].isOtherEnd(pool.root))
@@ -244,6 +274,11 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
               lines = pool.lines.toArray(lines);
               setItem(new ClosedRegion(lines));
               return pool.probSum / pool.lines.size();
+            }
+            else
+            {
+              done = false;
+              pool.add(les[bestN]);
             }
           }
           else if (!les[bestN].isOtherEnd(pool.root))
