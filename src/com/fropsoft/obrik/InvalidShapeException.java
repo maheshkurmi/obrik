@@ -17,35 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "points.h"
+package com.fropsoft.obrik;
 
-using namespace fropsoft::geometry;
-
-Point2D::Point2D(int x, int y) :
-        x(x), y(y) {}
-
-int Point2D::getX()
+/**
+ * Thrown when a shape is requested to be made that can't be made.
+ *
+ * @author jamoozy
+ */
+public class InvalidShapeException extends Exception
 {
-  return x;
-}
+  /** To shut eclipse up. */
+  private static final long serialVersionUID = 1L;
 
-int Point2D::getY()
-{
-  return y;
-}
-
-Point2DT::Point2DT(int x, int y, long t) :
-        Point2D(x, y), t(t) {}
-
-long Point2DT::getT()
-{
-  return t;
-}
-
-Point2DTV::Point2DTV(int x, int y, long t, double v) :
-        Point2DT(x, y, t), v(v) {}
-
-int Point2DTV::getV()
-{
-  return v;
+  /** Creates a new invalid shape exception. */
+  public InvalidShapeException(String msg)
+  {
+    super(msg);
+  }
 }
