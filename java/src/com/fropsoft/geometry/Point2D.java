@@ -156,4 +156,15 @@ public class Point2D
     this.x = x;
     this.y = y;
   }
+
+  /**
+   * Gets the vector (in point form) to that point.
+   * @param that
+   *          The other point.
+   * @return The vector to that point.
+   */
+  public Point2D vectorTo(Point2D that)
+  {
+    return new Point2D(that.x - this.x, that.y - this.y);
+  }
 }
