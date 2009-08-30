@@ -92,7 +92,7 @@ public class ClosedRegion extends AbstractItem
 
     startPoints = new Point2D[lines.length];
     for (int i = 0; i < points.length; i++)
-      points[i] = startPoints[i].clone();
+      startPoints[i] = points[i].clone();
   }
 
   /**
@@ -137,7 +137,6 @@ public class ClosedRegion extends AbstractItem
   /* (non-Javadoc)
    * @see com.fropsoft.obrik.Item#resetPosition()
    */
-  @Override
   public void resetPosition()
   {
     super.resetPosition();
