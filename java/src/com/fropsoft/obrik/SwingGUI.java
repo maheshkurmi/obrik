@@ -22,12 +22,15 @@ package com.fropsoft.obrik;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -107,6 +110,88 @@ public class SwingGUI extends JPanel implements MouseListener,
     setBackground(Color.white);
     setOpaque(true);
     setBorder(BorderFactory.createLineBorder(Color.white));
+
+    JButton run = new JButton("Run");
+    run.setAction(new AbstractAction()
+    {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+        SwingGUI.this.startSim();
+      }
+    });
+
+    JButton stop = new JButton("Run");
+    stop.setAction(new AbstractAction()
+    {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+        SwingGUI.this.stopSim();
+      }
+    });
+
+    add(run);
+    add(stop);
+  }
+
+  /**
+   * Start the simulation.
+   */
+  public void startSim()
+  {
+    // Initialize the simulation.
+    SwingUtilities.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        state.initSim();
+      }
+    });
+
+    // Perform a step in the simulation.
+    SwingUtilities.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        doSimStep();
+      }
+    });
+  }
+
+  public void doSimStep()
+  {
+    if (state.simShouldRun())
+    {
+      // actually do something
+      if (state.doSimStep())
+      {
+        repaint();
+      }
+
+      // Queue up another sim step.
+      SwingUtilities.invokeLater(new Runnable()
+      {
+        public void run()
+        {
+          doSimStep();
+        }
+      });
+    }
+  }
+
+  /**
+   * Start the simulation.
+   */
+  public void stopSim()
+  {
+    SwingUtilities.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        state.destroySim();
+      }
+    });
   }
 
   /* (non-Javadoc)

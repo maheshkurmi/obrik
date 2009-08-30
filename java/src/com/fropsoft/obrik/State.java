@@ -313,4 +313,46 @@ public class State
   {
     return items.iterator();
   }
+
+  /** The simulation interface. */
+  private JBox2DDispatcher sim = null;
+
+  /**
+   * Initializes the simulation.
+   */
+  public void initSim()
+  {
+    if (sim != null) return;
+
+    sim = new JBox2DDispatcher();
+
+    Item[] items = new Item[this.items.size()];
+    sim.add(this.items.toArray(items));
+  }
+
+  /**
+   * Does one step in the simulation.
+   * @return Whether the screen needs to be repainted.
+   */
+  public boolean doSimStep()
+  {
+    return sim != null && sim.step();
+  }
+
+  /**
+   * Determines if the simulation is active.
+   * @return <code>true</code> if it is.
+   */
+  public boolean simShouldRun()
+  {
+    return sim != null;
+  }
+
+  /**
+   * Destroys the simulation.
+   */
+  public void destroySim()
+  {
+    sim = null;
+  }
 }
