@@ -38,14 +38,19 @@ import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
 
 /**
+ * A GUI for a web browser (applet).
  * @author jamoozy
- * 
  */
 public class SwingCanvas extends JPanel
         implements MouseListener, MouseMotionListener
 {
-  private final State state;
+  /** The state that will be populated. */
+  private State state;
 
+  /**
+   * 
+   * @param state
+   */
   public SwingCanvas(State state)
   {
     this.state = state;
@@ -56,6 +61,14 @@ public class SwingCanvas extends JPanel
     setBackground(Color.white);
     setOpaque(true);
     setBorder(BorderFactory.createLineBorder(Color.white));
+  }
+
+  /**
+   * 
+   */
+  public void destroy()
+  {
+    state = null;
   }
 
   /* (non-Javadoc)
