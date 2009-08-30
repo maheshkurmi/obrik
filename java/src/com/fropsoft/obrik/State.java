@@ -25,6 +25,8 @@ import java.util.Vector;
 import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
+import com.fropsoft.sketch.ActionRecognizerMain;
+import com.fropsoft.sketch.AnchorActionRecognizer;
 import com.fropsoft.sketch.AnchorRecognizer;
 import com.fropsoft.sketch.ClosedRegionRecognizer;
 import com.fropsoft.sketch.DotRecognizer;
@@ -56,6 +58,9 @@ public class State
 
   /** The item recognizer.  */
   private final ItemRecognizerMain irec;
+  
+  /** Global action recognizer. */
+  private final ActionRecognizerMain grec;
 
   /**
    * Create a new Obrik game state.
@@ -76,7 +81,8 @@ public class State
     // irec.add(new BoxRecognizer());
     irec.add(new AnchorRecognizer());
 
-    // TODO create and init a global recognizer.
+    grec = new ActionRecognizerMain();
+    grec.add(new AnchorActionRecognizer());
   }
 
   /**
@@ -280,17 +286,17 @@ public class State
         System.out.println("Probably a " + shape.getClass().getSimpleName());
         stroke = null;
 
-        if (shapes.size() > 0)
+        Shape[] tmp = new Shape[shapes.size()];
+        tmp = shapes.toArray(tmp);
+        Item item = irec.classify(tmp);
+
+        if (item != null)
         {
-          Shape[] tmp = new Shape[shapes.size()];
-          tmp = shapes.toArray(tmp);
-          Item item = irec.classify(tmp);
-          if (item != null)
-          {
-            removeItemsShapes(item);
-            items.add(item);
-            System.out.println("Probably a " + item.getClass().getSimpleName());
-          }
+          removeItemsShapes(item);
+          items.add(item);
+          System.out.println("Probably a " + item.getClass().getSimpleName());
+
+          grec.classify(items);
         }
         return true;
       }
@@ -324,6 +330,8 @@ public class State
   {
     if (sim != null) return;
 
+    System.out.println("initSim()");
+
     sim = new JBox2DDispatcher();
 
     Item[] items = new Item[this.items.size()];
@@ -353,6 +361,12 @@ public class State
    */
   public void destroySim()
   {
+    if (sim == null) return;
+
+    System.out.println("destroySim()");
+
+    for (Item i : items)
+      i.resetPosition();
     sim = null;
   }
 }
