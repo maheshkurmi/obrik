@@ -177,7 +177,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
      */
     public boolean isValidNext(LineEnd le)
     {
-      return le.line != last.line && le.line != prev.line;
+      return !lines.contains(le.line) || le.isOtherEnd(root);
     }
 
     /**
