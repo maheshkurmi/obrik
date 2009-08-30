@@ -103,6 +103,17 @@ public class SwingGUI extends JPanel
       }
     });
     run.setText("Run");
+    
+    JButton clear = new JButton("Clear");
+    clear.setAction(new AbstractAction()
+    {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+        SwingGUI.this.clear();
+      }
+    });
+    clear.setText("Clear");
 
     JButton reset = new JButton("Reset");
     reset.setAction(new AbstractAction()
@@ -123,9 +134,23 @@ public class SwingGUI extends JPanel
     run.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     reset.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     p.add(run);
-    p.add(Box.createRigidArea(new Dimension(150,10)));
+    p.add(Box.createRigidArea(new Dimension(70,10)));
+    p.add(clear);
+    p.add(Box.createRigidArea(new Dimension(70,10)));
     p.add(reset);
     add(p);
+  }
+
+  /**
+   * Clears everything from Obrik, stops the simulation (if need be) and
+   * repaints the screen. 
+   */
+  private void clear()
+  {
+    if (state.simShouldRun())
+      stopSim();
+    state.clearAll();
+    repaint();
   }
 
   /**

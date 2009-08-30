@@ -54,7 +54,7 @@ public class WebGUI extends JApplet
   public void init()
   {
     super.init();
-    resize(400, 500);
+    resize(400, 430);
 
     state = new State();
     canvas = new SwingCanvas(state);
@@ -69,8 +69,19 @@ public class WebGUI extends JApplet
       }
     });
     run.setText("Run");
+    
+    JButton clear = new JButton("Clear");
+    clear.setAction(new AbstractAction()
+    {
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+        WebGUI.this.clear();
+      }
+    });
+    clear.setText("Clear");
 
-    JButton reset = new JButton("Run");
+    JButton reset = new JButton("Reset");
     reset.setAction(new AbstractAction()
     {
       @Override
@@ -83,16 +94,19 @@ public class WebGUI extends JApplet
 
     Insets insets = new Insets(0, 0, 0, 0);
     GridBagLayout layout = new GridBagLayout();
-    layout.setConstraints(canvas, new GridBagConstraints(0, 0, 2, 1, 1, 1,
+    layout.setConstraints(canvas, new GridBagConstraints(0, 0, 3, 1, 1, 1,
             GridBagConstraints.BASELINE, 0, insets, 0, 0));
     layout.setConstraints(run, new GridBagConstraints(0, 1, 1, 1, 1, 1,
-            GridBagConstraints.BASELINE, 0, insets, 0, 0));
-    layout.setConstraints(reset, new GridBagConstraints(1, 1, 1, 1, 1, 1,
+        GridBagConstraints.BASELINE, 0, insets, 0, 0));
+    layout.setConstraints(clear, new GridBagConstraints(1, 1, 1, 1, 1, 1,
+        GridBagConstraints.BASELINE, 0, insets, 0, 0));
+    layout.setConstraints(reset, new GridBagConstraints(2, 1, 1, 1, 1, 1,
             GridBagConstraints.BASELINE, 0, insets, 0, 0));
     setLayout(layout);
 
     add(canvas);
     add(run);
+    add(clear);
     add(reset);
   }
 
@@ -122,6 +136,14 @@ public class WebGUI extends JApplet
   {
     state = null;
     canvas.destroy();
+  }
+  
+  private void clear()
+  {
+    if (state.simShouldRun())
+      stopSim();
+    state.clearAll();
+    repaint();
   }
 
   private void startSim()
@@ -167,6 +189,7 @@ public class WebGUI extends JApplet
 
   private void stopSim()
   {
-    state.destroySim();
+    if (state != null)
+      state.destroySim();
   }
 }

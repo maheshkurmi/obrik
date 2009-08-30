@@ -86,6 +86,17 @@ public class State
   }
 
   /**
+   * Removes all items and strokes from Obrik, effictively resetting it.
+   */
+  public void clearAll()
+  {
+    points.clear();
+    stroke = null;
+    shapes.clear();
+    items.clear();
+  }
+
+  /**
    * Mouse clicked at (x,y).
    *
    * @param x
