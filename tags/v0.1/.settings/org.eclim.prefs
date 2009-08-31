@@ -1,5 +1,0 @@
-#Thu Aug 20 09:42:54 EDT 2009
-eclipse.preferences.version=1
-org.eclim.java.compile.sourcepath=src
-org.eclim.java.run.mainclass=com.fropsoft.obrik.SwingGUI
-org.eclim.project.copyright=COPYING
