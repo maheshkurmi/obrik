@@ -62,7 +62,6 @@ public class WebGUI extends JApplet
     JButton run = new JButton("Run");
     run.setAction(new AbstractAction()
     {
-      @Override
       public void actionPerformed(ActionEvent e)
       {
         WebGUI.this.startSim();
@@ -73,7 +72,6 @@ public class WebGUI extends JApplet
     JButton clear = new JButton("Clear");
     clear.setAction(new AbstractAction()
     {
-      @Override
       public void actionPerformed(ActionEvent e)
       {
         WebGUI.this.clear();
@@ -84,7 +82,6 @@ public class WebGUI extends JApplet
     JButton reset = new JButton("Reset");
     reset.setAction(new AbstractAction()
     {
-      @Override
       public void actionPerformed(ActionEvent e)
       {
         WebGUI.this.stopSim();

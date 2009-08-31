@@ -37,7 +37,6 @@ public abstract class AbstractActionRecognizer implements ActionRecognizer
   /* (non-Javadoc)
    * @see com.fropsoft.sketch.ActionRecognizer#act(java.util.Vector)
    */
-  @Override
   public void act(Vector<Item> items)
   {
     // TODO Auto-generated method stub

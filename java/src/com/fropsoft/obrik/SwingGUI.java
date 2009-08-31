@@ -96,7 +96,6 @@ public class SwingGUI extends JPanel
     JButton run = new JButton("Run");
     run.setAction(new AbstractAction()
     {
-      @Override
       public void actionPerformed(ActionEvent e)
       {
         SwingGUI.this.startSim();
@@ -107,7 +106,6 @@ public class SwingGUI extends JPanel
     JButton clear = new JButton("Clear");
     clear.setAction(new AbstractAction()
     {
-      @Override
       public void actionPerformed(ActionEvent e)
       {
         SwingGUI.this.clear();
@@ -118,7 +116,6 @@ public class SwingGUI extends JPanel
     JButton reset = new JButton("Reset");
     reset.setAction(new AbstractAction()
     {
-      @Override
       public void actionPerformed(ActionEvent e)
       {
         SwingGUI.this.stopSim();

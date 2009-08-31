@@ -19,11 +19,10 @@
 
 package com.fropsoft.sketch;
 
-import com.fropsoft.obrik.ClosedRegion;
-
 import java.util.Vector;
 
 import com.fropsoft.obrik.Anchor;
+import com.fropsoft.obrik.ClosedRegion;
 import com.fropsoft.obrik.Item;
 
 /**
@@ -46,7 +45,6 @@ public class AnchorActionRecognizer extends AbstractActionRecognizer
   /* (non-Javadoc)
    * @see com.fropsoft.sketch.ActionRecognizer#gauge(java.util.Vector)
    */
-  @Override
   public double gauge(Vector<Item> items)
   {
     return gaugeOrAct(items, Action.GAUGE);
