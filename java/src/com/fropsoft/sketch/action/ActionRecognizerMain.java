@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.action;
 
 import java.util.Vector;
 
@@ -29,19 +29,19 @@ import com.fropsoft.obrik.Item;
  *
  * @author jamoozy
  */
-public class ItemRecognizerMain
+public class ActionRecognizerMain
 {
   /**
    * The list of recognizers that this recognizer uses to recognize.
    */
-  private final Vector<ItemRecognizer> recognizers;
+  private final Vector<ActionRecognizer> recognizers;
 
   /**
    * Creates a new, empty recognizer.
    */
-  public ItemRecognizerMain()
+  public ActionRecognizerMain()
   {
-    recognizers = new Vector<ItemRecognizer>();
+    recognizers = new Vector<ActionRecognizer>();
   }
 
   /**
@@ -50,7 +50,7 @@ public class ItemRecognizerMain
    *
    * @param r The shape recognizer to add.
    */
-  public void add(ItemRecognizer r)
+  public void add(ActionRecognizer r)
   {
     recognizers.add(r);
   }
@@ -62,14 +62,14 @@ public class ItemRecognizerMain
    * @param shapes The shapes to evaluate.
    * @return The item corresponding to the most probable match.
    */
-  public Item classify(Shape... shapes)
+  public void classify(Vector<Item> items)
   {
     double prob = 0;
     int high = -1;
     for (int i = 0; i < recognizers.size(); i++)
     {
-      ItemRecognizer r = recognizers.get(i);
-      double next = r.gauge(shapes);
+      ActionRecognizer r = recognizers.get(i);
+      double next = r.gauge(items);
       System.out.printf("%s: %1.3f\n", r.getClass().getSimpleName(), next);
       if (next > prob)
       {
@@ -78,9 +78,11 @@ public class ItemRecognizerMain
       }
     }
 
-    if (prob <= 0)
-      return null;
-
-    return recognizers.get(high).getItem(shapes);
+    if (prob > 0)
+    {
+      System.out.printf("Doing %s action.\n",
+              recognizers.get(high).getClass().getSimpleName());
+      recognizers.get(high).act(items);
+    }
   }
 }

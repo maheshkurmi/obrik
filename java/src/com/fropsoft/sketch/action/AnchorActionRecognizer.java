@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.action;
 
 import java.util.Vector;
 

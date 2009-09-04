@@ -17,29 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.action;
 
 import java.util.Vector;
 
 import com.fropsoft.obrik.Item;
 
 /**
- * @author jamoozy
+ * Global recognizers take a look at items and how they relate to one another,
+ * and either "correct" how items were recognized or combine things on top of
+ * one another (for example when you draw an X on a closed region).
  *
+ * @author jamoozy
  */
-public abstract class AbstractActionRecognizer implements ActionRecognizer
+public interface ActionRecognizer
 {
-  protected void addRemoval(Item item)
-  {
-    
-  }
-
-  /* (non-Javadoc)
-   * @see com.fropsoft.sketch.ActionRecognizer#act(java.util.Vector)
+  /**
+   * Computes the probability this recognizer's associated action was met.
+   * 
+   * @param items
+   *          The items currently recognized.
+   * @return The "probability" this needs to act.
    */
-  public void act(Vector<Item> items)
-  {
-    // TODO Auto-generated method stub
-
-  }
+  public double gauge(Vector<Item> items);
+  
+  /**
+   * Acts on the list of items.
+   * 
+   * @param items
+   *          The items to act on.
+   */
+  public void act(Vector<Item> items);
 }

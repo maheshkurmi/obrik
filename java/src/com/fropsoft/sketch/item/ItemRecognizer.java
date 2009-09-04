@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.item;
 
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.obrik.Item;
@@ -25,7 +25,7 @@ import com.fropsoft.obrik.Item;
 /**
  * This is the interface for a class that recognizes items given a list of
  * shapes.
- *
+ * 
  * @author jamoozy
  */
 public interface ItemRecognizer
@@ -34,7 +34,7 @@ public interface ItemRecognizer
    * Gauges the probability that the list of passed shapes contains the item
    * this recognizer corresponds to. This function is expected to exhaustively
    * search the list for combinations of shapes that make up this
-   *
+   * 
    * @return The probability that some combination of shapes is this item.
    */
   public double gauge(Shape... shapes);
@@ -45,10 +45,10 @@ public interface ItemRecognizer
    * execution, call getItem immediately after the call to
    * {@link ItemRecognizerMain#classify(Shape...)} as {@link #gauge(Shape...)}
    * will store the result locally.
-   *
+   * 
    * @param shapes
    *          A list of recognized shapes.
-   *
+   * 
    * @return An item found in the list of shapes.
    * @throws NoItemFoundException
    *           If the item could not be found in the strokes.

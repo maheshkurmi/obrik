@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.item;
 
 import java.util.Vector;
 
@@ -26,31 +26,31 @@ import com.fropsoft.obrik.Item;
 
 /**
  * This class recognizes items given a list of shapes.
- *
+ * 
  * @author jamoozy
  */
-public class ActionRecognizerMain
+public class ItemRecognizerMain
 {
   /**
    * The list of recognizers that this recognizer uses to recognize.
    */
-  private final Vector<ActionRecognizer> recognizers;
+  private final Vector<ItemRecognizer> recognizers;
 
   /**
    * Creates a new, empty recognizer.
    */
-  public ActionRecognizerMain()
+  public ItemRecognizerMain()
   {
-    recognizers = new Vector<ActionRecognizer>();
+    recognizers = new Vector<ItemRecognizer>();
   }
 
   /**
    * Adds the passed item recognizer to the list of recognizers this will query
    * on the next call to {@link #classify(Shape...)}.
-   *
+   * 
    * @param r The shape recognizer to add.
    */
-  public void add(ActionRecognizer r)
+  public void add(ItemRecognizer r)
   {
     recognizers.add(r);
   }
@@ -58,18 +58,18 @@ public class ActionRecognizerMain
   /**
    * Queries all registered recognizers and returns the item corresponding to
    * the most probable match in the list.
-   *
+   * 
    * @param shapes The shapes to evaluate.
    * @return The item corresponding to the most probable match.
    */
-  public void classify(Vector<Item> items)
+  public Item classify(Shape... shapes)
   {
     double prob = 0;
     int high = -1;
     for (int i = 0; i < recognizers.size(); i++)
     {
-      ActionRecognizer r = recognizers.get(i);
-      double next = r.gauge(items);
+      ItemRecognizer r = recognizers.get(i);
+      double next = r.gauge(shapes);
       System.out.printf("%s: %1.3f\n", r.getClass().getSimpleName(), next);
       if (next > prob)
       {
@@ -78,11 +78,9 @@ public class ActionRecognizerMain
       }
     }
 
-    if (prob > 0)
-    {
-      System.out.printf("Doing %s action.\n",
-              recognizers.get(high).getClass().getSimpleName());
-      recognizers.get(high).act(items);
-    }
+    if (prob <= 0)
+      return null;
+
+    return recognizers.get(high).getItem(shapes);
   }
 }

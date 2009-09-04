@@ -17,54 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.action;
 
-import com.fropsoft.geometry.Shape;
+import java.util.Vector;
+
 import com.fropsoft.obrik.Item;
 
 /**
- * A convenience class that handles the item handling of a class that
- * implements {@link ItemRecognizer}.
- *
  * @author jamoozy
+ *
  */
-public abstract class AbstractItemRecognizer implements ItemRecognizer
+public abstract class AbstractActionRecognizer implements ActionRecognizer
 {
-  /** The item that was found on the last call to {@link #gauge(Shape...)}.  */
-  private Item item;
-
-  /**
-   * Sets the item.
-   *
-   * @param item The item.
-   */
-  protected void setItem(Item item)
+  protected void addRemoval(Item item)
   {
-    this.item = item;
-  }
-
-  /**
-   * Returns the item.
-   *
-   * @return The item.
-   */
-  protected Item getItem()
-  {
-    return item;
+    
   }
 
   /* (non-Javadoc)
-   * @see
-   * com.fropsoft.sketch.ItemRecognizer#getItem(com.fropsoft.geometry.Shape[])
+   * @see com.fropsoft.sketch.ActionRecognizer#act(java.util.Vector)
    */
-  public Item getItem(Shape... shapes)
+  public void act(Vector<Item> items)
   {
-    if (item != null)
-      return item;
+    // TODO Auto-generated method stub
 
-    if (gauge(shapes) <= 0)
-      throw new NoItemFoundException(" ");
-
-    return item;
   }
 }

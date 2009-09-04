@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.shape;
 
 import java.util.Iterator;
 
@@ -30,12 +30,14 @@ import com.fropsoft.geometry.Stroke;
 
 /**
  * Recognizes a Line.
- *
+ * 
  * @author jamoozy
  */
 public class LineRecognizer implements ShapeRecognizer
 {
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see
    * com.fropsoft.sketch.ShapeRecognizer#gague(com.fropsoft.geometry.Stroke)
    */
@@ -70,7 +72,9 @@ public class LineRecognizer implements ShapeRecognizer
     return 1 - (minAngle.angleBetween(maxAngle).getValue() / Math.PI);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see
    * com.fropsoft.sketch.ShapeRecognizer#makeShape(com.fropsoft.geometry.Stroke)
    */

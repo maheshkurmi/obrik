@@ -17,35 +17,56 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.item;
 
-import java.util.Vector;
-
+import com.fropsoft.geometry.Shape;
 import com.fropsoft.obrik.Item;
 
 /**
- * Global recognizers take a look at items and how they relate to one another,
- * and either "correct" how items were recognized or combine things on top of
- * one another (for example when you draw an X on a closed region).
- *
+ * 
  * @author jamoozy
  */
-public interface ActionRecognizer
+public abstract class AbstractItemRecognizer implements ItemRecognizer
 {
   /**
-   * Computes the probability this recognizer's associated action was met.
-   * 
-   * @param items
-   *          The items currently recognized.
-   * @return The "probability" this needs to act.
+   * The item that was found on the last call to {@link #gauge(Shape...)}.
    */
-  public double gauge(Vector<Item> items);
-  
+  private Item item;
+
   /**
-   * Acts on the list of items.
+   * Sets the item.
    * 
-   * @param items
-   *          The items to act on.
+   * @param item The item.
    */
-  public void act(Vector<Item> items);
+  protected void setItem(Item item)
+  {
+    this.item = item;
+  }
+
+  /**
+   * Returns the item.
+   * 
+   * @return The item.
+   */
+  protected Item getItem()
+  {
+    return item;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fropsoft.sketch.ItemRecognizer#getItem(com.fropsoft.geometry.Shape[])
+   */
+  public Item getItem(Shape... shapes)
+  {
+    if (item != null)
+      return item;
+
+    if (gauge(shapes) <= 0)
+      throw new NoItemFoundException(" ");
+
+    return item;
+  }
 }

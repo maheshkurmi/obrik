@@ -25,14 +25,14 @@ import java.util.Vector;
 import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
-import com.fropsoft.sketch.ActionRecognizerMain;
-import com.fropsoft.sketch.AnchorActionRecognizer;
-import com.fropsoft.sketch.AnchorRecognizer;
-import com.fropsoft.sketch.ClosedRegionRecognizer;
-import com.fropsoft.sketch.DotRecognizer;
-import com.fropsoft.sketch.ItemRecognizerMain;
-import com.fropsoft.sketch.LineRecognizer;
-import com.fropsoft.sketch.ShapeRecognizerMain;
+import com.fropsoft.sketch.action.ActionRecognizerMain;
+import com.fropsoft.sketch.action.AnchorActionRecognizer;
+import com.fropsoft.sketch.item.AnchorRecognizer;
+import com.fropsoft.sketch.item.ItemRecognizerMain;
+import com.fropsoft.sketch.shape.ClosedRegionRecognizer;
+import com.fropsoft.sketch.shape.DotRecognizer;
+import com.fropsoft.sketch.shape.LineRecognizer;
+import com.fropsoft.sketch.shape.ShapeRecognizerMain;
 
 /**
  * Keeps track of the state of the Obrik "game".

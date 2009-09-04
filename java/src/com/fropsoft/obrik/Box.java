@@ -22,7 +22,7 @@ package com.fropsoft.obrik;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.sketch.BoxRecognizer;
+import com.fropsoft.sketch.shape.BoxRecognizer;
 
 /**
  * A box is a closed loop of lines.

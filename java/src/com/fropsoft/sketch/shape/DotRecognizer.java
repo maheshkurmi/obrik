@@ -17,26 +17,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.shape;
 
-/**
- * Thrown when a call to
- * {@link ItemRecognizer#getItem(com.fropsoft.geometry.Shape...)} cannot find an
- * item in the shape list.
- *
- * @author jamoozy
- */
-public class NoItemFoundException extends RuntimeException
+import com.fropsoft.geometry.Dot;
+import com.fropsoft.geometry.Shape;
+import com.fropsoft.geometry.Stroke;
+
+public class DotRecognizer implements ShapeRecognizer
 {
-  /** To shut eclipse up. */
-  private static final long serialVersionUID = 2L;
-
-  /**
-   * Creates a new no item found exception.
-   * @param msg A brief description.
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * com.fropsoft.sketch.ShapeRecognizer#gague(com.fropsoft.geometry.Stroke)
    */
-  public NoItemFoundException(String msg)
+  public double gauge(Stroke stroke)
   {
-    super(msg);
+    if (stroke.numPoints() < 4)
+      return 1.0;
+    
+    return 1.0 / stroke.numPoints();
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fropsoft.sketch.ShapeRecognizer#getShape()
+   */
+  public Shape makeShape(Stroke stroke)
+  {
+    return new Dot(stroke);
   }
 }

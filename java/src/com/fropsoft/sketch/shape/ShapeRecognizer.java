@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.sketch;
+package com.fropsoft.sketch.shape;
 
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.geometry.Stroke;
@@ -27,19 +27,19 @@ import com.fropsoft.geometry.Stroke;
  * that implement this must have a corresponding class that implements the
  * {@link Shape} interface. That corresponding class is expected to be returned
  * by the {@link #makeShape(Stroke)} method.
- *
+ * 
  * @author jamoozy
- *
+ * 
  * @see {@link Shape}, {@link ShapeRecognizerMain}
  */
 public interface ShapeRecognizer
 {
   /**
    * Classifies the passed stroke set as this shape.
-   *
+   * 
    * @param stroke
    *          The stroke to classify.
-   *
+   * 
    * @return The probability the stroke is this shape.
    */
   public double gauge(Stroke stroke);
@@ -47,10 +47,10 @@ public interface ShapeRecognizer
   /**
    * After a call to {@link #gauge(Stroke)}, this function will return the Shape
    * representation of that stroke.
-   *
+   * 
    * @param stroke
    *          The stroke that was recognized as this shape.
-   *
+   * 
    * @return A shape representation of the stroke object.
    */
   public Shape makeShape(Stroke stroke);
