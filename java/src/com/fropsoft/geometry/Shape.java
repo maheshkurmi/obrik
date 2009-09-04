@@ -19,7 +19,7 @@
 
 package com.fropsoft.geometry;
 
-import com.fropsoft.obrik.Item;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * Interface that all shapes share. In Obrik, shapes are just that, shapes. A

@@ -21,9 +21,9 @@ package com.fropsoft.sketch.action;
 
 import java.util.Vector;
 
-import com.fropsoft.obrik.Anchor;
-import com.fropsoft.obrik.ClosedRegion;
-import com.fropsoft.obrik.Item;
+import com.fropsoft.obrik.item.Anchor;
+import com.fropsoft.obrik.item.ClosedRegion;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * @author jamoozy

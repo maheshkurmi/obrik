@@ -17,38 +17,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.item;
 
-import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Bounds;
 import com.fropsoft.geometry.Point2D;
+import com.fropsoft.geometry.Shape;
 
 /**
- * Looks like an X.
+ * An {@link Item} is something that exists on the Obrik canvas that has
+ * meaning.
  *
  * @author jamoozy
  */
-public class Anchor extends AbstractItem
+public interface Item
 {
   /**
-   * The point of intersection of the lines that make up this anchor.
+   * Returns the shapes that made up this {@link Item}.
+   * @return The shapes that make up this {@link Item}.
    */
-  private final Point2D center;
+  public Shape[] getShapes();
 
   /**
-   * Creates a new Anchor made up of these two lines.
+   * Returns the position of this item.
+   * @return The position of this item.
    */
-  public Anchor(Line l1, Line l2)
-  {
-    super(l1, l2);
-    center = Line.intersection(l1, l2);
-  }
+  public Point2D getPosition();
 
   /**
-   * Get the center point of this anchor. The center point is defined as the
-   * point where the two lines that make this line cross.
+   * Returns the bounding box of this item.
+   * @return The bounding box of this item.
    */
-  public Point2D getCenter()
-  {
-    return center;
-  }
+  public Bounds getBBox();
+
+  /**
+   * Updates the Position of this item.
+   */
+  public void updatePosition(Point2D point);
+
+  /**
+   * Resets the position of this object to where it was drawn.
+   */
+  public void resetPosition();
 }

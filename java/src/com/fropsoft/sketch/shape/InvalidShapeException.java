@@ -17,45 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
-
-import com.fropsoft.geometry.Bounds;
-import com.fropsoft.geometry.Point2D;
-import com.fropsoft.geometry.Shape;
+package com.fropsoft.sketch.shape;
 
 /**
- * An {@link Item} is something that exists on the Obrik canvas that has
- * meaning.
+ * Thrown when a shape is requested to be made that can't be made.
  *
  * @author jamoozy
  */
-public interface Item
+public class InvalidShapeException extends Exception
 {
-  /**
-   * Returns the shapes that made up this {@link Item}.
-   * @return The shapes that make up this {@link Item}.
-   */
-  public Shape[] getShapes();
+  /** To shut eclipse up. */
+  private static final long serialVersionUID = 1L;
 
-  /**
-   * Returns the position of this item.
-   * @return The position of this item.
-   */
-  public Point2D getPosition();
-
-  /**
-   * Returns the bounding box of this item.
-   * @return The bounding box of this item.
-   */
-  public Bounds getBBox();
-
-  /**
-   * Updates the Position of this item.
-   */
-  public void updatePosition(Point2D point);
-
-  /**
-   * Resets the position of this object to where it was drawn.
-   */
-  public void resetPosition();
+  /** Creates a new invalid shape exception. */
+  public InvalidShapeException(String msg)
+  {
+    super(msg);
+  }
 }

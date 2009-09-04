@@ -17,29 +17,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.item;
 
-public class SWTGUI
+import com.fropsoft.geometry.Line;
+import com.fropsoft.geometry.Point2D;
+
+/**
+ * Looks like an X.
+ *
+ * @author jamoozy
+ */
+public class Anchor extends AbstractItem
 {
-  public static void main(String[] args)
+  /**
+   * The point of intersection of the lines that make up this anchor.
+   */
+  private final Point2D center;
+
+  /**
+   * Creates a new Anchor made up of these two lines.
+   */
+  public Anchor(Line l1, Line l2)
   {
-//    final Display display = new Display();
-//    final Shell shell = new Shell(display);
-//    shell.addPaintListener(new PaintListener()
-//    {
-//      public void paintControl(PaintEvent event)
-//      {
-//        Rectangle rect = shell.getClientArea();
-//        event.gc.drawOval(0, 0, rect.width - 1, rect.height - 1);
-//      }
-//    });
-//    shell.setBounds(10, 10, 200, 200);
-//    shell.open();
-//    while (!shell.isDisposed())
-//    {
-//      if (!display.readAndDispatch())
-//        display.sleep();
-//    }
-//    display.dispose();
+    super(l1, l2);
+    center = Line.intersection(l1, l2);
+  }
+
+  /**
+   * Get the center point of this anchor. The center point is defined as the
+   * point where the two lines that make this line cross.
+   */
+  public Point2D getCenter()
+  {
+    return center;
   }
 }

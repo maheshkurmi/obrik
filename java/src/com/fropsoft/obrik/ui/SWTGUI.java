@@ -17,21 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.ui;
 
-/**
- * Thrown when a shape is requested to be made that can't be made.
- *
- * @author jamoozy
- */
-public class InvalidShapeException extends Exception
+public class SWTGUI
 {
-  /** To shut eclipse up. */
-  private static final long serialVersionUID = 1L;
-
-  /** Creates a new invalid shape exception. */
-  public InvalidShapeException(String msg)
+  public static void main(String[] args)
   {
-    super(msg);
+//    final Display display = new Display();
+//    final Shell shell = new Shell(display);
+//    shell.addPaintListener(new PaintListener()
+//    {
+//      public void paintControl(PaintEvent event)
+//      {
+//        Rectangle rect = shell.getClientArea();
+//        event.gc.drawOval(0, 0, rect.width - 1, rect.height - 1);
+//      }
+//    });
+//    shell.setBounds(10, 10, 200, 200);
+//    shell.open();
+//    while (!shell.isDisposed())
+//    {
+//      if (!display.readAndDispatch())
+//        display.sleep();
+//    }
+//    display.dispose();
   }
 }

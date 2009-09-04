@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.ui;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,6 +30,8 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import com.fropsoft.obrik.State;
 
 /**
  * Sets up a Swing interface and creates and hooks into an Obrik {@link State}.

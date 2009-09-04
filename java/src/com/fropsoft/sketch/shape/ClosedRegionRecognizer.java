@@ -24,7 +24,7 @@ import java.util.Vector;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.ClosedRegion;
+import com.fropsoft.obrik.item.ClosedRegion;
 import com.fropsoft.sketch.item.AbstractItemRecognizer;
 
 /**

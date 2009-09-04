@@ -31,6 +31,8 @@ import org.jbox2d.dynamics.World;
 
 import com.fropsoft.geometry.Angle;
 import com.fropsoft.geometry.Point2D;
+import com.fropsoft.obrik.item.ClosedRegion;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * Meant to create and dispatch a JBox2D simulation. This acts as the bridge

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,6 +36,9 @@ import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Point2DT;
 import com.fropsoft.geometry.Shape;
+import com.fropsoft.obrik.State;
+import com.fropsoft.obrik.item.ClosedRegion;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * A GUI for a web browser (applet).

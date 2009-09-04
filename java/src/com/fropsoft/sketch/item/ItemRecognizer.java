@@ -20,7 +20,7 @@
 package com.fropsoft.sketch.item;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Item;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * This is the interface for a class that recognizes items given a list of

@@ -22,7 +22,7 @@ package com.fropsoft.sketch.item;
 import java.util.Vector;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Item;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * This class recognizes items given a list of shapes.

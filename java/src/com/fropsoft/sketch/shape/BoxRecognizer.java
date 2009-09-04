@@ -23,7 +23,7 @@ import java.util.Vector;
 
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Box;
+import com.fropsoft.obrik.item.Box;
 import com.fropsoft.sketch.item.AbstractItemRecognizer;
 
 /**

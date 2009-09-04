@@ -22,7 +22,7 @@ package com.fropsoft.sketch.item;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Anchor;
+import com.fropsoft.obrik.item.Anchor;
 
 /**
  * This recognizes anchors (that look like X's).

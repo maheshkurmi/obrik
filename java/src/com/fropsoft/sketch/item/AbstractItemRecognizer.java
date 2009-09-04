@@ -20,7 +20,7 @@
 package com.fropsoft.sketch.item;
 
 import com.fropsoft.geometry.Shape;
-import com.fropsoft.obrik.Item;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * 

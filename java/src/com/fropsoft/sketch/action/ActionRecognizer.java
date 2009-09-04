@@ -21,7 +21,7 @@ package com.fropsoft.sketch.action;
 
 import java.util.Vector;
 
-import com.fropsoft.obrik.Item;
+import com.fropsoft.obrik.item.Item;
 
 /**
  * Global recognizers take a look at items and how they relate to one another,

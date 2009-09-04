@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.item;
 
 import com.fropsoft.geometry.Bounds;
 import com.fropsoft.geometry.Point2D;

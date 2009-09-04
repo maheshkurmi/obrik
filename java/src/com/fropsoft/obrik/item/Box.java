@@ -17,12 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.fropsoft.obrik;
+package com.fropsoft.obrik.item;
 
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.sketch.shape.BoxRecognizer;
+import com.fropsoft.sketch.shape.InvalidShapeException;
 
 /**
  * A box is a closed loop of lines.
