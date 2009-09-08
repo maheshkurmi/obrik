@@ -91,9 +91,33 @@ public class State
    */
   public void clearAll()
   {
+    clearStroke();
+    clearShapes();
+    clearItems();
+  }
+
+  /**
+   * Clear the stroke (and points).
+   */
+  public void clearStroke()
+  {
     points.clear();
     stroke = null;
+  }
+
+  /**
+   * Clear the shapes.
+   */
+  public void clearShapes()
+  {
     shapes.clear();
+  }
+
+  /**
+   * Clear the items.
+   */
+  public void clearItems()
+  {
     items.clear();
   }
 
