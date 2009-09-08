@@ -19,9 +19,9 @@
 
 package com.fropsoft.obrik.rec;
 
-import com.fropsoft.obrik.item.Anchor;
-
 import java.io.PrintWriter;
+
+import com.fropsoft.obrik.item.Anchor;
 
 /**
  * @author jamoozy
@@ -40,8 +40,7 @@ public class AnchorEvent extends ItemRecognitionEvent
   public void record(PrintWriter out)
   {
     Anchor a = (Anchor)item;
-    StringBuffer buf = new StringBuffer();
     super.record(out, String.format("<point x=\"%d\" y=\"%d\" />",
-                  a.getCenter().getX(), a.getCenter.getY()));
+                  a.getCenter().getX(), a.getCenter().getY()));
   }
 }
