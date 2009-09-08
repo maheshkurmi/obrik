@@ -22,10 +22,12 @@ package com.fropsoft.obrik.ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -41,25 +43,33 @@ import com.fropsoft.obrik.item.ClosedRegion;
 import com.fropsoft.obrik.item.Item;
 
 /**
- * A GUI for a web browser (applet).
+ * A GUI for a web browser (in an <code>&lt;applet&gt;</code> tag).
  * @author jamoozy
  */
 public class SwingCanvas extends JPanel
         implements MouseListener, MouseMotionListener
 {
+  /** Shut up, Eclipse. */
+  private static final long serialVersionUID = 10L;
+
   /** The state that will be populated. */
   private State state;
 
+  /** Listeners that will be called after native ones. */ 
+  private Vector<MouseAdapter> adapters;
+
   /**
-   * 
+   * Creates a new canvas on top of the passed state.
    * @param state
+   *          The state this will access.
    */
   public SwingCanvas(State state)
   {
     this.state = state;
+    this.adapters = new Vector<MouseAdapter>();
 
-    addMouseListener(this);
-    addMouseMotionListener(this);
+    super.addMouseListener(this);
+    super.addMouseMotionListener(this);
 
     setBackground(Color.white);
     setOpaque(true);
@@ -67,7 +77,19 @@ public class SwingCanvas extends JPanel
   }
 
   /**
-   * 
+   * Adds a new adapter to this.  When a mouse event happens, the objects
+   * passed here will be guaranteed to be called after this does all its
+   * processing.
+   * @param a
+   *          The adapter to add.
+   */
+  public void addMouseAdapter(MouseAdapter a)
+  {
+    adapters.add(a);
+  }
+
+  /**
+   * Cleanup for WebGUI.
    */
   public void destroy()
   {
@@ -80,6 +102,8 @@ public class SwingCanvas extends JPanel
   public void mouseClicked(MouseEvent e)
   {
     state.mouseClicked(e.getX(), e.getY());
+    for (MouseAdapter l : adapters)
+      l.mouseClicked(e);
   }
 
   /* (non-Javadoc)
@@ -89,6 +113,8 @@ public class SwingCanvas extends JPanel
   {
     state.mouseEntered(e.getX(), e.getY(),
             e.getButton() != MouseEvent.NOBUTTON);
+    for (MouseAdapter l : adapters)
+      l.mouseEntered(e);
   }
 
   /* (non-Javadoc)
@@ -99,6 +125,8 @@ public class SwingCanvas extends JPanel
     repaint(e);
     state.mouseExited(e.getX(), e.getY(), e.getButton() != MouseEvent.NOBUTTON);
     invokeShapeRecognitionLater();
+    for (MouseAdapter l : adapters)
+      l.mouseExited(e);
   }
 
   /* (non-Javadoc)
@@ -108,6 +136,8 @@ public class SwingCanvas extends JPanel
   {
     repaint();
     state.mousePressed(e.getX(), e.getY());
+    for (MouseAdapter l : adapters)
+      l.mousePressed(e);
   }
 
   /* (non-Javadoc)
@@ -118,6 +148,7 @@ public class SwingCanvas extends JPanel
     repaint(e);
     state.mouseReleased(e.getX(), e.getY());
     invokeShapeRecognitionLater();
+    invokeMouseReleaseLater(e);
   }
 
   /**
@@ -135,6 +166,18 @@ public class SwingCanvas extends JPanel
     });
   }
 
+  private void invokeMouseReleaseLater(final MouseEvent e)
+  {
+    SwingUtilities.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        for (MouseAdapter l : adapters)
+          l.mousePressed(e);
+      }
+    });
+  }
+
   /* (non-Javadoc)
    * @see
    * java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
@@ -143,6 +186,8 @@ public class SwingCanvas extends JPanel
   {
     repaint(e);
     state.mouseDrag(e.getX(), e.getY());
+    for (MouseAdapter l : adapters)
+      l.mouseDragged(e);
   }
 
   /* (non-Javadoc)
@@ -152,6 +197,8 @@ public class SwingCanvas extends JPanel
   public void mouseMoved(MouseEvent e)
   {
     state.mouseMoved(e.getX(), e.getY());
+    for (MouseAdapter l : adapters)
+      l.mouseMoved(e);
   }
 
 
