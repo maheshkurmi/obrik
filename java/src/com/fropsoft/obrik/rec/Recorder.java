@@ -19,15 +19,17 @@
 
 package com.fropsoft.obrik.rec;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Vector;
+
 import com.fropsoft.geometry.Dot;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Shape;
-
 import com.fropsoft.obrik.item.Anchor;
 import com.fropsoft.obrik.item.ClosedRegion;
 import com.fropsoft.obrik.item.Item;
-
-import java.util.Vector;
 
 /**
  * @author jamoozy
@@ -35,14 +37,38 @@ import java.util.Vector;
 public class Recorder
 {
   /** The points of the current stroke. */
-  private Vector<UserEvent> events;
+  private final Vector<UserEvent> events;
+
+  /** Major version of Obrik. */
+  private final int v_maj;
+
+  /** Minor version of Obrik. */
+  private final int v_min;
 
   /**
    * Creates a new recorder.
    */
   public Recorder()
   {
+    // This is large, because there are sooooo many points.
     events = new Vector<UserEvent>(10000);
+    v_maj = 0;
+    v_min = 1;
+  }
+
+  /**
+   * Creates a new recorder for the given version of Obrik.
+   * @param major_verison
+   *          The major version of Obrik.
+   * @param minor_version
+   *          The minor version of Obrik.
+   */
+  public Recorder(int major_verison, int minor_version)
+  {
+    // This is large, because there are sooooo many points.
+    events = new Vector<UserEvent>(10000);
+    v_maj = major_verison;
+    v_min = minor_version;
   }
 
   /**
@@ -148,6 +174,38 @@ public class Recorder
     else
     {
       throw new RuntimeException("Don't know of " + i.getClass().getName());
+    }
+  }
+
+  /**
+   * Stores these events to a log file.  The log file's name is generated
+   * based on the current time.  This will not overwrite a file, it will just
+   * try another name.
+   */
+  public void storeToFile()
+  {
+    File file = null;
+    do
+    {
+      file = new File(String.format("%d-log.xml",
+                    System.currentTimeMillis()));
+    }
+    while (file.exists());
+
+    try
+    {
+      file.createNewFile();
+      PrintWriter out = new PrintWriter(file);
+      out.printf("<obrik version=\"%s.%s\">\n", v_maj, v_min);
+      for (UserEvent e : events)
+        e.record(out);
+      out.println("</obrik>");
+      out.close();
+    }
+    catch (IOException e)
+    {
+      System.err.println("Could not produce the file!");
+      e.printStackTrace();
     }
   }
 }

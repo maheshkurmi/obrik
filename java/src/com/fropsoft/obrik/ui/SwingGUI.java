@@ -83,6 +83,12 @@ public class SwingGUI extends JPanel
     // <http://java.sun.com/products/jfc/tsc/articles/threads/threads1.html>
   }
 
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // ------------------------- Non-static GUI ------------------------------- //
+  //////////////////////////////////////////////////////////////////////////////
+
   /**
    * The internal state of Obrik.
    */

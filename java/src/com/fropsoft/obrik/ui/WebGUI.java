@@ -23,6 +23,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JApplet;
@@ -30,6 +32,7 @@ import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
 import com.fropsoft.obrik.State;
+import com.fropsoft.obrik.rec.Recorder;
 
 /**
  * @author jamoozy
@@ -49,6 +52,9 @@ public class WebGUI extends JApplet
   /** Keeps track of whether this applet has focus. */
   private boolean hasFocus = true;
 
+  /** A log of this run. */
+  private Recorder recorder;
+
   /* (non-Javadoc)
    * @see java.applet.Applet#init()
    */
@@ -57,9 +63,32 @@ public class WebGUI extends JApplet
   {
     super.init();
     resize(400, 430);
+    recorder = new Recorder(0, 1);
 
     state = new State();
+
+    // Create the canvas
     canvas = new SwingCanvas(state);
+    canvas.addMouseListener(new MouseAdapter()
+    {
+      @Override
+      public void mouseDragged(MouseEvent e)
+      {
+        WebGUI.this.recorder.addPoint(e.getX(), e.getY());
+      }
+
+      @Override
+      public void mousePressed(MouseEvent e)
+      {
+        WebGUI.this.recorder.startStroke(e.getX(), e.getY());
+      }
+
+      @Override
+      public void mouseReleased(MouseEvent e)
+      {
+        WebGUI.this.recorder.endPoint(e.getX(), e.getY());
+      }
+    });
 
     JButton run = new JButton("Run");
     run.setAction(new AbstractAction()
@@ -134,11 +163,13 @@ public class WebGUI extends JApplet
   public void destroy()
   {
     state = null;
+    recorder.storeToFile();
     canvas.destroy();
   }
   
   private void clear()
   {
+    recorder.addClear();
     if (state.simShouldRun())
       stopSim();
     state.clearAll();
@@ -147,6 +178,7 @@ public class WebGUI extends JApplet
 
   private void startSim()
   {
+    recorder.addRun();
     state.initSim();
 
     // Perform a step in the simulation.
@@ -159,6 +191,9 @@ public class WebGUI extends JApplet
     });
   }
 
+  /**
+   * Takes one step through the simulation.
+   */
   private void stepSim()
   {
     if (!hasFocus)
@@ -188,6 +223,7 @@ public class WebGUI extends JApplet
 
   private void stopSim()
   {
+    recorder.addReset();
     if (state != null)
       state.destroySim();
   }
