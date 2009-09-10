@@ -34,6 +34,9 @@ public class FibonacciHeap<T>
   /** Map of objects --&gt; nodes. */
   private final HashMap<T,Node> map;
 
+  /** Minimum-valued node. */
+  private Node min;
+
   /**
    * Creates a new fibonacci heap.
    */
@@ -67,26 +70,20 @@ public class FibonacciHeap<T>
     for (int b = 0; b < buckets.size(); b++)
     {
       Vector<Node> bucket = buckets.get(b);
-      for (int i = 1; i < bucket.size(); i += 2)
+      while (bucket.size() > 1)
       {
-        Node node1 = bucket.remove(i-1);
-        Node node2 = bucket.remove(i);
+        Node node1 = bucket.remove(0);
+        Node node2 = bucket.remove(0);
         int comparison = node1.compareTo(node2);
         if (comparison < 0)
-        {
           node1.merge(node2);
-          addTo(b+1, node1);
-        }
         else
-        {
           node2.merge(node1);
-          addTo(b+1, node2);
-        }
       }
     }
 
     // Find the lowest root.
-    Node min = null;
+    min = null;
     for (Vector<Node> bucket : buckets)
       for (Node root : bucket)
         if (min == null || min.compareTo(root) > 0)
@@ -105,7 +102,12 @@ public class FibonacciHeap<T>
   public void update(int key, T obj)
   {
     Node node = map.get(obj);
-    node.key = key;
+    if (key < node.key)
+    {
+      node.key = key;
+      if (node.parent != null)
+        node.cut();
+    }
   }
 
   /**
@@ -115,21 +117,9 @@ public class FibonacciHeap<T>
    */
   private void remove(Node node)
   {
-    if (node.parent != null)
-    {
-      if (node.parent.first_kid == node)
-        node.parent.first_kid = node.right;
-      
-      if (node.parent.isMarked())
-      {
-
-      }
-      else
-      {
-        node.parent.sad = true;
-      }
-    }
-    // TODO finish me.
+    buckets.get(node.rank).remove(node);
+    while (node.first_kid != null)
+      node.first_kid.cut();
   }
 
   /**
@@ -170,6 +160,9 @@ public class FibonacciHeap<T>
 
     /** "left-most" child node. */
     Node first_kid = null;
+
+    /** Previous node with same parent. */
+    Node left = null;
 
     /** Next node with same parent. */
     Node right = null;
@@ -230,7 +223,7 @@ public class FibonacciHeap<T>
      */
     int compareTo(Node that)
     {
-      return that.key - this.key;
+      return this.key - that.key;
     }
 
     /**
@@ -240,10 +233,88 @@ public class FibonacciHeap<T>
      */
     void merge(Node that)
     {
+      if (this.first_kid != null)
+        this.first_kid.left = that;
       that.right = this.first_kid;
       this.first_kid = that;
       that.parent = this;
-      this.rank += that.rank + 1;
+      this.rank++;
+      FibonacciHeap.this.addTo(rank, this);
     }
+
+    /**
+     * Allow this node to mourn the loss of a child ::sniff:: ...
+     */
+    void mourn()
+    {
+      if (--rank < 0)
+        throw new RuntimeException("0 > rank = " + rank);
+      else if (parent == null)
+        sad = false;
+      else if (sad)
+        cut();
+      else
+        sad = true;
+    }
+
+    /**
+     * Cut this from its current tree, make it its own node.
+     */
+    void cut()
+    {
+      if (parent == null)
+        throw new RuntimeException("Root being cut.");
+
+      sad = false;
+      parent.mourn();
+      if (parent.first_kid == this)
+        parent.first_kid = right;
+      else
+        if (left != null)
+          left.right = right;
+      if (right != null)
+        right.left = left;
+      parent = null;
+
+      FibonacciHeap.this.addTo(rank, this);
+    }
+  }
+
+  /** For testing. */
+  public static void main(String[] args)
+  {
+    FibonacciHeap<String> fh = new FibonacciHeap<String>();
+    String[] str = new String[] { "John", "Mary", "Sue", "Ashley", "Andrew" };
+    
+    System.out.println("testing now");
+
+    fh.insert(20, str[0]);
+    fh.insert(60, str[1]);
+    fh.insert(60, str[2]);
+    fh.insert(40, str[3]);
+    fh.insert(10, str[4]);
+
+    String out = fh.deleteMin();
+    if (!out.equals(str[4]))
+      System.err.printf("Test 1 failed: %s for %s\n", out, str[4]);
+
+    fh.update(20, str[0]);
+    fh.update(20, str[1]);
+    fh.update(50, str[2]);
+    fh.update(10, str[3]);
+
+    out = fh.deleteMin();
+    if (!out.equals(str[3]))
+      System.err.printf("Test 2 failed: %s for %s\n", out, str[3]);
+
+    fh.update(10, str[0]);
+    fh.update(20, str[1]);
+    fh.update(30, str[2]);
+
+    out = fh.deleteMin();
+    if (!out.equals(str[0]))
+      System.err.printf("Test 3 failed: %s for %s\n", out, str[0]);
+
+    System.out.println("k done");
   }
 }
