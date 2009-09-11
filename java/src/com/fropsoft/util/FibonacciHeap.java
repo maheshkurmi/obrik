@@ -23,7 +23,10 @@ import java.util.HashMap;
 import java.util.Vector;
 
 /**
- * This is a data structure that gives O(1) inserts and O(log n) deletes.
+ * This is a data structure that gives O(1) inserts and O(log n) deletes
+ * (amortized).  I learned about it in "6.828 Advanced Algorithms" taught by
+ * David Karger.
+ *
  * @author jamoozy
  */
 public class FibonacciHeap<T>
@@ -191,17 +194,6 @@ public class FibonacciHeap<T>
     }
 
     /**
-     * Determines if this is marked (lost a child).
-     * @return Whether this has lost a child.
-     */
-    boolean isMarked()
-    {
-      if (parent == null)
-        sad = false;
-      return sad;
-    }
-
-    /**
      * Decreases the rank of this an its parents by delta.
      * @param delta
      *          The amount to decrease by.
@@ -258,7 +250,8 @@ public class FibonacciHeap<T>
     }
 
     /**
-     * Cut this from its current tree, make it its own node.
+     * Cut this from its current tree, make it its own node.  Throws a
+     * RuntimeException if this is a root node.
      */
     void cut()
     {
