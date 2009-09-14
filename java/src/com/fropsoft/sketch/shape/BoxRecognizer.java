@@ -21,6 +21,7 @@ package com.fropsoft.sketch.shape;
 
 import java.util.Vector;
 
+import com.fropsoft.geometry.AbstractShape;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Shape;
 import com.fropsoft.obrik.item.Box;
@@ -284,7 +285,7 @@ public class BoxRecognizer extends AbstractItemRecognizer
    */
   public double gauge(Shape... shapes)
   {
-    Line[] lines = Line.findLines(shapes);
+    Line[] lines = AbstractShape.findTypes((Line)null, shapes);
 
     Vector<LGNode> nodes = new Vector<LGNode>();
 

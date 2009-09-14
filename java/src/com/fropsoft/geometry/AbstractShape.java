@@ -29,6 +29,27 @@ import java.util.Vector;
 public class AbstractShape implements Shape
 {
   /**
+   * Find all the shapes of a specific type in an array of shapes.  So if you
+   * want all the lines in a list of shapes, you call:
+   * <code>AbstractShape.findTypes((Line)null, shapes)</code> 
+   *
+   * @param shapes
+   *          The shapes to search for something in.
+   * @return An array of the found shapes.
+   */
+  public static <T extends Shape> T[] findTypes(T shape, Shape... shapes)
+  {
+    int num = 0;
+    Shape[] ts = new Shape[shapes.length];
+    for (Shape s : shapes)
+      if (s instanceof Line)
+        ts[num++] = s;
+    Shape[] out = new Shape[num];
+    System.arraycopy(ts, 0, out, 0, num);
+    return (T[])ts;
+  }
+
+  /**
    * The strokes that make up this shape.
    */
   protected Vector<Stroke> strokes;

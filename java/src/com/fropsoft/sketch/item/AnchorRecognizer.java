@@ -19,6 +19,7 @@
 
 package com.fropsoft.sketch.item;
 
+import com.fropsoft.geometry.AbstractShape;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
@@ -74,7 +75,7 @@ public class AnchorRecognizer extends AbstractItemRecognizer
    */
   public double gauge(Shape... shapes)
   {
-    Line[] lines = Line.findLines(shapes);
+    Line[] lines = AbstractShape.findTypes((Line)null, shapes);
 
     double highGauge = 0;
     int iMax = -1, jMax = -1;   // Indexes of the best pair.
