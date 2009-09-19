@@ -21,7 +21,6 @@ package com.fropsoft.sketch.shape;
 
 import java.util.Vector;
 
-import com.fropsoft.geometry.AbstractShape;
 import com.fropsoft.geometry.Line;
 import com.fropsoft.geometry.Point2D;
 import com.fropsoft.geometry.Shape;
@@ -194,7 +193,7 @@ public class ClosedRegionRecognizer extends AbstractItemRecognizer
    */
   public double gauge(Shape... shapes)
   {
-    Line[] lines = AbstractShape.findTypes((Line)null, shapes);
+    Line[] lines = Line.findLines(shapes);
     LineEnd[] les = new LineEnd[2*lines.length];
     for (int i = 0; i < lines.length; i++)
     {

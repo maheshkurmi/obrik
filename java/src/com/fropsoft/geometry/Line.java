@@ -19,6 +19,7 @@
 
 package com.fropsoft.geometry;
 
+import java.util.Vector;
 
 /**
  * Y'know ... a line.
@@ -27,6 +28,23 @@ package com.fropsoft.geometry;
  */
 public class Line extends AbstractShape
 {
+  /**
+   * Find all the lines in an array of shapes.
+   *
+   * @param shapes
+   *          The shapes to search for lines in.
+   * @return An array of the found lines.
+   */
+  public static Line[] findLines(Shape... shapes)
+  {
+    // TODO generic-ize this function and put it ... somewhere.
+    Vector<Line> vs = new Vector<Line>();
+    for (Shape s : shapes)
+      if (s.getClass() == Line.class)
+        vs.add((Line) s);
+    return vs.toArray(new Line[] {});
+  }
+
   /**
    * Creates a new Line.
    *
