@@ -45,6 +45,7 @@ public class StrokeStartEvent extends StrokeEvent
    */
   public void record(PrintWriter out)
   {
-    // TODO
+    out.printf("  <point type=\"start\" x=\"%d\" y=\"%d\" t=\"%d\" />\n",
+            point.getX(), point.getY(), timestamp);
   }
 }

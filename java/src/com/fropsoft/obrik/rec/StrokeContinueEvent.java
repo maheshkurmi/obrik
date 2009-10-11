@@ -45,6 +45,7 @@ public class StrokeContinueEvent extends StrokeEvent
    */
   public void record(PrintWriter out)
   {
-    // TODO
+    out.printf("  <point type=\"cont\" x=\"%d\" y=\"%d\" t=\"%d\" />\n",
+            point.getX(), point.getY(), timestamp);
   }
 }

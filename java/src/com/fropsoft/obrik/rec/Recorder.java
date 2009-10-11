@@ -39,6 +39,9 @@ public class Recorder
   /** The points of the current stroke. */
   private final Vector<UserEvent> events;
 
+  /** Name of the GUI used. */
+  private final String guiName;
+
   /** Major version of Obrik. */
   private final int v_maj;
 
@@ -47,26 +50,32 @@ public class Recorder
 
   /**
    * Creates a new recorder.
+   * @param name
+   *          Name of the GUI that ran this.
    */
-  public Recorder()
+  public Recorder(String name)
   {
     // This is large, because there are sooooo many points.
     events = new Vector<UserEvent>(10000);
+    guiName = name;
     v_maj = 0;
     v_min = 1;
   }
 
   /**
    * Creates a new recorder for the given version of Obrik.
+   * @param name
+   *          Name of the GUI that ran this.
    * @param major_verison
    *          The major version of Obrik.
    * @param minor_version
    *          The minor version of Obrik.
    */
-  public Recorder(int major_verison, int minor_version)
+  public Recorder(String name, int major_verison, int minor_version)
   {
     // This is large, because there are sooooo many points.
     events = new Vector<UserEvent>(10000);
+    guiName = name;
     v_maj = major_verison;
     v_min = minor_version;
   }
@@ -81,6 +90,7 @@ public class Recorder
    */
   public void startStroke(int x, int y)
   {
+    System.out.println("Start point at (" + x + "," + y + ")");
     events.add(new StrokeStartEvent(x, y, System.currentTimeMillis()));
   }
 
@@ -94,6 +104,7 @@ public class Recorder
    */
   public void addPoint(int x, int y)
   {
+    System.out.println("Point at (" + x + "," + y + ")");
     events.add(new StrokeContinueEvent(x, y, System.currentTimeMillis()));
   }
 
@@ -196,7 +207,8 @@ public class Recorder
     {
       file.createNewFile();
       PrintWriter out = new PrintWriter(file);
-      out.printf("<obrik version=\"%s.%s\">\n", v_maj, v_min);
+      out.printf("<obrik type=\"%s\" version=\"%s.%s\">\n",
+              guiName, v_maj, v_min);
       for (UserEvent e : events)
         e.record(out);
       out.println("</obrik>");

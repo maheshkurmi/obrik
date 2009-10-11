@@ -45,6 +45,6 @@ public abstract class ButtonEvent extends AbstractUserEvent
    */
   protected void record(PrintWriter out, String name)
   {
-    out.printf("<button name=\"%s\" ts=\"ts\" />\n", name, timestamp);
+    out.printf("  <button name=\"%s\" ts=\"ts\" />\n", name, timestamp);
   }
 }

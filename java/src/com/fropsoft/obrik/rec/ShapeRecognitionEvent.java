@@ -50,7 +50,7 @@ public abstract class ShapeRecognitionEvent extends AbstractUserEvent
    */
   public void record(PrintWriter out, String data)
   {
-    out.printf("<shape type=\"%s\">\n%s\n</shape>\n",
+    out.printf("  <shape type=\"%s\">\n%s\n  </shape>\n",
                 shape.getClass().getName(), data);
   }
 }

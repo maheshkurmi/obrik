@@ -46,6 +46,9 @@ public class State
   /** Points collected from the user via one of the GUIs. */
   private final Vector<Point2DT> points;
 
+  /** Recorder for strokes. */
+  private final Recorder recorder;
+
   /** Stroke created when the final user point comes from the GUI.  */
   private Stroke stroke;
 
@@ -69,7 +72,18 @@ public class State
    */
   public State()
   {
+    this(null);
+  }
+
+  /**
+   * Create a new Obrik game state.
+   * @param r
+   *          The recorder to record recognitions with.
+   */
+  public State(Recorder r)
+  {
     points = new Vector<Point2DT>(200);
+    recorder = r;
     stroke = null;
 
     shapes = new Vector<Shape>();
@@ -291,8 +305,8 @@ public class State
    */
   private void makeStroke()
   {
-    stroke = new Stroke(points.toArray(new Point2DT[] {}));
-    System.out.println("There were " + points.size() + " points.");
+    Point2DT tmp[] = new Point2DT[points.size()];
+    stroke = new Stroke(points.toArray(tmp));
     points.clear();
   }
 
@@ -321,6 +335,7 @@ public class State
       {
         shapes.add(shape);
         System.out.println("Probably a " + shape.getClass().getSimpleName());
+        recorder.addShape(shape);
         stroke = null;
 
         Shape[] tmp = new Shape[shapes.size()];
@@ -332,6 +347,7 @@ public class State
           removeItemsShapes(item);
           items.add(item);
           System.out.println("Probably a " + item.getClass().getSimpleName());
+          recorder.addItem(item);
 
           grec.classify(items);
         }

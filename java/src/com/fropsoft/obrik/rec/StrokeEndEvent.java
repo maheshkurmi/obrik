@@ -34,7 +34,7 @@ public class StrokeEndEvent extends StrokeEvent
    * @param y
    *          The y coordinate of this event.
    * @param t
-   *          The time this occured.
+   *          The time this occurred.
    */
   public StrokeEndEvent(int x, int y, long t)
   {
@@ -46,5 +46,7 @@ public class StrokeEndEvent extends StrokeEvent
    */
   public void record(PrintWriter out)
   {
+    out.printf("  <point type=\"end\" x=\"%d\" y\"%d\" t=\"%d\" />\n",
+            point.getX(), point.getY(), timestamp);
   }
 }

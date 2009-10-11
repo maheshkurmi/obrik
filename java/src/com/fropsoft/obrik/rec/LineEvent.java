@@ -40,9 +40,11 @@ public class LineEvent extends ShapeRecognitionEvent
   public void record(PrintWriter out)
   {
     Line line = (Line)shape;
-    String body = String.format("<start x=\"%d\" y=\"%d\" />\n<end x=\"%d\" y=\"%d\">\n",
-                line.getStartX(), line.getStartY(),
-                line.getEndX(), line.getEndY());
+    String body = String.format(
+        "    <start x=\"%d\" y=\"%d\" />\n" +
+        "    <end x=\"%d\" y=\"%d\" />",
+        line.getStartX(), line.getStartY(),
+        line.getEndX(), line.getEndY());
     super.record(out, body);
   }
 }

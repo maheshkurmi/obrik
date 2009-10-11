@@ -63,20 +63,14 @@ public class WebGUI extends JApplet
   {
     super.init();
     resize(400, 430);
-    recorder = new Recorder(0, 1);
+    recorder = new Recorder("WebGUI", 0, 1);
 
-    state = new State();
+    state = new State(recorder);
 
     // Create the canvas
     canvas = new SwingCanvas(state);
     canvas.addMouseListener(new MouseAdapter()
     {
-      @Override
-      public void mouseDragged(MouseEvent e)
-      {
-        WebGUI.this.recorder.addPoint(e.getX(), e.getY());
-      }
-
       @Override
       public void mousePressed(MouseEvent e)
       {
@@ -87,6 +81,14 @@ public class WebGUI extends JApplet
       public void mouseReleased(MouseEvent e)
       {
         WebGUI.this.recorder.endPoint(e.getX(), e.getY());
+      }
+    });
+    canvas.addMouseMotionListener(new MouseAdapter()
+    {
+      @Override
+      public void mouseDragged(MouseEvent e)
+      {
+        WebGUI.this.recorder.addPoint(e.getX(), e.getY());
       }
     });
 
