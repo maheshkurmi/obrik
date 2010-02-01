@@ -25,5 +25,8 @@ package com.fropsoft.sketch.paleo;
  */
 public class Spiral extends Primitive
 {
-
+  static Spiral recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

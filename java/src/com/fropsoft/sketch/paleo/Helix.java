@@ -25,5 +25,8 @@ package com.fropsoft.sketch.paleo;
  */
 public class Helix extends Primitive
 {
-
+  static Helix recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

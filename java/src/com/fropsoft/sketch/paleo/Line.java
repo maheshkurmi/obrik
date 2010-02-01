@@ -28,6 +28,4 @@ public class Line extends Primitive
   {
     return null;
   }
-
-  
 }

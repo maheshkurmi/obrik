@@ -25,5 +25,8 @@ package com.fropsoft.sketch.paleo;
  */
 public class Ellipse extends Primitive
 {
-
+  static Ellipse recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

@@ -19,11 +19,96 @@
 
 package com.fropsoft.sketch.paleo;
 
+import com.fropsoft.geometry.Stroke;
+
 /**
  * @author jamoozy
- *
  */
-public class StrokeInfo extends Primitive
+public class StrokeInfo extends Stroke
 {
+  /** The number of primitives to check. */;
+  public static int NUM_PRIMS = 9; // including complex
 
+  /** The primitives */
+  private Primitive[] primitives = new Primitive[NUM_PRIMS];
+
+  /** Candidate corners. */
+  private Vector<PointInfo> candCorners = new Vector<PointInfo>();
+
+  /** Merged corners. */
+  private Vector<PointInfo> mergCorners = new Vector<PointInfo>();
+
+  /** True corners. */
+  private Vector<PointInfo> trueCorners = new Vector<PointInfo>();
+
+  /** First valid index after trimming tails. */
+  private int firstValid;
+
+  /** Last valid index after trimming tails. */
+  private int lastValid;
+
+  /** Normalized Distance between Direction Extremes. */
+  private double ndde;
+
+  /** Direction Change Ratio. */
+  private double dcr;
+
+  /** Number of rotations the stroke made. */
+  private double rotations;
+
+  /** Whether the stroke was over traced. */
+  private boolean overtraced;
+
+  /** Whether the stroke was fully closed (think circle). */
+  private boolean closed;
+
+  /** The list of recognized primitives in order of likelihood. */
+  private Vector<Primitive> hierarchy = new Vector<Primitive>();
+
+  /** Make a new stroke info based on a stroke. */
+  StrokeInfo(Stroke stroke)
+  {
+    points = new Vector<PointInfo>(stroke.points.size());
+    for (Point p : stroke.points)
+      points.add(new PointInfo(p));
+  }
+
+  /** Get the first valid index after trimming tails. */
+  public int getFirstValid() { return firstValid; }
+
+  /** Get the last valid index after trimming tails. */
+  public int getLastValid() { return lastValid; }
+
+  /** Get the Normalized Distance between Direction Extremes. */
+  public double getNDDE() { return ndde; }
+
+  /** Get the Direction Change Ratio. */
+  public double getDCR() { return dcr; }
+
+  /** Get the number of rotations the stroke made. */
+  public double getRotations() { return rotations; }
+
+  /** Get whether the stroke was over traced. */
+  public boolean getOvertraced() { return overtraced; }
+
+  /** Get whether the stroke was fully closed (think circle). */
+  public boolean getClosed() { return closed; }
+
+  /** Gets the i<sup>th</sup> {@link PointInfo} in the stroke. */
+  public PointInfo get(int i)
+  {
+    if (0 <= i && i < points.size())
+      return hierarchy[i];
+    System.err.println("Could not get point " + i + ": O.O.B.");
+    return null;
+  }
+
+  /** Gets the (i+1)<sup>th</sup> most likely recognition. */
+  public Primitive getRec(int i)
+  {
+    if (0 <= i && i < hierarchy.length)
+      return hierarchy[i];
+    System.err.println("Could not get point " + i + ": O.O.B.");
+    return null;
+  }
 }

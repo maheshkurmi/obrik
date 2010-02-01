@@ -19,12 +19,14 @@
 
 package com.fropsoft.sketch.paleo;
 
-
 /**
  * @author jamoozy
  *
  */
 public class Curve extends Primitive
 {
-
+  static Curve recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

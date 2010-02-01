@@ -19,11 +19,58 @@
 
 package com.fropsoft.sketch.paleo;
 
+import com.fropsoft.geometry.Point2DTV;
+
 /**
  * @author jamoozy
- *
  */
-public class PointInfo
+public class PointInfo extends Point2DTV
 {
+  /** The direction the pen was going in here. */
+  private double direction;
 
+  /** The curvature at this point. */
+  private double curvature;
+
+  /** The velocity of the pen at this point (pixels/s). */
+  private double velocity;
+
+  /** The XXX ??? */
+  private double dirRatio;
+
+  /** The XXX ??? */
+  private double arcSum;
+
+  /** The XXX ??? */
+  private double dirSum;
+
+  /** The XXX ??? */
+  private double cordDist;
+
+  /** Create a new point info based on a Point2DTV. */
+  PointInfo(Point2DTV point)
+  {
+    super(point.getX(), point.getY(), point.getT(), point.getV());
+  }
+
+  /** The direction the pen was going in here. */
+  public double getDirection() { return direction; }
+
+  /** The curvature at this point. */
+  public double getCurvature() { return curvature; }
+
+  /** The velocity of the pen at this point (pixels/s). */
+  public double getVelocity() { return velocity; }
+
+  /** The XXX ??? */
+  public double getDirRatio() { return dirRatio; }
+
+  /** The XXX ??? */
+  public double getArcSum() { return arcSum; }
+
+  /** The XXX ??? */
+  public double getDirSum() { return dirSum; }
+
+  /** The XXX ??? */
+  public double getCordDist() { return cordDist; }
 }

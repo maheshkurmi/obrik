@@ -25,5 +25,8 @@ package com.fropsoft.sketch.paleo;
  */
 public class PolyLine extends Primitive
 {
-
+  static PolyLine recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

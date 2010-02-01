@@ -25,5 +25,8 @@ package com.fropsoft.sketch.paleo;
  */
 public class Circle extends Primitive
 {
-
+  static Circle recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

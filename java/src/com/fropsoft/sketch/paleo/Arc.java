@@ -19,12 +19,14 @@
 
 package com.fropsoft.sketch.paleo;
 
-
 /**
  * @author jamoozy
  *
  */
 public class Arc extends Primitive
 {
-
+  static Arc recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }

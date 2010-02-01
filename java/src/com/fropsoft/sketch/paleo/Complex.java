@@ -25,5 +25,8 @@ package com.fropsoft.sketch.paleo;
  */
 public class Complex extends Primitive
 {
-
+  static Complex recognize(StrokeInfo si)
+  {
+    return null;
+  }
 }
